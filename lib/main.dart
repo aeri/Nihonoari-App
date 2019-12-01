@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'quiz_brain.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'dart:io';
 
 void main() => runApp(Quizzler());
@@ -36,6 +37,10 @@ class QuizPage extends StatefulWidget {
 class _QuizPageState extends State<QuizPage> {
   List<Widget> scoreKeeper = [];
   FocusNode myFocusNode;
+  int total = 0;
+  int accepted = 0;
+  int rejected = 0;
+  double ratio = 0;
 
   @override
   void initState() {
@@ -52,6 +57,33 @@ class _QuizPageState extends State<QuizPage> {
     super.dispose();
   }
 
+  void _showDialog() async{
+    // flutter defined function
+    Scaffold.of(context).hideCurrentSnackBar();
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Statistics"),
+          content: new Text("Total: $total\n"
+              "Passed: $accepted\n"
+              "Failed: $rejected\n"
+              "Success rate: ${ratio.toStringAsFixed(2)}%"),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Close"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -59,7 +91,22 @@ class _QuizPageState extends State<QuizPage> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         Expanded(
-          flex: 5,
+          flex: 0,
+          child: Padding(
+            padding: EdgeInsets.all(10.0),
+            child: Center(
+              child: IconButton(
+            // Use the FontAwesomeIcons class for the IconData
+            icon: new Icon(
+                FontAwesomeIcons.chartBar,
+                color: Colors.white),
+              onPressed: () { _showDialog(); }
+          )
+            ),
+          ),
+        ),
+        Expanded(
+          flex: 4,
           child: Padding(
             padding: EdgeInsets.all(10.0),
             child: Center(
@@ -79,6 +126,7 @@ class _QuizPageState extends State<QuizPage> {
           child: Padding(
             padding: EdgeInsets.all(15.0),
             child: TextField(
+              textInputAction: TextInputAction.done,
               controller: _controller,
               focusNode: myFocusNode,
               autofocus: true,
@@ -89,7 +137,7 @@ class _QuizPageState extends State<QuizPage> {
                 fillColor: Colors.white,
                 focusColor: Colors.white,
                   border: InputBorder.none,
-                  hintText: 'Enter romaji',
+                  hintText: 'Enter rōmaji',
                    hintStyle: TextStyle(color: Colors.grey),
 
               ),
@@ -105,15 +153,19 @@ class _QuizPageState extends State<QuizPage> {
 
                 String result = quizBrain.getCorrectAnswer();
 
+                ++total;
+
                 if (result == value.toLowerCase()) {
                   control = 500;
                   print("OK");
                   _result = Colors.green;
+                  ++accepted;
                 }
                 else{
                   control = 3000;
                   print ("NO");
                   _result = Colors.red;
+                  ++rejected;
 
                   final snackBar = SnackBar(
                     elevation: 10,
@@ -132,6 +184,8 @@ class _QuizPageState extends State<QuizPage> {
                   Scaffold.of(context).showSnackBar(snackBar);
 
                 }
+
+                ratio = (accepted/total)*100;
 
                 setState(() {
 //                  scoreKeeper.add(

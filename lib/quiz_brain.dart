@@ -4,9 +4,9 @@ import 'package:kana/kana.dart';
 
 class QuizBrain{
 
-  int _questionNumber = 0;
+  static var rng = new Random();
 
-  List<Question> _questionBank = [
+  static List<Question> _questionBank = [
     Question ("あ", "a"),
     Question ("い", "i"),
     Question ("う", "u"),
@@ -152,6 +152,16 @@ class QuizBrain{
     Question ("ポ", "po"),
 
   ];
+
+
+  int _questionNumber = rng.nextInt(_questionBank.length);
+
+
+  void initState (){
+    Random random = new Random();
+    _questionNumber = random.nextInt(_questionBank.length);
+
+  }
 
   void nextQuestion(){
     Random random = new Random();
