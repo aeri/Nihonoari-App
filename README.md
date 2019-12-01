@@ -14,6 +14,11 @@ To recognize the Kana syllabary without difficulty is a costly task, for it ther
 - No buys.
 - Open Source project under GPL-3.0  license.
 
+## Release
+  <a href="https://play.google.com/store/apps/details?id=com.LAPARCELA.nihonoari">
+    <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Logo" width=200
+  </a>
+
 ## Built With
 
 * [Flutter](https://flutter.dev/) - SDK
