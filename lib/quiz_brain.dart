@@ -153,15 +153,7 @@ class QuizBrain{
 
   ];
 
-
   int _questionNumber = rng.nextInt(_questionBank.length);
-
-
-  void initState (){
-    Random random = new Random();
-    _questionNumber = random.nextInt(_questionBank.length);
-
-  }
 
   void nextQuestion(){
     Random random = new Random();
@@ -178,6 +170,13 @@ class QuizBrain{
   String getCorrectAnswer(){
     return _questionBank[_questionNumber].answer;
   }
+
+  void setList(bool h, bool k){
+    print("SRE");
+    print (h);
+    print (k);
+  }
+
 }
 
 
