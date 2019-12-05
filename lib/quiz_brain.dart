@@ -182,7 +182,6 @@ class QuizBrain{
   }
 
   static void setList(bool h, bool k){
-    print('esta cambiando');
     QuizBrain.h = h;
     QuizBrain.k = k;
     nextQuestion();
