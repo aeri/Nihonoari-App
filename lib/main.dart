@@ -1,228 +1,150 @@
 import 'package:flutter/material.dart';
-import 'quiz_brain.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'dart:io';
+import 'party.dart';
 
-void main() => runApp(Quizzler());
+void main() {
+  runApp(new MaterialApp(
+    home: new MyApp(),
+  ));
+}
 
-QuizBrain quizBrain = QuizBrain();
+class MyApp extends StatefulWidget {
+  @override
+  _State createState() => new _State();
+}
 
-TextEditingController _controller = TextEditingController();
+//State is information of the application that can change over time or when some actions are taken.
+class _State extends State<MyApp> {
+  bool _katakana = true;
+  bool _hiragana = true;
+  bool _isButtonDisabled = false;
 
-Color _result = Colors.white;
+  //we omitted the brackets '{}' and are using fat arrow '=>' instead, this is dart syntax
+  void _katakanaChanged(bool value) => setState(() => _katakana = value);
+  void _hiraganaChanged(bool value) => setState(() => _hiragana = value);
 
+  void __isButtonDisabledChanged() {
+    _isButtonDisabled = _katakana || _hiragana ? false : true;
+  }
 
-class Quizzler extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        backgroundColor: Colors.grey.shade900,
-        body: SafeArea(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.0),
-            child: QuizPage(),
+    return new Scaffold(
+      backgroundColor: Colors.grey.shade900,
+      //hit Ctrl+space in intellij to know what are the options you can use in flutter widgets
+      body: new Container(
+        padding: new EdgeInsets.all(32.0),
+        child: new Center(
+          child: new Column(
+            children: <Widget>[
+              Expanded(
+                flex: 2,
+                child: Padding(
+                  padding: EdgeInsets.all(5.0),
+                  child: Center(
+                      child: RichText(
+                    text: TextSpan(
+                      text: 'nihonoari ',
+                      style: TextStyle(
+                        fontFamily: 'AppleTP',
+                        fontSize: 25.0,
+                        color: Colors.white,
+                      ),
+                      children: <TextSpan>[
+                        TextSpan(
+                            text: 'project',
+                            style: TextStyle(fontWeight: FontWeight.bold)),
+                      ],
+                    ),
+                  )),
+                ),
+              ),
+              Expanded(
+                flex: 2,
+                child: new Column(children: <Widget>[
+                  new CheckboxListTile(
+                    value: _hiragana,
+                    onChanged: (value) {
+                      _hiraganaChanged(value);
+                      __isButtonDisabledChanged();
+                    },
+                    title: new Text(
+                      'Hiragana',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                    controlAffinity: ListTileControlAffinity.leading,
+                    subtitle: new Text(
+                      'Include Hiragana syllabary',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                    secondary: new Icon(
+                      Icons.font_download,
+                      color: Colors.white,
+                    ),
+                    activeColor: Colors.red,
+                  ),
+                  new CheckboxListTile(
+                    value: _katakana,
+                    onChanged: (value) {
+                      _katakanaChanged(value);
+                      __isButtonDisabledChanged();
+                    },
+                    title: new Text(
+                      'Katakana',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                    controlAffinity: ListTileControlAffinity.leading,
+                    subtitle: new Text(
+                      'Include Katakana syllabary',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                    secondary: new Icon(
+                      Icons.font_download,
+                      color: Colors.white,
+                    ),
+                    activeColor: Colors.red,
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: Padding(
+                      padding: EdgeInsets.all(5.0),
+                      child: Center(
+                        child: new RaisedButton(
+                          padding: const EdgeInsets.all(8.0),
+                          textColor: Colors.white,
+                          color: Colors.red,
+                          disabledColor: Colors.white,
+                          onPressed: _isButtonDisabled
+                              ? null
+                              : () {
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context) => new Party(
+                                              h: _hiragana,
+                                              k: _katakana,
+                                            )),
+                                  );
+                                },
+                          child: new Text(
+                              _isButtonDisabled ? "Select one" : "Start"),
+                        ),
+                      ),
+                    ),
+                  ),
+                ]),
+              ),
+            ],
           ),
         ),
       ),
-    );
-  }
-}
-
-class QuizPage extends StatefulWidget {
-  @override
-  _QuizPageState createState() => _QuizPageState();
-}
-
-class _QuizPageState extends State<QuizPage> {
-  List<Widget> scoreKeeper = [];
-  FocusNode myFocusNode;
-  int total = 0;
-  int accepted = 0;
-  int rejected = 0;
-  double ratio = 0;
-
-  @override
-  void initState() {
-    super.initState();
-
-    myFocusNode = FocusNode();
-  }
-
-  @override
-  void dispose() {
-    // Clean up the focus node when the Form is disposed.
-    myFocusNode.dispose();
-
-    super.dispose();
-  }
-
-  void _showDialog() async{
-    // flutter defined function
-    Scaffold.of(context).hideCurrentSnackBar();
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return AlertDialog(
-          title: new Text("Statistics"),
-          content: new Text("Total: $total\n"
-              "Passed: $accepted\n"
-              "Failed: $rejected\n"
-              "Success rate: ${ratio.toStringAsFixed(2)}%"),
-          actions: <Widget>[
-            // usually buttons at the bottom of the dialog
-            new FlatButton(
-              child: new Text("Close"),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        Expanded(
-          flex: 0,
-          child: Padding(
-            padding: EdgeInsets.all(10.0),
-            child: Center(
-              child: IconButton(
-            // Use the FontAwesomeIcons class for the IconData
-            icon: new Icon(
-                FontAwesomeIcons.chartBar,
-                color: Colors.white),
-              onPressed: () { _showDialog(); }
-          )
-            ),
-          ),
-        ),
-        Expanded(
-          flex: 4,
-          child: Padding(
-            padding: EdgeInsets.all(10.0),
-            child: Center(
-              child: Text(
-                quizBrain.getQuestionText(),
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontFamily: 'AppleTP',
-                  fontSize: 150.0,
-                  color: _result,
-                ),
-              ),
-            ),
-          ),
-        ),
-        Expanded(
-          child: Padding(
-            padding: EdgeInsets.all(15.0),
-            child: TextField(
-              textInputAction: TextInputAction.done,
-              controller: _controller,
-              focusNode: myFocusNode,
-              autofocus: true,
-              textAlign: TextAlign.center ,
-              cursorColor: Colors.white,
-              decoration: InputDecoration(
-                hoverColor: Colors.white,
-                fillColor: Colors.white,
-                focusColor: Colors.white,
-                  border: InputBorder.none,
-                  hintText: 'Enter rōmaji',
-                   hintStyle: TextStyle(color: Colors.grey),
-
-              ),
-              style: TextStyle(
-                fontSize: 20,
-                color: Colors.white,
-              ),
-              onSubmitted: (value) {
-
-                int control = 0;
-
-                _controller.clear();
-
-                String result = quizBrain.getCorrectAnswer();
-
-                ++total;
-
-                if (result == value.toLowerCase()) {
-                  control = 500;
-                  print("OK");
-                  _result = Colors.green;
-                  ++accepted;
-                }
-                else{
-                  control = 3000;
-                  print ("NO");
-                  _result = Colors.red;
-                  ++rejected;
-
-                  final snackBar = SnackBar(
-                    elevation: 10,
-                    duration: Duration(milliseconds: control) ,
-                    content: Text('Correct answer: $result',
-                      style: TextStyle(
-                        fontSize: 20,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center,
-                    ),
-
-
-                  );
-
-                  Scaffold.of(context).showSnackBar(snackBar);
-
-                }
-
-                ratio = (accepted/total)*100;
-
-                setState(() {
-//                  scoreKeeper.add(
-//                    Icon(
-//                      Icons.close,
-//                      color: Colors.red,
-//                    ),
-//                  );
-
-                });
-
-                Future.delayed(Duration(milliseconds: control), () {
-
-
-                  setState(() {
-                    _result = Colors.white;
-                    quizBrain.nextQuestion();
-                    FocusScope.of(context).requestFocus(myFocusNode);
-                  });
-
-                });
-
-
-
-
-              },
-            )
-
-          ),
-        ),
-
-        Expanded(
-          child: Row(
-            children: scoreKeeper,
-          ),
-        ),
-      ],
     );
   }
 }

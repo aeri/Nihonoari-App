@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://i.imgur.com/cm9Rop6.png" title="Nihonoari Logo">
+  <img src="https://i.imgur.com/PbrWneR.png" width="350" title="Nihonoari Logo">
 </p>
 
 # Nihonoari App
@@ -24,9 +24,13 @@ To recognize the Kana syllabary without difficulty is a costly task, for it ther
 * [Flutter](https://flutter.dev/) - SDK
 * [Android Studio](https://developer.android.com/studio) - IDE
 
-## Authors
+## Author
 
 * **Aeri** - *Project Nihonoari* - [aeri](https://github.com/aeri)
+
+## Collaborators
+
+* **[diegoroyo](https://github.com/diegoroyo)**
 
 ## License
 

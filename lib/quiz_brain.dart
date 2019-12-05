@@ -5,8 +5,10 @@ import 'package:kana/kana.dart';
 class QuizBrain{
 
   static var rng = new Random();
+  static bool h = true, k = true;
+  static Question currentQuestion;
 
-  static List<Question> _questionBank = [
+  static List<Question> _questionHiragana = [
     Question ("あ", "a"),
     Question ("い", "i"),
     Question ("う", "u"),
@@ -77,8 +79,10 @@ class QuizBrain{
     Question ("ぴ", "pi"),
     Question ("ぷ", "pu"),
     Question ("ぺ", "pe"),
-    Question ("ぽ", "po"),
+    Question ("ぽ", "po")
+  ];
 
+  static List<Question> _questionKatakana = [
     Question ("ア", "a"),
     Question ("イ", "i"),
     Question ("ウ", "u"),
@@ -153,31 +157,36 @@ class QuizBrain{
 
   ];
 
-
-  int _questionNumber = rng.nextInt(_questionBank.length);
-
-
-  void initState (){
-    Random random = new Random();
-    _questionNumber = random.nextInt(_questionBank.length);
-
+  static Question nextHiragana() {
+    int _questionNumber = rng.nextInt(_questionHiragana.length);
+    return _questionHiragana[_questionNumber];
   }
 
-  void nextQuestion(){
-    Random random = new Random();
-    _questionNumber = random.nextInt(_questionBank.length);
-    if(_questionNumber < _questionBank.length - 1) {
-      _questionNumber++;
+  static Question nextKatakana() {
+    int _questionNumber = rng.nextInt(_questionKatakana.length);
+    return _questionKatakana[_questionNumber];
+  }
+
+  static void nextQuestion(){
+    if (!h) {
+      currentQuestion = nextKatakana();
+    } else if (!k) {
+      currentQuestion = nextHiragana();
+    } else {
+      if (rng.nextBool()) {
+        currentQuestion = nextKatakana();
+      } else {
+        currentQuestion = nextHiragana();
+      }
     }
   }
 
-  String getQuestionText(){
-    return _questionBank[_questionNumber].question;
+  static void setList(bool h, bool k){
+    QuizBrain.h = h;
+    QuizBrain.k = k;
+    nextQuestion();
   }
 
-  String getCorrectAnswer(){
-    return _questionBank[_questionNumber].answer;
-  }
 }
 
 
