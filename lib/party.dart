@@ -3,27 +3,28 @@ import 'quiz_brain.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'dart:io';
 
-void main() => runApp(Party());
-
-QuizBrain quizBrain = QuizBrain();
-
-TextEditingController _controller = TextEditingController();
+//void main() => runApp(Party());
 
 Color _result = Colors.white;
 
+class Party extends StatefulWidget {
 
-class Party extends StatelessWidget {
+  final bool h, k;
 
-  final bool h;
-  final bool k;
+  Party({@required this.h, @required this.k});
 
-  Party({Key key, @required this.h, @required this.k }) : super(key: key);
+  @override
+  _Party createState() => _Party(h, k);
+}
 
-  void setup() => quizBrain.setList(h, k);
+class _Party extends State<Party> {
+
+  _Party(h, k) {
+    QuizBrain.setList(h, k);
+  }
 
   @override
   Widget build(BuildContext context) {
-    setup();
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Colors.grey.shade900,
@@ -44,6 +45,9 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
+
+  TextEditingController _controller = TextEditingController();
+
   List<Widget> scoreKeeper = [];
   FocusNode myFocusNode;
   int total = 0;
@@ -120,7 +124,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                quizBrain.getQuestionText(),
+                QuizBrain.currentQuestion.question,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontFamily: 'AppleTP',
@@ -160,14 +164,17 @@ class _QuizPageState extends State<QuizPage> {
 
                 _controller.clear();
 
-                String result = quizBrain.getCorrectAnswer();
+                String result = QuizBrain.currentQuestion.answer;
 
                 ++total;
 
                 if (result == value.toLowerCase()) {
-                  control = 500;
+                  control = 1000;
                   print("OK");
-                  _result = Colors.green;
+                  //setState(() {
+                    _result = Colors.green;
+                  //}
+                  //);
                   ++accepted;
                 }
                 else{
@@ -197,13 +204,7 @@ class _QuizPageState extends State<QuizPage> {
                 ratio = (accepted/total)*100;
 
                 setState(() {
-//                  scoreKeeper.add(
-//                    Icon(
-//                      Icons.close,
-//                      color: Colors.red,
-//                    ),
-//                  );
-
+//
                 });
 
                 Future.delayed(Duration(milliseconds: control), () {
@@ -211,7 +212,7 @@ class _QuizPageState extends State<QuizPage> {
 
                   setState(() {
                     _result = Colors.white;
-                    quizBrain.nextQuestion();
+                    QuizBrain.nextQuestion();
                     FocusScope.of(context).requestFocus(myFocusNode);
                   });
 
