@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'quiz_brain.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'dart:io';
+import 'table.dart';
 
 //void main() => runApp(Party());
 
@@ -105,18 +105,32 @@ class _QuizPageState extends State<QuizPage> {
       children: <Widget>[
         Expanded(
           flex: 0,
-          child: Padding(
-            padding: EdgeInsets.all(10.0),
-            child: Center(
-              child: IconButton(
-            // Use the FontAwesomeIcons class for the IconData
-            icon: new Icon(
-                FontAwesomeIcons.chartBar,
-                color: Colors.white),
-              onPressed: () { _showDialog(); }
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: IconButton(
+                  // Use the FontAwesomeIcons class for the IconData
+                    icon: new Icon(
+                        FontAwesomeIcons.language,
+                        color: Colors.white),
+                    onPressed: () { Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => BasicGridView()),
+                    ); }
+                )
+              ),
+              Expanded(
+                child: IconButton(
+                  // Use the FontAwesomeIcons class for the IconData
+                    icon: new Icon(
+                        FontAwesomeIcons.chartBar,
+                        color: Colors.white),
+                    onPressed: () { _showDialog(); }
+                )
+              ),
+
+            ],
           )
-            ),
-          ),
         ),
         Expanded(
           flex: 4,
@@ -169,12 +183,9 @@ class _QuizPageState extends State<QuizPage> {
                 ++total;
 
                 if (result == value.toLowerCase()) {
-                  control = 1000;
+                  control = 500;
                   print("OK");
-                  //setState(() {
                     _result = Colors.green;
-                  //}
-                  //);
                   ++accepted;
                 }
                 else{

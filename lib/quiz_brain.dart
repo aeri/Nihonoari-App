@@ -1,6 +1,5 @@
 import 'Question.dart';
 import 'dart:math';
-import 'package:kana/kana.dart';
 
 class QuizBrain{
 
