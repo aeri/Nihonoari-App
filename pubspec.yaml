@@ -38,6 +38,8 @@ flutter:
     - family: AppleTPT
       fonts:
       - asset: assets/apple-tp_text.ttf
+  assets:
+    - assets/LICENSES.txt
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
