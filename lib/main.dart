@@ -80,7 +80,7 @@ class _State extends State<MyApp> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.all(50.0),
+                        padding: EdgeInsets.all(25.0),
                         child: RichText(
                           text: TextSpan(
                             text: 'nihonoari ',
