@@ -1,0 +1,4 @@
+Nihonoari is an Open Source project to provide to community a simple app to memorize and practice the Hiragana and Katakana alphabet without adverts, buys and useless functions, more simple is better.
+
+Want to collaborate with the project or report some bug?
+https://github.com/aeri/Nihonoari-App
