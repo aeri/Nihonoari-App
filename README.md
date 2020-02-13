@@ -30,7 +30,7 @@ To recognize the Kana syllabary without difficulty is a costly task. While there
 
 ## Collaborators
 
-* **[diegoroyo](https://github.com/diegoroyo)**
+See the list of [contributors](https://github.com/aeri/Nihonoari-App/graphs/contributors) who participated in this project.
 
 ## License
 
