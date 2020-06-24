@@ -11,16 +11,18 @@ class Party extends StatefulWidget {
 
   final bool h, k;
 
-  Party({@required this.h, @required this.k});
+  final Map<String, bool> hv, kv;
+
+  Party({@required this.h, @required this.hv, @required this.k, @required this.kv});
 
   @override
-  _Party createState() => _Party(h, k);
+  _Party createState() => _Party(h, hv, k, kv);
 }
 
 class _Party extends State<Party> {
 
-  _Party(h, k) {
-    QuizBrain.setList(h, k);
+  _Party(h, hv, k, kv) {
+    QuizBrain.setList(h, hv, k, kv);
   }
 
   @override
@@ -78,15 +80,26 @@ class _QuizPageState extends State<QuizPage> {
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
-          title: new Text("Statistics"),
+          backgroundColor: Colors.black,
+          title: new Text("Statistics",
+              style: TextStyle(
+                color: Colors.white,
+              )),
           content: new Text("Total: $total\n"
               "Passed: $accepted\n"
               "Failed: $rejected\n"
-              "Success rate: ${ratio.toStringAsFixed(2)}%"),
+              "Success rate: ${ratio.toStringAsFixed(2)}%",
+              style: TextStyle(
+                color: Colors.white,
+              )),
+
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             new FlatButton(
-              child: new Text("Close"),
+              child: new Icon(
+                Icons.done,
+                color: Colors.red,
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -189,7 +202,7 @@ class _QuizPageState extends State<QuizPage> {
                   ++accepted;
                 }
                 else{
-                  control = 3000;
+                  control = 2000;
                   print ("NO");
                   _result = Colors.red;
                   ++rejected;
