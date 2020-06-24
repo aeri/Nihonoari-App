@@ -62,27 +62,45 @@ class _hiraDialogState extends State<hiraDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Hiragana set selector'),
+      title: Text(
+        'Hiragana set',
+        style: TextStyle(
+          color: Colors.white,
+        ),
+      ),
+      backgroundColor: Colors.black,
       content: Container(
         width: double.maxFinite,
-        child: new ListView(
-          children: _hirasol.keys.map((String key) {
-            return new CheckboxListTile(
-              title: new Text(key),
-              value: _hirasol[key],
-              onChanged: (bool value) {
-                setState(() {
-                  _hirasol[key] = value;
-                });
-              },
-            );
-          }).toList(),
+        child: new Theme(
+          data: ThemeData(unselectedWidgetColor: Colors.white),
+          child: new ListView(
+            children: _hirasol.keys.map((String key) {
+              return new CheckboxListTile(
+                title: new Text(
+                  key,
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+                activeColor: Colors.red,
+                value: _hirasol[key],
+                onChanged: (bool value) {
+                  setState(() {
+                    _hirasol[key] = value;
+                  });
+                },
+              );
+            }).toList(),
+          ),
         ),
       ),
       actions: <Widget>[
         // usually buttons at the bottom of the dialog
         new FlatButton(
-          child: new Text("Done"),
+          child: new Icon(
+            Icons.done,
+            color: Colors.red,
+          ),
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -96,27 +114,45 @@ class _kataDialogState extends State<kataDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Katakana set selector'),
+      backgroundColor: Colors.black,
+      title: Text(
+        'Katakana set',
+        style: TextStyle(
+          color: Colors.white,
+        ),
+      ),
       content: Container(
         width: double.maxFinite,
-        child: new ListView(
-          children: _katasol.keys.map((String key) {
-            return new CheckboxListTile(
-              title: new Text(key),
-              value: _katasol[key],
-              onChanged: (bool value) {
-                setState(() {
-                  _katasol[key] = value;
-                });
-              },
-            );
-          }).toList(),
+        child: Theme(
+          data: ThemeData(unselectedWidgetColor: Colors.white),
+          child: new ListView(
+            children: _katasol.keys.map((String key) {
+              return new CheckboxListTile(
+                title: new Text(
+                  key,
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+                value: _katasol[key],
+                activeColor: Colors.red,
+                onChanged: (bool value) {
+                  setState(() {
+                    _katasol[key] = value;
+                  });
+                },
+              );
+            }).toList(),
+          ),
         ),
       ),
       actions: <Widget>[
         // usually buttons at the bottom of the dialog
         new FlatButton(
-          child: new Text("Done"),
+          child: new Icon(
+            Icons.done,
+            color: Colors.red,
+          ),
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -157,7 +193,10 @@ class _State extends State<MyApp> {
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             new FlatButton(
-              child: new Text("Close"),
+              child: new Icon(
+                Icons.done,
+                color: Colors.red,
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
               },
