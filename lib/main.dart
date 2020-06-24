@@ -20,22 +20,130 @@ class MyApp extends StatefulWidget {
   _State createState() => new _State();
 }
 
+class hiraDialog extends StatefulWidget {
+  @override
+  _hiraDialogState createState() => _hiraDialogState();
+}
+
+class kataDialog extends StatefulWidget {
+  @override
+  _kataDialogState createState() => _kataDialogState();
+}
+
+Map<String, bool> _hirasol = {
+  'あ い う え お': true,
+  'か き く け こ': true,
+  'さ し	す せ そ': true,
+  'た ち つ て と': true,
+  'な に ぬ ね の': true,
+  'は ひ ふ へ ほ': true,
+  'ま み む め も': true,
+  'や ゆ よ': true,
+  'ら り る れ ろ': true,
+  'わ を': true,
+  'ん': true
+};
+
+Map<String, bool> _katasol = {
+  'ア イ ウ エ オ': true,
+  'カ キ ク ケ コ': true,
+  'サ シ ス セ ソ': true,
+  'タ チ ツ テ ト': true,
+  'ナ ニ ヌ ネ ノ': true,
+  'ハ ヒ フ ヘ ホ': true,
+  'マ ミ ム メ モ': true,
+  'ヤ ユ ヨ': true,
+  'ラ リ ル レ ロ': true,
+  'ワ ヲ': true,
+  'ン': true,
+};
+
+class _hiraDialogState extends State<hiraDialog> {
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text('Hiragana set selector'),
+      content: Container(
+        width: double.maxFinite,
+        child: new ListView(
+          children: _hirasol.keys.map((String key) {
+            return new CheckboxListTile(
+              title: new Text(key),
+              value: _hirasol[key],
+              onChanged: (bool value) {
+                setState(() {
+                  _hirasol[key] = value;
+                });
+              },
+            );
+          }).toList(),
+        ),
+      ),
+      actions: <Widget>[
+        // usually buttons at the bottom of the dialog
+        new FlatButton(
+          child: new Text("Done"),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ],
+    );
+  }
+}
+
+class _kataDialogState extends State<kataDialog> {
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text('Katakana set selector'),
+      content: Container(
+        width: double.maxFinite,
+        child: new ListView(
+          children: _katasol.keys.map((String key) {
+            return new CheckboxListTile(
+              title: new Text(key),
+              value: _katasol[key],
+              onChanged: (bool value) {
+                setState(() {
+                  _katasol[key] = value;
+                });
+              },
+            );
+          }).toList(),
+        ),
+      ),
+      actions: <Widget>[
+        // usually buttons at the bottom of the dialog
+        new FlatButton(
+          child: new Text("Done"),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ],
+    );
+  }
+}
+
 //State is information of the application that can change over time or when some actions are taken.
 class _State extends State<MyApp> {
-  bool _katakana = true;
-  bool _hiragana = true;
-  bool _isButtonDisabled = false;
+  bool _katakana = false;
+  bool _hiragana = false;
+
+  bool _isButtonDisabled = true;
 
   //we omitted the brackets '{}' and are using fat arrow '=>' instead, this is dart syntax
   void _katakanaChanged(bool value) => setState(() => _katakana = value);
+
   void _hiraganaChanged(bool value) => setState(() => _hiragana = value);
 
   void __isButtonDisabledChanged() {
     _isButtonDisabled = _katakana || _hiragana ? false : true;
   }
 
-  void _showLicense() async{
-    String data =  await loadAsset();
+  void _showLicense() async {
+    String data = await loadAsset();
     // flutter defined function
     showDialog(
       context: context,
@@ -43,11 +151,9 @@ class _State extends State<MyApp> {
         // return object of type Dialog
         return AlertDialog(
           title: new Text("Licenses"),
-          content: new SingleChildScrollView (
-            child: Text(data) ,
-          )
-
-          ,
+          content: new SingleChildScrollView(
+            child: Text(data),
+          ),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             new FlatButton(
@@ -61,7 +167,6 @@ class _State extends State<MyApp> {
       },
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +185,7 @@ class _State extends State<MyApp> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.all(50.0),
+                        padding: EdgeInsets.all(25.0),
                         child: RichText(
                           text: TextSpan(
                             text: 'nihonoari ',
@@ -92,20 +197,21 @@ class _State extends State<MyApp> {
                             children: <TextSpan>[
                               TextSpan(
                                   text: 'project',
-                                  style: TextStyle(fontWeight: FontWeight.bold)),
+                                  style:
+                                      TextStyle(fontWeight: FontWeight.bold)),
                             ],
                           ),
                         ),
                       ),
-
                       Padding(
                         padding: EdgeInsets.all(5),
                         child: RichText(
                           text: TextSpan(
                             text: 'LICENSES',
-                            recognizer: TapGestureRecognizer()..onTap = () {
-                              _showLicense();
-                            },
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                _showLicense();
+                              },
                             style: TextStyle(
                               fontSize: 15.0,
                               color: Colors.grey,
@@ -113,93 +219,122 @@ class _State extends State<MyApp> {
                           ),
                         ),
                       ),
-
                     ],
                   )),
               Expanded(
                 flex: 2,
-                child: new Column(children: <Widget>[
-                  new CheckboxListTile(
-                    value: _hiragana,
-                    onChanged: (value) {
-                      _hiraganaChanged(value);
-                      __isButtonDisabledChanged();
-                    },
-                    title: new Text(
-                      'Hiragana',
-                      style: TextStyle(
+                child: Theme(
+                  data: ThemeData(unselectedWidgetColor: Colors.white),
+                  child: new Column(children: <Widget>[
+                    new CheckboxListTile(
+                      value: _hiragana,
+                      onChanged: (value) async {
+                        if (value) {
+                          await showDialog(
+                            context: context,
+                            builder: (context) {
+                              return hiraDialog();
+                            },
+                          );
+                        }
+                        if (!_hirasol.containsValue(true)) {
+                          _hiraganaChanged(false);
+                        } else {
+                          _hiraganaChanged(value);
+                        }
+                        __isButtonDisabledChanged();
+                      },
+                      title: new Text(
+                        'Hiragana',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      controlAffinity: ListTileControlAffinity.leading,
+                      subtitle: new Text(
+                        'Include Hiragana syllabary',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      secondary: new Icon(
+                        Icons.font_download,
                         color: Colors.white,
                       ),
+                      activeColor: Colors.red,
                     ),
-                    controlAffinity: ListTileControlAffinity.leading,
-                    subtitle: new Text(
-                      'Include Hiragana syllabary',
-                      style: TextStyle(
+                    new CheckboxListTile(
+                      value: _katakana,
+                      onChanged: (value) async {
+                        if (value) {
+                          await showDialog(
+                            context: context,
+                            builder: (context) {
+                              return kataDialog();
+                            },
+                          );
+                        }
+
+                        if (!_katasol.containsValue(true)) {
+                          _katakanaChanged(false);
+                        } else {
+                          _katakanaChanged(value);
+                        }
+                        __isButtonDisabledChanged();
+                      },
+                      title: new Text(
+                        'Katakana',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      controlAffinity: ListTileControlAffinity.leading,
+                      subtitle: new Text(
+                        'Include Katakana syllabary',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      secondary: new Icon(
+                        Icons.font_download,
                         color: Colors.white,
                       ),
+                      activeColor: Colors.red,
                     ),
-                    secondary: new Icon(
-                      Icons.font_download,
-                      color: Colors.white,
-                    ),
-                    activeColor: Colors.red,
-                  ),
-                  new CheckboxListTile(
-                    value: _katakana,
-                    onChanged: (value) {
-                      _katakanaChanged(value);
-                      __isButtonDisabledChanged();
-                    },
-                    title: new Text(
-                      'Katakana',
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                    controlAffinity: ListTileControlAffinity.leading,
-                    subtitle: new Text(
-                      'Include Katakana syllabary',
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                    secondary: new Icon(
-                      Icons.font_download,
-                      color: Colors.white,
-                    ),
-                    activeColor: Colors.red,
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Padding(
-                      padding: EdgeInsets.all(5.0),
-                      child: Center(
-                        child: new RaisedButton(
-                          padding: const EdgeInsets.all(8.0),
-                          textColor: Colors.white,
-                          color: Colors.red,
-                          disabledColor: Colors.white,
-                          onPressed: _isButtonDisabled
-                              ? null
-                              : () {
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            new Party(
-                                              h: _hiragana,
-                                              k: _katakana,
-                                            )),
-                                  );
-                                },
-                          child: new Text(
-                              _isButtonDisabled ? "Select one" : "Start"),
+                    Expanded(
+                      flex: 2,
+                      child: Padding(
+                        padding: EdgeInsets.all(5.0),
+                        child: Center(
+                          child: new RaisedButton(
+                            padding: const EdgeInsets.all(8.0),
+                            textColor: Colors.white,
+                            color: Colors.red,
+                            disabledColor: Colors.white,
+                            onPressed: _isButtonDisabled
+                                ? null
+                                : () {
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (BuildContext context) =>
+                                              new Party(
+                                                h: _hiragana,
+                                                hv: _hirasol,
+                                                k: _katakana,
+                                                kv: _katasol,
+                                              )),
+                                    );
+                                  },
+                            child: new Text(
+                                _isButtonDisabled ? "Select one" : "Start"),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ]),
-              ),
+                  ]),
+                ),
+              )
             ],
           ),
         ),

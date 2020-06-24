@@ -11,16 +11,18 @@ class Party extends StatefulWidget {
 
   final bool h, k;
 
-  Party({@required this.h, @required this.k});
+  final Map<String, bool> hv, kv;
+
+  Party({@required this.h, @required this.hv, @required this.k, @required this.kv});
 
   @override
-  _Party createState() => _Party(h, k);
+  _Party createState() => _Party(h, hv, k, kv);
 }
 
 class _Party extends State<Party> {
 
-  _Party(h, k) {
-    QuizBrain.setList(h, k);
+  _Party(h, hv, k, kv) {
+    QuizBrain.setList(h, hv, k, kv);
   }
 
   @override

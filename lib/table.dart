@@ -26,7 +26,7 @@ class BasicGridView extends StatelessWidget {
               _columnContainer("え"),
               _columnContainer("お"),
 
-              _columnContainer("お"),
+              _columnContainer("あ"),
               _buildContainer("a"),
               _buildContainer("i"),
               _buildContainer("u"),
@@ -151,6 +151,7 @@ class BasicGridView extends StatelessWidget {
           TextSpan(
             text: hira,
             style: TextStyle(
+              fontFamily: "AppleTPT",
               color: Colors.black,
               fontSize: 20,
             ),
