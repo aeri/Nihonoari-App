@@ -1,0 +1,4 @@
+* Agrupa por conjuntos de Hiragana y Katakana
+* Motor de preguntas mejorado
+* Arreglado Katakana "ri"
+* Tema oscuro mejorado
