@@ -187,6 +187,8 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onSubmitted: (value) {
 
+                FocusScope.of(context).requestFocus(myFocusNode);
+
                 int control = 0;
 
                 _controller.clear();
@@ -237,7 +239,6 @@ class _QuizPageState extends State<QuizPage> {
                   setState(() {
                     _result = Colors.white;
                     QuizBrain.nextQuestion();
-                    FocusScope.of(context).requestFocus(myFocusNode);
                   });
 
                 });
