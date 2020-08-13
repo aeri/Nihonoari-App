@@ -190,6 +190,7 @@ class _QuizPageState extends State<QuizPage> {
                 FocusScope.of(context).requestFocus(myFocusNode);
 
                 int control = 0;
+                bool passed;
 
                 _controller.clear();
 
@@ -202,12 +203,14 @@ class _QuizPageState extends State<QuizPage> {
                   print("OK");
                     _result = Colors.green;
                   ++accepted;
+                  passed = true;
                 }
                 else{
                   control = 2000;
                   print ("NO");
                   _result = Colors.red;
                   ++rejected;
+                  passed = false;
 
                   final snackBar = SnackBar(
                     elevation: 10,
@@ -238,7 +241,7 @@ class _QuizPageState extends State<QuizPage> {
 
                   setState(() {
                     _result = Colors.white;
-                    QuizBrain.nextQuestion();
+                    QuizBrain.nextQuestion(passed);
                   });
 
                 });

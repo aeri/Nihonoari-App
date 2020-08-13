@@ -7,6 +7,8 @@ class QuizBrain {
   static Question currentQuestion;
 
   static List<Question> _quiz = new List<Question>();
+  static List<Question> _passed = new List<Question>();
+  static List<Question> _failed = new List<Question>();
 
   static var _hiragana = {
     "あ い う え お": {
@@ -198,9 +200,36 @@ class QuizBrain {
     }
   };
 
-  static void nextQuestion() {
+  static void nextQuestion(bool passed) {
+
+    if (passed){
+      _passed.add (currentQuestion);
+      _quiz.remove(currentQuestion);
+    }
+    else{
+      _failed.add (currentQuestion);
+      _quiz.remove(currentQuestion);
+    }
+
+    if (_quiz.length == 0){
+      if (_failed.length == 0){
+        _quiz.addAll(_passed);
+        _passed.clear();
+      }
+      else{
+        _quiz.addAll(_failed);
+        _failed.clear();
+      }
+
+    }
     int _questionNumber = rng.nextInt(_quiz.length);
     currentQuestion = _quiz[_questionNumber];
+  }
+
+  static void firstQuestion() {
+    int _questionNumber = rng.nextInt(_quiz.length);
+    currentQuestion = _quiz[_questionNumber];
+
   }
 
   static void setList(
@@ -228,6 +257,6 @@ class QuizBrain {
       );
     }
 
-    nextQuestion();
+    firstQuestion();
   }
 }
