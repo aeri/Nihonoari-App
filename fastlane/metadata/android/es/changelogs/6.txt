@@ -1,0 +1,2 @@
+* Algorítmo de repetición espaciada
+* El teclado no se cierra al aceptar

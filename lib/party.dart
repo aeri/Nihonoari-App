@@ -48,10 +48,13 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
 
+  FocusNode _focusNode = FocusNode();
+
+  bool _ignore = false;
+
   TextEditingController _controller = TextEditingController();
 
   List<Widget> scoreKeeper = [];
-  FocusNode myFocusNode;
   int total = 0;
   int accepted = 0;
   int rejected = 0;
@@ -61,15 +64,11 @@ class _QuizPageState extends State<QuizPage> {
   void initState() {
     super.initState();
 
-    myFocusNode = FocusNode();
-  }
-
-  @override
-  void dispose() {
-    // Clean up the focus node when the Form is disposed.
-    myFocusNode.dispose();
-
-    super.dispose();
+    _focusNode.addListener(() {
+      if (!_focusNode.hasFocus) {
+        FocusScope.of(context).requestFocus(_focusNode);
+      }
+    });
   }
 
   void _showDialog() async{
@@ -126,7 +125,9 @@ class _QuizPageState extends State<QuizPage> {
                     icon: new Icon(
                         FontAwesomeIcons.language,
                         color: Colors.white),
-                    onPressed: () { Navigator.push(
+                    onPressed: () {
+                      FocusScope.of(context).requestFocus(new FocusNode());
+                      Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => BasicGridView()),
                     ); }
@@ -138,7 +139,9 @@ class _QuizPageState extends State<QuizPage> {
                     icon: new Icon(
                         FontAwesomeIcons.chartBar,
                         color: Colors.white),
-                    onPressed: () { _showDialog(); }
+                    onPressed: () {
+                      FocusScope.of(context).requestFocus(new FocusNode());
+                      _showDialog(); }
                 )
               ),
 
@@ -168,7 +171,7 @@ class _QuizPageState extends State<QuizPage> {
             child: TextField(
               textInputAction: TextInputAction.done,
               controller: _controller,
-              focusNode: myFocusNode,
+              focusNode: _focusNode,
               autofocus: true,
               textAlign: TextAlign.center ,
               cursorColor: Colors.white,
@@ -187,7 +190,14 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onSubmitted: (value) {
 
+                if (_ignore || value.length < 1){
+                  return;
+                }
+                _ignore = true;
+
                 int control = 0;
+                bool passed;
+
 
                 _controller.clear();
 
@@ -195,49 +205,53 @@ class _QuizPageState extends State<QuizPage> {
 
                 ++total;
 
-                if (result == value.toLowerCase()) {
-                  control = 500;
-                  print("OK");
+                setState(() {
+                  if (result == value.toLowerCase()) {
+                    control = 500;
+                    print("OK");
                     _result = Colors.green;
-                  ++accepted;
-                }
-                else{
-                  control = 2000;
-                  print ("NO");
-                  _result = Colors.red;
-                  ++rejected;
+                    ++accepted;
+                    passed = true;
+                  }
+                  else{
+                    control = 2000;
+                    print ("NO");
+                    _result = Colors.red;
+                    ++rejected;
+                    passed = false;
 
-                  final snackBar = SnackBar(
-                    elevation: 10,
-                    duration: Duration(milliseconds: control) ,
-                    content: Text('Correct answer: $result',
-                      style: TextStyle(
-                        fontSize: 20,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center,
-                    ),
+                    final snackBar = SnackBar(
+                      elevation: 10,
+                      duration: Duration(milliseconds: control) ,
+                      content: Text('Correct answer: $result',
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
+                      ),
 
 
-                  );
+                    );
 
-                  Scaffold.of(context).showSnackBar(snackBar);
+                    Scaffold.of(context).showSnackBar(snackBar);
 
-                }
+                  }
+                });
+
+
 
                 ratio = (accepted/total)*100;
 
-                setState(() {
-//
-                });
+
 
                 Future.delayed(Duration(milliseconds: control), () {
 
 
                   setState(() {
                     _result = Colors.white;
-                    QuizBrain.nextQuestion();
-                    FocusScope.of(context).requestFocus(myFocusNode);
+                    QuizBrain.nextQuestion(passed);
+                    _ignore = false;
                   });
 
                 });
