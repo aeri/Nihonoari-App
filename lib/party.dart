@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'localizations.dart';
 import 'quiz_brain.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'table.dart';
@@ -28,6 +30,15 @@ class _Party extends State<Party> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      supportedLocales: [
+        Locale('en', 'US'),
+        Locale('es', ''),
+      ],
+      localizationsDelegates: [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
       home: Scaffold(
         backgroundColor: Colors.grey.shade900,
         body: SafeArea(
@@ -80,14 +91,15 @@ class _QuizPageState extends State<QuizPage> {
         // return object of type Dialog
         return AlertDialog(
           backgroundColor: Colors.black,
-          title: new Text("Statistics",
+          title: new Text(AppLocalizations.of(context).translate('quiz_stats'),
               style: TextStyle(
                 color: Colors.white,
               )),
-          content: new Text("Total: $total\n"
-              "Passed: $accepted\n"
-              "Failed: $rejected\n"
-              "Success rate: ${ratio.toStringAsFixed(2)}%",
+          content: new Text(
+              "${AppLocalizations.of(context).translate('quiz_total')}: $total\n"
+              "${AppLocalizations.of(context).translate('quiz_passed')}: $accepted\n"
+              "${AppLocalizations.of(context).translate('quiz_failed')}: $rejected\n"
+              "${AppLocalizations.of(context).translate('quiz_rate')}: ${ratio.toStringAsFixed(2)}%",
               style: TextStyle(
                 color: Colors.white,
               )),
@@ -180,7 +192,7 @@ class _QuizPageState extends State<QuizPage> {
                 fillColor: Colors.white,
                 focusColor: Colors.white,
                   border: InputBorder.none,
-                  hintText: 'Enter rōmaji',
+                  hintText: AppLocalizations.of(context).translate('quiz_enter'),
                    hintStyle: TextStyle(color: Colors.grey),
 
               ),
@@ -223,7 +235,7 @@ class _QuizPageState extends State<QuizPage> {
                     final snackBar = SnackBar(
                       elevation: 10,
                       duration: Duration(milliseconds: control) ,
-                      content: Text('Correct answer: $result',
+                      content: Text('${AppLocalizations.of(context).translate('quiz_correct')}: $result',
                         style: TextStyle(
                             fontSize: 20,
                             color: Colors.white,

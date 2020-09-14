@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'party.dart';
 import 'package:flutter/gestures.dart';
+
+import 'localizations.dart';
 
 import 'dart:async' show Future;
 import 'package:flutter/services.dart' show rootBundle;
@@ -11,6 +14,15 @@ Future<String> loadAsset() async {
 
 void main() {
   runApp(new MaterialApp(
+    supportedLocales: [
+      Locale('en', 'US'),
+      Locale('es', ''),
+    ],
+    localizationsDelegates: [
+      AppLocalizations.delegate,
+      GlobalMaterialLocalizations.delegate,
+      GlobalWidgetsLocalizations.delegate,
+    ],
     home: new MyApp(),
   ));
 }
@@ -186,7 +198,7 @@ class _State extends State<MyApp> {
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
-          title: new Text("Licenses"),
+          title: Text("Licenses"),
           content: new SingleChildScrollView(
             child: Text(data),
           ),
@@ -246,7 +258,7 @@ class _State extends State<MyApp> {
                         padding: EdgeInsets.all(5),
                         child: RichText(
                           text: TextSpan(
-                            text: 'LICENSES',
+                            text: AppLocalizations.of(context).translate('main_licenses'),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
                                 _showLicense();
@@ -291,7 +303,7 @@ class _State extends State<MyApp> {
                       ),
                       controlAffinity: ListTileControlAffinity.leading,
                       subtitle: new Text(
-                        'Include Hiragana syllabary',
+                        (AppLocalizations.of(context).translate('main_hiragana')),
                         style: TextStyle(
                           color: Colors.white,
                         ),
@@ -329,7 +341,7 @@ class _State extends State<MyApp> {
                       ),
                       controlAffinity: ListTileControlAffinity.leading,
                       subtitle: new Text(
-                        'Include Katakana syllabary',
+                        (AppLocalizations.of(context).translate('main_katakana')),
                         style: TextStyle(
                           color: Colors.white,
                         ),
@@ -366,7 +378,10 @@ class _State extends State<MyApp> {
                                     );
                                   },
                             child: new Text(
-                                _isButtonDisabled ? "Select one" : "Start"),
+                                _isButtonDisabled ?
+                                (AppLocalizations.of(context).translate('main_select'))
+                                    :
+                                (AppLocalizations.of(context).translate('main_start'))),
                           ),
                         ),
                       ),

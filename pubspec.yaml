@@ -18,6 +18,8 @@ dependencies:
   font_awesome_flutter: ^8.5.0
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -41,6 +43,8 @@ flutter:
       - asset: assets/apple-tp_text.ttf
   assets:
     - assets/LICENSES.txt
+    - i18n/es.json
+    - i18n/en.json
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
