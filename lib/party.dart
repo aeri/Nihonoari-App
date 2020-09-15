@@ -1,3 +1,4 @@
+import 'package:Nihonoari/preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'localizations.dart';
@@ -13,7 +14,7 @@ class Party extends StatefulWidget {
 
   final bool h, k;
 
-  final Map<String, bool> hv, kv;
+  final Map<String, dynamic> hv, kv;
 
   Party({@required this.h, @required this.hv, @required this.k, @required this.kv});
 
@@ -24,6 +25,10 @@ class Party extends StatefulWidget {
 class _Party extends State<Party> {
 
   _Party(h, hv, k, kv) {
+
+    setHiraganaSet(hv);
+    setKatakanaSet(kv);
+
     QuizBrain.setList(h, hv, k, kv);
   }
 

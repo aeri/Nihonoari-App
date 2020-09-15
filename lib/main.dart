@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'party.dart';
@@ -12,7 +15,13 @@ Future<String> loadAsset() async {
   return await rootBundle.loadString('assets/LICENSES.txt');
 }
 
-void main() {
+
+Map<String, dynamic> _hirasol = new Map<String, bool>();
+
+Map<String, dynamic> _katasol = new Map<String, bool>();
+
+Future<void> main() async {
+
   runApp(new MaterialApp(
     supportedLocales: [
       Locale('en', 'US'),
@@ -41,34 +50,6 @@ class kataDialog extends StatefulWidget {
   @override
   _kataDialogState createState() => _kataDialogState();
 }
-
-Map<String, bool> _hirasol = {
-  'あ い う え お': true,
-  'か き く け こ': true,
-  'さ し	す せ そ': true,
-  'た ち つ て と': true,
-  'な に ぬ ね の': true,
-  'は ひ ふ へ ほ': true,
-  'ま み む め も': true,
-  'や ゆ よ': true,
-  'ら り る れ ろ': true,
-  'わ を': true,
-  'ん': true
-};
-
-Map<String, bool> _katasol = {
-  'ア イ ウ エ オ': true,
-  'カ キ ク ケ コ': true,
-  'サ シ ス セ ソ': true,
-  'タ チ ツ テ ト': true,
-  'ナ ニ ヌ ネ ノ': true,
-  'ハ ヒ フ ヘ ホ': true,
-  'マ ミ ム メ モ': true,
-  'ヤ ユ ヨ': true,
-  'ラ リ ル レ ロ': true,
-  'ワ ヲ': true,
-  'ン': true,
-};
 
 class _hiraDialogState extends State<hiraDialog> {
   @override
@@ -178,6 +159,18 @@ class _kataDialogState extends State<kataDialog> {
 class _State extends State<MyApp> {
   bool _katakana = false;
   bool _hiragana = false;
+
+
+  @override
+  void initState() {
+    super.initState();
+    readData();
+  }
+
+  Future<Null> readData() async {
+    _hirasol = json.decode(await getHiraganaSet());
+    _katasol = json.decode(await getKatakanaSet());
+  }
 
   bool _isButtonDisabled = true;
 

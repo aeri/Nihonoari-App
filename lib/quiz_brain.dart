@@ -233,7 +233,7 @@ class QuizBrain {
   }
 
   static void setList(
-      bool h, Map<String, bool> hv, bool k, Map<String, bool> kv) {
+      bool h, Map<String, dynamic> hv, bool k, Map<String, dynamic> kv) {
     QuizBrain.h = h;
     QuizBrain.k = k;
 
