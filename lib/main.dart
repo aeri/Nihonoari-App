@@ -168,8 +168,9 @@ class _State extends State<MyApp> {
   }
 
   Future<Null> readData() async {
-    _hirasol = json.decode(await getHiraganaSet());
-    _katasol = json.decode(await getKatakanaSet());
+    await SharedKanaPreferences.init();
+    _hirasol = json.decode(await SharedKanaPreferences.getHiraganaSet());
+    _katasol = json.decode(await SharedKanaPreferences.getKatakanaSet());
   }
 
   bool _isButtonDisabled = true;

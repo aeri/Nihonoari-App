@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://i.imgur.com/PbrWneR.png" width="350" title="Nihonoari Logo">
+  <img src="https://i.imgur.com/TKvd3WD.png" width="350" title="Nihonoari Logo">
 </p>
 
 # Nihonoari App
