@@ -6,7 +6,6 @@ class SharedKanaPreferences {
       _prefsInstance ??= await SharedPreferences.getInstance();
   static SharedPreferences _prefsInstance;
 
-  // call this method from iniState() function of mainApp().
   static Future<SharedPreferences> init() async {
     _prefsInstance = await _instance;
     return _prefsInstance;
@@ -43,7 +42,7 @@ class SharedKanaPreferences {
   static final String _hirasolSet = "hiragana";
   static final String _katasolSet = "katakana";
 
-  static Future<String> getHiraganaSet() async {
+  static String getHiraganaSet() {
     var hiraganaData = _prefsInstance.getString(_hirasolSet);
 
     if (hiraganaData == null) {
@@ -59,7 +58,7 @@ class SharedKanaPreferences {
     return _prefsInstance.setString(_hirasolSet, json.encode(value));
   }
 
-  static Future<String> getKatakanaSet() async {
+  static String getKatakanaSet() {
     var katakanaData = _prefsInstance.getString(_katasolSet);
 
     if (katakanaData == null) {
