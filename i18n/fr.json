@@ -1,0 +1,14 @@
+{
+  "main_licenses": "LICENCES",
+  "main_hiragana" : "Incorporer syllabaire Hiragana",
+  "main_katakana" : "Incorporer syllabaire Katakana",
+  "main_select": "Choisis",
+  "main_start": "Commencer",
+  "quiz_stats": "Statistiques",
+  "quiz_total": "Total",
+  "quiz_passed": "Coups",
+  "quiz_failed": "Ratés",
+  "quiz_rate": "Taux de succès",
+  "quiz_enter": "Écris rōmaji",
+  "quiz_correct": "Réponse correcte"
+}

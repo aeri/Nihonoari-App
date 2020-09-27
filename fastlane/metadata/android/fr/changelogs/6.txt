@@ -1,0 +1,2 @@
+* Algorithme de répétition espacée
+* Le clavier ne se cache pas quand l'utilisateur accepte

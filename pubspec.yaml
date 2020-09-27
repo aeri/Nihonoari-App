@@ -46,6 +46,7 @@ flutter:
     - assets/LICENSES.txt
     - i18n/es.json
     - i18n/en.json
+    - i18n/fr.json
     - i18n/uk.json
     - i18n/ru.json
 

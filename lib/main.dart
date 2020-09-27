@@ -26,6 +26,7 @@ Future<void> main() async {
     supportedLocales: [
       Locale('en', 'US'),
       Locale('es', ''),
+      Locale('fr', ''),
       Locale('uk', ''),
       Locale('ru', ''),
     ],

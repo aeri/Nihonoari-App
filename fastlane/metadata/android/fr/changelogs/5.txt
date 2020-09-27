@@ -1,0 +1,4 @@
+* Ajouter par groupe Hiragana et Katakana
+* Algorithme de question amélioré
+* Réparé le Katakana "ri"
+* Thème sombre amélioré
