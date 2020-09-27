@@ -1,0 +1,2 @@
+* Les ensembles Kana sélectionnés sont mémorisés
+* Traduction de l'UI ajoutée

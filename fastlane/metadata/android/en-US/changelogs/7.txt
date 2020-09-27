@@ -1,0 +1,2 @@
+* The selected Kana sets are remembered
+* Added UI translation
