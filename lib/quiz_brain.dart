@@ -1,3 +1,22 @@
+/*
+    Copyright (C) 2020 Naval Alcalá
+
+    This file is part of Nihonoari.
+
+    Nihonoari is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Nihonoari is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Nihonoari.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 import 'Question.dart';
 import 'dart:math';
 
@@ -201,26 +220,22 @@ class QuizBrain {
   };
 
   static void nextQuestion(bool passed) {
-
-    if (passed){
-      _passed.add (currentQuestion);
+    if (passed) {
+      _passed.add(currentQuestion);
       _quiz.remove(currentQuestion);
-    }
-    else{
-      _failed.add (currentQuestion);
+    } else {
+      _failed.add(currentQuestion);
       _quiz.remove(currentQuestion);
     }
 
-    if (_quiz.length == 0){
-      if (_failed.length == 0){
+    if (_quiz.length == 0) {
+      if (_failed.length == 0) {
         _quiz.addAll(_passed);
         _passed.clear();
-      }
-      else{
+      } else {
         _quiz.addAll(_failed);
         _failed.clear();
       }
-
     }
     int _questionNumber = rng.nextInt(_quiz.length);
     currentQuestion = _quiz[_questionNumber];
@@ -229,11 +244,10 @@ class QuizBrain {
   static void firstQuestion() {
     int _questionNumber = rng.nextInt(_quiz.length);
     currentQuestion = _quiz[_questionNumber];
-
   }
 
   static void setList(
-      bool h, Map<String, bool> hv, bool k, Map<String, bool> kv) {
+      bool h, Map<String, dynamic> hv, bool k, Map<String, dynamic> kv) {
     QuizBrain.h = h;
     QuizBrain.k = k;
 

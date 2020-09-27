@@ -1,0 +1,14 @@
+{
+  "main_licenses": "LICENSES",
+  "main_hiragana" : "Include Hiragana syllabary",
+  "main_katakana" : "Include Katakana syllabary",
+  "main_select": "Select one",
+  "main_start": "Start",
+  "quiz_stats": "Statistics",
+  "quiz_total": "Total",
+  "quiz_passed": "Passed",
+  "quiz_failed": "Failed",
+  "quiz_rate": "Success rate",
+  "quiz_enter": "Enter rōmaji",
+  "quiz_correct": "Correct answer"
+}

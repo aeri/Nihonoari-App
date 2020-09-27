@@ -1,0 +1,2 @@
+* Se recuerda el conjunto de Kanas seleccionados
+* Se incorpora traducción a la interfaz

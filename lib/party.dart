@@ -1,4 +1,26 @@
+/*
+    Copyright (C) 2020 Naval Alcalá
+
+    This file is part of Nihonoari.
+
+    Nihonoari is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Nihonoari is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Nihonoari.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+import 'package:Nihonoari/preferences.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'localizations.dart';
 import 'quiz_brain.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'table.dart';
@@ -8,26 +30,43 @@ import 'table.dart';
 Color _result = Colors.white;
 
 class Party extends StatefulWidget {
-
   final bool h, k;
 
-  final Map<String, bool> hv, kv;
+  final Map<String, dynamic> hv, kv;
 
-  Party({@required this.h, @required this.hv, @required this.k, @required this.kv});
+  Party(
+      {@required this.h,
+      @required this.hv,
+      @required this.k,
+      @required this.kv});
 
   @override
   _Party createState() => _Party(h, hv, k, kv);
 }
 
 class _Party extends State<Party> {
-
   _Party(h, hv, k, kv) {
+    SharedKanaPreferences.setHiraganaSet(hv);
+    SharedKanaPreferences.setKatakanaSet(kv);
+
     QuizBrain.setList(h, hv, k, kv);
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      supportedLocales: [
+        Locale('en', 'US'),
+        Locale('es', ''),
+        Locale('fr', ''),
+        Locale('uk', ''),
+        Locale('ru', ''),
+      ],
+      localizationsDelegates: [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
       home: Scaffold(
         backgroundColor: Colors.grey.shade900,
         body: SafeArea(
@@ -47,7 +86,6 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
-
   FocusNode _focusNode = FocusNode();
 
   bool _ignore = false;
@@ -71,7 +109,7 @@ class _QuizPageState extends State<QuizPage> {
     });
   }
 
-  void _showDialog() async{
+  void _showDialog() async {
     // flutter defined function
     Scaffold.of(context).hideCurrentSnackBar();
     showDialog(
@@ -80,18 +118,18 @@ class _QuizPageState extends State<QuizPage> {
         // return object of type Dialog
         return AlertDialog(
           backgroundColor: Colors.black,
-          title: new Text("Statistics",
+          title: new Text(AppLocalizations.of(context).translate('quiz_stats'),
               style: TextStyle(
                 color: Colors.white,
               )),
-          content: new Text("Total: $total\n"
-              "Passed: $accepted\n"
-              "Failed: $rejected\n"
-              "Success rate: ${ratio.toStringAsFixed(2)}%",
+          content: new Text(
+              "${AppLocalizations.of(context).translate('quiz_total')}: $total\n"
+              "${AppLocalizations.of(context).translate('quiz_passed')}: $accepted\n"
+              "${AppLocalizations.of(context).translate('quiz_failed')}: $rejected\n"
+              "${AppLocalizations.of(context).translate('quiz_rate')}: ${ratio.toStringAsFixed(2)}%",
               style: TextStyle(
                 color: Colors.white,
               )),
-
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             new FlatButton(
@@ -116,38 +154,33 @@ class _QuizPageState extends State<QuizPage> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         Expanded(
-          flex: 0,
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                child: IconButton(
-                  // Use the FontAwesomeIcons class for the IconData
-                    icon: new Icon(
-                        FontAwesomeIcons.language,
-                        color: Colors.white),
-                    onPressed: () {
-                      FocusScope.of(context).requestFocus(new FocusNode());
-                      Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => BasicGridView()),
-                    ); }
-                )
-              ),
-              Expanded(
-                child: IconButton(
-                  // Use the FontAwesomeIcons class for the IconData
-                    icon: new Icon(
-                        FontAwesomeIcons.chartBar,
-                        color: Colors.white),
-                    onPressed: () {
-                      FocusScope.of(context).requestFocus(new FocusNode());
-                      _showDialog(); }
-                )
-              ),
-
-            ],
-          )
-        ),
+            flex: 0,
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                    child: IconButton(
+                        // Use the FontAwesomeIcons class for the IconData
+                        icon: new Icon(FontAwesomeIcons.language,
+                            color: Colors.white),
+                        onPressed: () {
+                          FocusScope.of(context).requestFocus(new FocusNode());
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => BasicGridView()),
+                          );
+                        })),
+                Expanded(
+                    child: IconButton(
+                        // Use the FontAwesomeIcons class for the IconData
+                        icon: new Icon(FontAwesomeIcons.chartBar,
+                            color: Colors.white),
+                        onPressed: () {
+                          FocusScope.of(context).requestFocus(new FocusNode());
+                          _showDialog();
+                        })),
+              ],
+            )),
         Expanded(
           flex: 4,
           child: Padding(
@@ -167,104 +200,85 @@ class _QuizPageState extends State<QuizPage> {
         ),
         Expanded(
           child: Padding(
-            padding: EdgeInsets.all(15.0),
-            child: TextField(
-              textInputAction: TextInputAction.done,
-              controller: _controller,
-              focusNode: _focusNode,
-              autofocus: true,
-              textAlign: TextAlign.center ,
-              cursorColor: Colors.white,
-              decoration: InputDecoration(
-                hoverColor: Colors.white,
-                fillColor: Colors.white,
-                focusColor: Colors.white,
+              padding: EdgeInsets.all(15.0),
+              child: TextField(
+                textInputAction: TextInputAction.done,
+                controller: _controller,
+                focusNode: _focusNode,
+                autofocus: true,
+                textAlign: TextAlign.center,
+                cursorColor: Colors.white,
+                decoration: InputDecoration(
+                  hoverColor: Colors.white,
+                  fillColor: Colors.white,
+                  focusColor: Colors.white,
                   border: InputBorder.none,
-                  hintText: 'Enter rōmaji',
-                   hintStyle: TextStyle(color: Colors.grey),
-
-              ),
-              style: TextStyle(
-                fontSize: 20,
-                color: Colors.white,
-              ),
-              onSubmitted: (value) {
-
-                if (_ignore || value.length < 1){
-                  return;
-                }
-                _ignore = true;
-
-                int control = 0;
-                bool passed;
-
-
-                _controller.clear();
-
-                String result = QuizBrain.currentQuestion.answer;
-
-                ++total;
-
-                setState(() {
-                  if (result == value.toLowerCase()) {
-                    control = 500;
-                    print("OK");
-                    _result = Colors.green;
-                    ++accepted;
-                    passed = true;
+                  hintText:
+                      AppLocalizations.of(context).translate('quiz_enter'),
+                  hintStyle: TextStyle(color: Colors.grey),
+                ),
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.white,
+                ),
+                onSubmitted: (value) {
+                  if (_ignore || value.length < 1) {
+                    return;
                   }
-                  else{
-                    control = 2000;
-                    print ("NO");
-                    _result = Colors.red;
-                    ++rejected;
-                    passed = false;
+                  _ignore = true;
 
-                    final snackBar = SnackBar(
-                      elevation: 10,
-                      duration: Duration(milliseconds: control) ,
-                      content: Text('Correct answer: $result',
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.center,
-                      ),
+                  int control = 0;
+                  bool passed;
 
+                  _controller.clear();
 
-                    );
+                  String result = QuizBrain.currentQuestion.answer;
 
-                    Scaffold.of(context).showSnackBar(snackBar);
-
-                  }
-                });
-
-
-
-                ratio = (accepted/total)*100;
-
-
-
-                Future.delayed(Duration(milliseconds: control), () {
-
+                  ++total;
 
                   setState(() {
-                    _result = Colors.white;
-                    QuizBrain.nextQuestion(passed);
-                    _ignore = false;
+                    if (result == value.toLowerCase()) {
+                      control = 500;
+                      print("OK");
+                      _result = Colors.green;
+                      ++accepted;
+                      passed = true;
+                    } else {
+                      control = 2000;
+                      print("NO");
+                      _result = Colors.red;
+                      ++rejected;
+                      passed = false;
+
+                      final snackBar = SnackBar(
+                        elevation: 10,
+                        duration: Duration(milliseconds: control),
+                        content: Text(
+                          '${AppLocalizations.of(context).translate('quiz_correct')}: $result',
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.center,
+                        ),
+                      );
+
+                      Scaffold.of(context).showSnackBar(snackBar);
+                    }
                   });
 
-                });
+                  ratio = (accepted / total) * 100;
 
-
-
-
-              },
-            )
-
-          ),
+                  Future.delayed(Duration(milliseconds: control), () {
+                    setState(() {
+                      _result = Colors.white;
+                      QuizBrain.nextQuestion(passed);
+                      _ignore = false;
+                    });
+                  });
+                },
+              )),
         ),
-
         Expanded(
           child: Row(
             children: scoreKeeper,

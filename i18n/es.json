@@ -1,0 +1,14 @@
+{
+  "main_licenses": "LICENCIAS",
+  "main_hiragana" : "Incluir silabario Hiragana",
+  "main_katakana" : "Incluir silabario Katakana",
+  "main_select": "Selecciona",
+  "main_start": "Inciar",
+  "quiz_stats": "Estadísticas",
+  "quiz_total": "Total",
+  "quiz_passed": "Aciertos",
+  "quiz_failed": "Fallos",
+  "quiz_rate": "Tasa de acierto",
+  "quiz_enter": "Escribe rōmaji",
+  "quiz_correct": "Respuesta correcta"
+}

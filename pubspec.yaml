@@ -8,7 +8,7 @@ description: A little Japanese Kana training
 # build by specifying --build-name and --build-number, respectively.
 # Read more about versioning at semver.org.
 
-version: 1.4.0+6
+version: 1.5.0+7
 
 environment:
   sdk: ">=2.0.0-dev.68.0 <3.0.0"
@@ -16,7 +16,10 @@ environment:
 dependencies:
   kana: ^1.0.0
   font_awesome_flutter: ^8.5.0
+  shared_preferences: ^0.5.12
   flutter:
+    sdk: flutter
+  flutter_localizations:
     sdk: flutter
 
   # The following adds the Cupertino Icons font to your application.
@@ -41,6 +44,11 @@ flutter:
       - asset: assets/apple-tp_text.ttf
   assets:
     - assets/LICENSES.txt
+    - i18n/es.json
+    - i18n/en.json
+    - i18n/fr.json
+    - i18n/uk.json
+    - i18n/ru.json
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

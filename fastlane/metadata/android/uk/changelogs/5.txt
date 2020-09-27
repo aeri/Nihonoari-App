@@ -1,0 +1,4 @@
+* Set selection in Hiragana and Katakana
+* Improved quiz core
+* Fixed "ri" Katakana
+* Improved dark style

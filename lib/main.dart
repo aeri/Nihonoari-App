@@ -1,6 +1,31 @@
+/*
+    Copyright (C) 2020 Naval Alcalá
+
+    This file is part of Nihonoari.
+
+    Nihonoari is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Nihonoari is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Nihonoari.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+import 'dart:convert';
+
+import 'preferences.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'party.dart';
 import 'package:flutter/gestures.dart';
+
+import 'localizations.dart';
 
 import 'dart:async' show Future;
 import 'package:flutter/services.dart' show rootBundle;
@@ -9,8 +34,26 @@ Future<String> loadAsset() async {
   return await rootBundle.loadString('assets/LICENSES.txt');
 }
 
-void main() {
+
+Map<String, dynamic> _hirasol = new Map<String, bool>();
+
+Map<String, dynamic> _katasol = new Map<String, bool>();
+
+Future<void> main() async {
+
   runApp(new MaterialApp(
+    supportedLocales: [
+      Locale('en', 'US'),
+      Locale('es', ''),
+      Locale('fr', ''),
+      Locale('uk', ''),
+      Locale('ru', ''),
+    ],
+    localizationsDelegates: [
+      AppLocalizations.delegate,
+      GlobalMaterialLocalizations.delegate,
+      GlobalWidgetsLocalizations.delegate,
+    ],
     home: new MyApp(),
   ));
 }
@@ -29,34 +72,6 @@ class kataDialog extends StatefulWidget {
   @override
   _kataDialogState createState() => _kataDialogState();
 }
-
-Map<String, bool> _hirasol = {
-  'あ い う え お': true,
-  'か き く け こ': true,
-  'さ し	す せ そ': true,
-  'た ち つ て と': true,
-  'な に ぬ ね の': true,
-  'は ひ ふ へ ほ': true,
-  'ま み む め も': true,
-  'や ゆ よ': true,
-  'ら り る れ ろ': true,
-  'わ を': true,
-  'ん': true
-};
-
-Map<String, bool> _katasol = {
-  'ア イ ウ エ オ': true,
-  'カ キ ク ケ コ': true,
-  'サ シ ス セ ソ': true,
-  'タ チ ツ テ ト': true,
-  'ナ ニ ヌ ネ ノ': true,
-  'ハ ヒ フ ヘ ホ': true,
-  'マ ミ ム メ モ': true,
-  'ヤ ユ ヨ': true,
-  'ラ リ ル レ ロ': true,
-  'ワ ヲ': true,
-  'ン': true,
-};
 
 class _hiraDialogState extends State<hiraDialog> {
   @override
@@ -167,6 +182,19 @@ class _State extends State<MyApp> {
   bool _katakana = false;
   bool _hiragana = false;
 
+
+  @override
+  void initState() {
+    super.initState();
+    readData();
+  }
+
+  Future<Null> readData() async {
+    await SharedKanaPreferences.init();
+    _hirasol = json.decode(SharedKanaPreferences.getHiraganaSet());
+    _katasol = json.decode(SharedKanaPreferences.getKatakanaSet());
+  }
+
   bool _isButtonDisabled = true;
 
   //we omitted the brackets '{}' and are using fat arrow '=>' instead, this is dart syntax
@@ -186,7 +214,7 @@ class _State extends State<MyApp> {
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
-          title: new Text("Licenses"),
+          title: Text("Licenses"),
           content: new SingleChildScrollView(
             child: Text(data),
           ),
@@ -246,7 +274,7 @@ class _State extends State<MyApp> {
                         padding: EdgeInsets.all(5),
                         child: RichText(
                           text: TextSpan(
-                            text: 'LICENSES',
+                            text: AppLocalizations.of(context).translate('main_licenses'),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
                                 _showLicense();
@@ -291,7 +319,7 @@ class _State extends State<MyApp> {
                       ),
                       controlAffinity: ListTileControlAffinity.leading,
                       subtitle: new Text(
-                        'Include Hiragana syllabary',
+                        (AppLocalizations.of(context).translate('main_hiragana')),
                         style: TextStyle(
                           color: Colors.white,
                         ),
@@ -329,7 +357,7 @@ class _State extends State<MyApp> {
                       ),
                       controlAffinity: ListTileControlAffinity.leading,
                       subtitle: new Text(
-                        'Include Katakana syllabary',
+                        (AppLocalizations.of(context).translate('main_katakana')),
                         style: TextStyle(
                           color: Colors.white,
                         ),
@@ -366,7 +394,10 @@ class _State extends State<MyApp> {
                                     );
                                   },
                             child: new Text(
-                                _isButtonDisabled ? "Select one" : "Start"),
+                                _isButtonDisabled ?
+                                (AppLocalizations.of(context).translate('main_select'))
+                                    :
+                                (AppLocalizations.of(context).translate('main_start'))),
                           ),
                         ),
                       ),
