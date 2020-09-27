@@ -27,6 +27,8 @@ Future<void> main() async {
       Locale('en', 'US'),
       Locale('es', ''),
       Locale('fr', ''),
+      Locale('uk', ''),
+      Locale('ru', ''),
     ],
     localizationsDelegates: [
       AppLocalizations.delegate,
@@ -169,8 +171,9 @@ class _State extends State<MyApp> {
   }
 
   Future<Null> readData() async {
-    _hirasol = json.decode(await getHiraganaSet());
-    _katasol = json.decode(await getKatakanaSet());
+    await SharedKanaPreferences.init();
+    _hirasol = json.decode(SharedKanaPreferences.getHiraganaSet());
+    _katasol = json.decode(SharedKanaPreferences.getKatakanaSet());
   }
 
   bool _isButtonDisabled = true;

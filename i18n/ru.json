@@ -1,0 +1,14 @@
+{
+  "main_licenses": "ЛИЦЕНЗИИ",
+  "main_hiragana" : "Включить слоги Хираганы",
+  "main_katakana" : "Включить слоги Катаканы",
+  "main_select": "Выберите что-то",
+  "main_start": "Начать",
+  "quiz_stats": "Статистика",
+  "quiz_total": "Всего",
+  "quiz_passed": "Пройдено",
+  "quiz_failed": "Провалено",
+  "quiz_rate": "Процент успеха",
+  "quiz_enter": "Введите ромадзи",
+  "quiz_correct": "Ответ верный"
+}

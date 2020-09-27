@@ -26,8 +26,8 @@ class _Party extends State<Party> {
 
   _Party(h, hv, k, kv) {
 
-    setHiraganaSet(hv);
-    setKatakanaSet(kv);
+    SharedKanaPreferences.setHiraganaSet(hv);
+    SharedKanaPreferences.setKatakanaSet(kv);
 
     QuizBrain.setList(h, hv, k, kv);
   }
@@ -39,6 +39,8 @@ class _Party extends State<Party> {
         Locale('en', 'US'),
         Locale('es', ''),
         Locale('fr', ''),
+        Locale('uk', ''),
+        Locale('ru', ''),
       ],
       localizationsDelegates: [
         AppLocalizations.delegate,
