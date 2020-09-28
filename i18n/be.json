@@ -1,0 +1,14 @@
+{
+  "main_licenses": "ЛІЦЭНЗІІ",
+  "main_hiragana": "Уключыць склады Хіраганы",
+  "main_katakana": "Уключыць склады Катаканы",
+  "main_select": "Выбраць...",
+  "main_start": "Пачаць",
+  "quiz_stats": "Статыстыка",
+  "quiz_total": "Усяго",
+  "quiz_passed": "Правільна",
+  "quiz_failed": "Няправільна",
+  "quiz_rate": "Адсотак поспеху",
+  "quiz_enter": "Увядзіце rōmaji",
+  "quiz_correct": "Правільны адказ"
+}
