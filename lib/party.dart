@@ -61,6 +61,7 @@ class _Party extends State<Party> {
         Locale('fr', ''),
         Locale('uk', ''),
         Locale('ru', ''),
+        Locale('be', ''),
       ],
       localizationsDelegates: [
         AppLocalizations.delegate,
