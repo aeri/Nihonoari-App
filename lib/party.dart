@@ -17,6 +17,8 @@
     along with Nihonoari.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+import 'dart:async';
+
 import 'package:Nihonoari/preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -24,10 +26,6 @@ import 'localizations.dart';
 import 'quiz_brain.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'table.dart';
-
-//void main() => runApp(Party());
-
-Color _result = Colors.white;
 
 class Party extends StatefulWidget {
   final bool h, k;
@@ -52,44 +50,36 @@ class _Party extends State<Party> {
     QuizBrain.setList(h, hv, k, kv);
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      supportedLocales: [
-        Locale('en', 'US'),
-        Locale('es', ''),
-        Locale('fr', ''),
-        Locale('uk', ''),
-        Locale('ru', ''),
-        Locale('be', ''),
-      ],
-      localizationsDelegates: [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ],
-      home: Scaffold(
-        backgroundColor: Colors.grey.shade900,
-        body: SafeArea(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.0),
-            child: QuizPage(),
-          ),
-        ),
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
+  void showInSnackBar(int control, String result) {
+
+    _scaffoldKey.currentState.showSnackBar(SnackBar(
+      elevation: 10,
+      duration: Duration(milliseconds: control),
+      content: Text(
+        '${AppLocalizations.of(context).translate('quiz_correct')}: $result',
+        style: TextStyle(
+            fontSize: 20,
+            color: Colors.white,
+            fontWeight: FontWeight.bold),
+        textAlign: TextAlign.center,
       ),
-    );
+    ));
   }
-}
 
-class QuizPage extends StatefulWidget {
-  @override
-  _QuizPageState createState() => _QuizPageState();
-}
+  void hideSnackbar(){
+    _scaffoldKey.currentState.hideCurrentSnackBar();
+  }
 
-class _QuizPageState extends State<QuizPage> {
   FocusNode _focusNode = FocusNode();
 
   bool _ignore = false;
+
+  Timer t;
+
+  Color _result = Colors.white;
+
 
   TextEditingController _controller = TextEditingController();
 
@@ -111,8 +101,8 @@ class _QuizPageState extends State<QuizPage> {
   }
 
   void _showDialog() async {
+    hideSnackbar();
     // flutter defined function
-    Scaffold.of(context).hideCurrentSnackBar();
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -148,144 +138,189 @@ class _QuizPageState extends State<QuizPage> {
     );
   }
 
+  Future<bool> _onBackPressed() {
+    FocusScope.of(context).requestFocus(new FocusNode());
+    return showDialog(
+          context: context,
+          builder: (context) => new AlertDialog(
+            backgroundColor: Colors.black,
+            title: new Text("Stop quiz",
+                style: TextStyle(
+                  color: Colors.white,
+                )),
+            content: new Text("Return to the main menu?",
+                style: TextStyle(
+                  color: Colors.white,
+                )),
+            actions: <Widget>[
+              // usually buttons at the bottom of the dialog
+              new FlatButton(
+                child: new Icon(
+                  Icons.close,
+                  color: Colors.red,
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                },
+              ),
+              new FlatButton(
+                child: new Icon(
+                  Icons.done,
+                  color: Colors.red,
+                ),
+                onPressed: () {
+                  if (t != null && t.isActive) t.cancel();
+                  Navigator.of(context).pop(true);
+                },
+              ),
+            ],
+          ),
+        ) ??
+        false;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        Expanded(
-            flex: 0,
-            child: Row(
+    return WillPopScope(
+      onWillPop: _onBackPressed,
+      child: new Scaffold(
+        key: _scaffoldKey,
+        backgroundColor: Colors.grey.shade900,
+        body: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 Expanded(
-                    child: IconButton(
-                        // Use the FontAwesomeIcons class for the IconData
-                        icon: new Icon(FontAwesomeIcons.language,
-                            color: Colors.white),
-                        onPressed: () {
-                          FocusScope.of(context).requestFocus(new FocusNode());
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => BasicGridView()),
-                          );
-                        })),
+                    flex: 0,
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                            child: IconButton(
+                                // Use the FontAwesomeIcons class for the IconData
+                                icon: new Icon(FontAwesomeIcons.language,
+                                    color: Colors.white),
+                                onPressed: () {
+                                  FocusScope.of(context)
+                                      .requestFocus(new FocusNode());
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => BasicGridView()),
+                                  );
+                                })),
+                        Expanded(
+                            child: IconButton(
+                                // Use the FontAwesomeIcons class for the IconData
+                                icon: new Icon(FontAwesomeIcons.chartBar,
+                                    color: Colors.white),
+                                onPressed: () {
+                                  FocusScope.of(context)
+                                      .requestFocus(new FocusNode());
+                                  _showDialog();
+                                })),
+                      ],
+                    )),
                 Expanded(
-                    child: IconButton(
-                        // Use the FontAwesomeIcons class for the IconData
-                        icon: new Icon(FontAwesomeIcons.chartBar,
-                            color: Colors.white),
-                        onPressed: () {
-                          FocusScope.of(context).requestFocus(new FocusNode());
-                          _showDialog();
-                        })),
-              ],
-            )),
-        Expanded(
-          flex: 4,
-          child: Padding(
-            padding: EdgeInsets.all(10.0),
-            child: Center(
-              child: Text(
-                QuizBrain.currentQuestion.question,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontFamily: 'AppleTP',
-                  fontSize: 150.0,
-                  color: _result,
+                  flex: 4,
+                  child: Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: Center(
+                      child: Text(
+                        QuizBrain.currentQuestion.question,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontFamily: 'AppleTP',
+                          fontSize: 150.0,
+                          color: _result,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
-              ),
+                Expanded(
+                  child: Padding(
+                      padding: EdgeInsets.all(15.0),
+                      child: TextField(
+                        textInputAction: TextInputAction.done,
+                        controller: _controller,
+                        focusNode: _focusNode,
+                        autofocus: true,
+                        textAlign: TextAlign.center,
+                        cursorColor: Colors.white,
+                        decoration: InputDecoration(
+                          hoverColor: Colors.white,
+                          fillColor: Colors.white,
+                          focusColor: Colors.white,
+                          border: InputBorder.none,
+                          hintText: AppLocalizations.of(context)
+                              .translate('quiz_enter'),
+                          hintStyle: TextStyle(color: Colors.grey),
+                        ),
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                        ),
+                        onSubmitted: (value) {
+                          if (_ignore || value.length < 1) {
+                            return;
+                          }
+                          _ignore = true;
+
+                          int control = 0;
+                          bool passed;
+
+                          _controller.clear();
+
+                          String result = QuizBrain.currentQuestion.answer;
+
+                          ++total;
+
+                          setState(() {
+                            if (result == value.toLowerCase()) {
+                              control = 500;
+                              print("OK");
+                              _result = Colors.green;
+                              ++accepted;
+                              passed = true;
+                            } else {
+                              control = 2000;
+                              print("NO");
+                              _result = Colors.red;
+                              ++rejected;
+                              passed = false;
+
+                              showInSnackBar(control,result);
+
+                            }
+                          });
+
+                          ratio = (accepted / total) * 100;
+
+                          t = Timer(Duration(milliseconds: control), () {
+                            setState(() {
+                              _result = Colors.white;
+                              QuizBrain.nextQuestion(passed);
+                              _ignore = false;
+                            });
+                          });
+                          // and later, before the timer goes off...
+
+                        },
+                      )),
+                ),
+                Expanded(
+                  child: Row(
+                    children: scoreKeeper,
+                  ),
+                ),
+              ],
             ),
           ),
         ),
-        Expanded(
-          child: Padding(
-              padding: EdgeInsets.all(15.0),
-              child: TextField(
-                textInputAction: TextInputAction.done,
-                controller: _controller,
-                focusNode: _focusNode,
-                autofocus: true,
-                textAlign: TextAlign.center,
-                cursorColor: Colors.white,
-                decoration: InputDecoration(
-                  hoverColor: Colors.white,
-                  fillColor: Colors.white,
-                  focusColor: Colors.white,
-                  border: InputBorder.none,
-                  hintText:
-                      AppLocalizations.of(context).translate('quiz_enter'),
-                  hintStyle: TextStyle(color: Colors.grey),
-                ),
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.white,
-                ),
-                onSubmitted: (value) {
-                  if (_ignore || value.length < 1) {
-                    return;
-                  }
-                  _ignore = true;
-
-                  int control = 0;
-                  bool passed;
-
-                  _controller.clear();
-
-                  String result = QuizBrain.currentQuestion.answer;
-
-                  ++total;
-
-                  setState(() {
-                    if (result == value.toLowerCase()) {
-                      control = 500;
-                      print("OK");
-                      _result = Colors.green;
-                      ++accepted;
-                      passed = true;
-                    } else {
-                      control = 2000;
-                      print("NO");
-                      _result = Colors.red;
-                      ++rejected;
-                      passed = false;
-
-                      final snackBar = SnackBar(
-                        elevation: 10,
-                        duration: Duration(milliseconds: control),
-                        content: Text(
-                          '${AppLocalizations.of(context).translate('quiz_correct')}: $result',
-                          style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
-                          textAlign: TextAlign.center,
-                        ),
-                      );
-
-                      Scaffold.of(context).showSnackBar(snackBar);
-                    }
-                  });
-
-                  ratio = (accepted / total) * 100;
-
-                  Future.delayed(Duration(milliseconds: control), () {
-                    setState(() {
-                      _result = Colors.white;
-                      QuizBrain.nextQuestion(passed);
-                      _ignore = false;
-                    });
-                  });
-                },
-              )),
-        ),
-        Expanded(
-          child: Row(
-            children: scoreKeeper,
-          ),
-        ),
-      ],
+      ),
     );
   }
 }

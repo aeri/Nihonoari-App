@@ -381,7 +381,7 @@ class _State extends State<MyApp> {
                             onPressed: _isButtonDisabled
                                 ? null
                                 : () {
-                                    Navigator.pushReplacement(
+                                    Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                           builder: (BuildContext context) =>
