@@ -1,5 +1,7 @@
 {
   "main_licenses": "ЛИЦЕНЗИИ",
+  "main_hset": "комплект Хираганы",
+  "main_kset": "катаканский набор",
   "main_hiragana" : "Включить слоги Хираганы",
   "main_katakana" : "Включить слоги Катаканы",
   "main_select": "Выберите что-то",
@@ -10,5 +12,7 @@
   "quiz_failed": "Провалено",
   "quiz_rate": "Процент успеха",
   "quiz_enter": "Введите ромадзи",
-  "quiz_correct": "Верный ответ"
+  "quiz_correct": "Верный ответ",
+  "quiz_stoptit" : "Стоп-тест",
+  "quiz_stopmes" : "Вернуться в главное меню?"
 }

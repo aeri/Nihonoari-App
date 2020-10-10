@@ -144,11 +144,11 @@ class _Party extends State<Party> {
           context: context,
           builder: (context) => new AlertDialog(
             backgroundColor: Colors.black,
-            title: new Text("Stop quiz",
+            title: new Text(AppLocalizations.of(context).translate('quiz_stoptit'),
                 style: TextStyle(
                   color: Colors.white,
                 )),
-            content: new Text("Return to the main menu?",
+            content: new Text(AppLocalizations.of(context).translate('quiz_stopmes'),
                 style: TextStyle(
                   color: Colors.white,
                 )),
