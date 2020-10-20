@@ -1,5 +1,7 @@
 {
   "main_licenses": "LICENSES",
+  "main_hset": "Hiragana set",
+  "main_kset": "Katakana set",
   "main_hiragana" : "Include Hiragana syllabary",
   "main_katakana" : "Include Katakana syllabary",
   "main_select": "Select one",
@@ -9,6 +11,8 @@
   "quiz_passed": "Passed",
   "quiz_failed": "Failed",
   "quiz_rate": "Success rate",
-  "quiz_enter": "Enter rōmaji",
-  "quiz_correct": "Correct answer"
+  "quiz_enter": "Input rōmaji",
+  "quiz_correct": "Correct answer",
+  "quiz_stoptit" : "Stop quiz",
+  "quiz_stopmes" : "Return to the main menu?"
 }

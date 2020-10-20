@@ -42,6 +42,9 @@ flutter:
     - family: AppleTPT
       fonts:
       - asset: assets/apple-tp_text.ttf
+    - family: AppleTPB
+      fonts:
+        - asset: assets/apple-tp_bold.ttf
   assets:
     - assets/LICENSES.txt
     - i18n/es.json

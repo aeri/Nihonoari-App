@@ -78,7 +78,7 @@ class _hiraDialogState extends State<hiraDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(
-        'Hiragana set',
+        AppLocalizations.of(context).translate('main_hset'),
         style: TextStyle(
           color: Colors.white,
         ),
@@ -131,7 +131,7 @@ class _kataDialogState extends State<kataDialog> {
     return AlertDialog(
       backgroundColor: Colors.black,
       title: Text(
-        'Katakana set',
+        AppLocalizations.of(context).translate('main_kset'),
         style: TextStyle(
           color: Colors.white,
         ),
@@ -324,9 +324,27 @@ class _State extends State<MyApp> {
                           color: Colors.white,
                         ),
                       ),
-                      secondary: new Icon(
-                        Icons.font_download,
-                        color: Colors.white,
+                      secondary: new Container(
+                        decoration: new BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: new BorderRadius.circular(4.0),
+                        ),
+                        padding: EdgeInsets.symmetric(vertical: 1, horizontal: 1),
+                        //padding: new EdgeInsets.all(4.0),
+                        height: 25.0,
+                        width: 25.0,
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: new Text(
+                            "あ",
+                            style: new TextStyle(
+                              fontSize: 23.0,
+                              fontFamily: "AppleTPB",
+                              fontStyle: FontStyle.normal,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
                       ),
                       activeColor: Colors.red,
                     ),
@@ -362,9 +380,27 @@ class _State extends State<MyApp> {
                           color: Colors.white,
                         ),
                       ),
-                      secondary: new Icon(
-                        Icons.font_download,
-                        color: Colors.white,
+                      secondary: new Container(
+                        decoration: new BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: new BorderRadius.circular(4.0),
+                        ),
+                        padding: EdgeInsets.symmetric(vertical: 1, horizontal: 1),
+                        //padding: new EdgeInsets.all(4.0),
+                        height: 25.0,
+                        width: 25.0,
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: new Text(
+                            "ア",
+                            style: new TextStyle(
+                              fontSize: 23.0,
+                              fontFamily: "AppleTPB",
+                              fontStyle: FontStyle.normal,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
                       ),
                       activeColor: Colors.red,
                     ),
@@ -381,7 +417,7 @@ class _State extends State<MyApp> {
                             onPressed: _isButtonDisabled
                                 ? null
                                 : () {
-                                    Navigator.pushReplacement(
+                                    Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                           builder: (BuildContext context) =>
