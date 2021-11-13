@@ -21,9 +21,12 @@ class Question{
 
   String question;
   String answer;
+  String type;
 
-  Question(String q, String a) {
+
+  Question(String q, String a, String t) {
     question = q;
     answer = a;
+    type = t;
   }
 }

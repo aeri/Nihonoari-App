@@ -19,6 +19,7 @@
 
 import 'dart:convert';
 
+import 'UI.Utils/IconCreator.dart';
 import 'preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -34,13 +35,10 @@ Future<String> loadAsset() async {
   return await rootBundle.loadString('assets/LICENSES.txt');
 }
 
-
 Map<String, dynamic> _hirasol = new Map<String, bool>();
-
 Map<String, dynamic> _katasol = new Map<String, bool>();
 
 Future<void> main() async {
-
   runApp(new MaterialApp(
     supportedLocales: [
       Locale('en', 'US'),
@@ -181,7 +179,7 @@ class _kataDialogState extends State<kataDialog> {
 class _State extends State<MyApp> {
   bool _katakana = false;
   bool _hiragana = false;
-
+  bool _reverse = false;
 
   @override
   void initState() {
@@ -265,7 +263,7 @@ class _State extends State<MyApp> {
                               TextSpan(
                                   text: 'project',
                                   style:
-                                      TextStyle(fontWeight: FontWeight.bold)),
+                                  TextStyle(fontWeight: FontWeight.bold)),
                             ],
                           ),
                         ),
@@ -274,7 +272,8 @@ class _State extends State<MyApp> {
                         padding: EdgeInsets.all(5),
                         child: RichText(
                           text: TextSpan(
-                            text: AppLocalizations.of(context).translate('main_licenses'),
+                            text: AppLocalizations.of(context)
+                                .translate('main_licenses'),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
                                 _showLicense();
@@ -319,33 +318,13 @@ class _State extends State<MyApp> {
                       ),
                       controlAffinity: ListTileControlAffinity.leading,
                       subtitle: new Text(
-                        (AppLocalizations.of(context).translate('main_hiragana')),
+                        (AppLocalizations.of(context)
+                            .translate('main_hiragana')),
                         style: TextStyle(
                           color: Colors.white,
                         ),
                       ),
-                      secondary: new Container(
-                        decoration: new BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: new BorderRadius.circular(4.0),
-                        ),
-                        padding: EdgeInsets.symmetric(vertical: 1, horizontal: 1),
-                        //padding: new EdgeInsets.all(4.0),
-                        height: 25.0,
-                        width: 25.0,
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: new Text(
-                            "あ",
-                            style: new TextStyle(
-                              fontSize: 23.0,
-                              fontFamily: "AppleTPB",
-                              fontStyle: FontStyle.normal,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                      ),
+                      secondary: new IconCreator("あ"),
                       activeColor: Colors.red,
                     ),
                     new CheckboxListTile(
@@ -375,37 +354,40 @@ class _State extends State<MyApp> {
                       ),
                       controlAffinity: ListTileControlAffinity.leading,
                       subtitle: new Text(
-                        (AppLocalizations.of(context).translate('main_katakana')),
+                        (AppLocalizations.of(context)
+                            .translate('main_katakana')),
                         style: TextStyle(
                           color: Colors.white,
                         ),
                       ),
-                      secondary: new Container(
-                        decoration: new BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: new BorderRadius.circular(4.0),
-                        ),
-                        padding: EdgeInsets.symmetric(vertical: 1, horizontal: 1),
-                        //padding: new EdgeInsets.all(4.0),
-                        height: 25.0,
-                        width: 25.0,
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: new Text(
-                            "ア",
-                            style: new TextStyle(
-                              fontSize: 23.0,
-                              fontFamily: "AppleTPB",
-                              fontStyle: FontStyle.normal,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                      ),
+                      secondary: new IconCreator("ア"),
                       activeColor: Colors.red,
                     ),
+                    SwitchListTile(
+                      title: new Text(
+                        (AppLocalizations.of(context)
+                            .translate('main_rset')),
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      subtitle:  new Text(
+                        (AppLocalizations.of(context)
+                            .translate('main_reverse')),
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      controlAffinity: ListTileControlAffinity.leading,
+                      value: _reverse,
+                      activeColor:  Colors.red,
+                      inactiveThumbColor: Colors.white,
+                      inactiveTrackColor: Colors.black,
+                      onChanged: (bool value) { setState(() { _reverse = value; }); },
+                      secondary: const Icon(Icons.refresh, color: Colors.white,),
+                    ),
                     Expanded(
-                      flex: 2,
+                      flex: 1,
                       child: Padding(
                         padding: EdgeInsets.all(5.0),
                         child: Center(
@@ -417,23 +399,24 @@ class _State extends State<MyApp> {
                             onPressed: _isButtonDisabled
                                 ? null
                                 : () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (BuildContext context) =>
-                                              new Party(
-                                                h: _hiragana,
-                                                hv: _hirasol,
-                                                k: _katakana,
-                                                kv: _katasol,
-                                              )),
-                                    );
-                                  },
-                            child: new Text(
-                                _isButtonDisabled ?
-                                (AppLocalizations.of(context).translate('main_select'))
-                                    :
-                                (AppLocalizations.of(context).translate('main_start'))),
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                    new Party(
+                                        h: _hiragana,
+                                        hv: _hirasol,
+                                        k: _katakana,
+                                        kv: _katasol,
+                                        re: _reverse
+                                    )),
+                              );
+                            },
+                            child: new Text(_isButtonDisabled
+                                ? (AppLocalizations.of(context)
+                                .translate('main_select'))
+                                : (AppLocalizations.of(context)
+                                .translate('main_start'))),
                           ),
                         ),
                       ),

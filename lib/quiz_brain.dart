@@ -22,7 +22,7 @@ import 'dart:math';
 
 class QuizBrain {
   static var rng = new Random();
-  static bool h = true, k = true;
+  static bool h = true, k = true, re = true;
   static Question currentQuestion;
 
   static List<Question> _quiz = new List<Question>();
@@ -219,6 +219,11 @@ class QuizBrain {
     }
   };
 
+  static bool checkAnswer(String answer){
+
+
+  }
+
   static void nextQuestion(bool passed) {
     if (passed) {
       _passed.add(currentQuestion);
@@ -247,16 +252,22 @@ class QuizBrain {
   }
 
   static void setList(
-      bool h, Map<String, dynamic> hv, bool k, Map<String, dynamic> kv) {
+      bool h, Map<String, dynamic> hv, bool k, Map<String, dynamic> kv, bool re) {
     QuizBrain.h = h;
     QuizBrain.k = k;
+    QuizBrain.re = re;
 
     if (h) {
       hv = Map.from(hv)..removeWhere((k, v) => v == false);
 
       hv.forEach(
         (k, v) => _hiragana[k].forEach(
-          (k, v) => _quiz.add(Question(k, v)),
+          (k, v) {
+            if (re)
+              _quiz.add(Question(v, k, "hiragana"));
+            else
+              _quiz.add(Question(k, v, "hiragana"));
+            },
         ),
       );
     }
@@ -266,7 +277,12 @@ class QuizBrain {
 
       kv.forEach(
         (k, v) => _katakana[k].forEach(
-          (k, v) => _quiz.add(Question(k, v)),
+              (k, v) {
+            if (re)
+              _quiz.add(Question(v, k, "katakana"));
+            else
+              _quiz.add(Question(k, v, "katakana"));
+          },
         ),
       );
     }
