@@ -263,7 +263,7 @@ class _State extends State<MyApp> {
                               TextSpan(
                                   text: 'project',
                                   style:
-                                  TextStyle(fontWeight: FontWeight.bold)),
+                                  TextStyle(fontFamily: 'MP1P_REGULAR')),
                             ],
                           ),
                         ),

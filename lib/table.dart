@@ -39,76 +39,76 @@ class BasicGridView extends StatelessWidget {
             //specify the list of children for the grid
             children: <Widget>[
               _emptyContainer(),
-              _columnContainer("あ"),
-              _columnContainer("い"),
-              _columnContainer("う"),
-              _columnContainer("え"),
-              _columnContainer("お"),
+              _columnContainer("a"),
+              _columnContainer("i"),
+              _columnContainer("u"),
+              _columnContainer("e"),
+              _columnContainer("o"),
 
-              _columnContainer("あ"),
+              _columnContainer("a"),
               _buildContainer("a"),
               _buildContainer("i"),
               _buildContainer("u"),
               _buildContainer("e"),
               _buildContainer("o"),
 
-              _columnContainer("か"),
+              _columnContainer("k"),
               _buildContainer("ka"),
               _buildContainer("ki"),
               _buildContainer("ku"),
               _buildContainer("ke"),
               _buildContainer("ko"),
 
-              _columnContainer("さ"),
+              _columnContainer("s"),
               _buildContainer("sa"),
               _buildContainer("shi"),
               _buildContainer("su"),
               _buildContainer("se"),
               _buildContainer("so"),
 
-              _columnContainer("た"),
+              _columnContainer("t"),
               _buildContainer("ta"),
               _buildContainer("chi"),
               _buildContainer("tsu"),
               _buildContainer("te"),
               _buildContainer("to"),
 
-              _columnContainer("な"),
+              _columnContainer("n"),
               _buildContainer("na"),
               _buildContainer("ni"),
               _buildContainer("nu"),
               _buildContainer("ne"),
               _buildContainer("no"),
 
-              _columnContainer("は"),
+              _columnContainer("h"),
               _buildContainer("ha"),
               _buildContainer("hi"),
               _buildContainer("fu"),
               _buildContainer("he"),
               _buildContainer("ho"),
 
-              _columnContainer("ま"),
+              _columnContainer("m"),
               _buildContainer("ma"),
               _buildContainer("mi"),
               _buildContainer("mu"),
               _buildContainer("me"),
               _buildContainer("mo"),
 
-              _columnContainer("や"),
+              _columnContainer("y"),
               _buildContainer("ya"),
               _emptyContainer(),
               _buildContainer("yu"),
               _emptyContainer(),
               _buildContainer("yo"),
 
-              _columnContainer("ら"),
+              _columnContainer("r"),
               _buildContainer("ra"),
               _buildContainer("ri"),
               _buildContainer("ru"),
               _buildContainer("re"),
               _buildContainer("ro"),
 
-              _columnContainer("わ"),
+              _columnContainer("w"),
               _buildContainer("wa"),
               _emptyContainer(),
               _emptyContainer(),
@@ -139,7 +139,7 @@ class BasicGridView extends StatelessWidget {
               color: Colors.black,
               fontFamily: "MP1P_MEDIUM",
               fontStyle: FontStyle.normal,
-              fontSize: 17,
+              fontSize: 16,
             ),
             children: <TextSpan>[
               TextSpan(
@@ -147,13 +147,13 @@ class BasicGridView extends StatelessWidget {
                   style: TextStyle(
                       //fontWeight: FontWeight.bold,
                       color: Colors.grey.shade700,
-                      fontSize: 12)),
+                      fontSize: 13)),
               TextSpan(
                   text: ' $hira',
                   style: TextStyle(
                       //fontStyle: FontStyle.italic,
                       color: Colors.grey.shade700,
-                      fontSize: 12)),
+                      fontSize: 13)),
             ],
           ),
           textAlign: TextAlign.center,
@@ -172,7 +172,7 @@ class BasicGridView extends StatelessWidget {
             style: TextStyle(
               fontFamily: "MP1P_MEDIUM",
               color: Colors.black,
-              fontSize: 17,
+              fontSize: 16,
             ),
             children: <TextSpan>[
               TextSpan(
@@ -180,13 +180,13 @@ class BasicGridView extends StatelessWidget {
                   style: TextStyle(
                       //fontWeight: FontWeight.bold,
                       color: Colors.grey.shade700,
-                      fontSize: 12)),
+                      fontSize: 13)),
               TextSpan(
                   text: ' $roma',
                   style: TextStyle(
                       //fontStyle: FontStyle.italic,
                       color: Colors.grey.shade700,
-                      fontSize: 12)),
+                      fontSize: 13)),
             ],
           ),
           textAlign: TextAlign.center,
@@ -204,7 +204,8 @@ class BasicGridView extends StatelessWidget {
             text: deep,
             style: TextStyle(
               color: Colors.deepOrangeAccent,
-              fontSize: 20,
+              fontSize: 18,
+              fontFamily: "MP1P_MEDIUM",
             ),
           ),
           textAlign: TextAlign.center,
