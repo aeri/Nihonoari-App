@@ -137,9 +137,9 @@ class BasicGridView extends StatelessWidget {
             text: getHiragana(hira),
             style: TextStyle(
               color: Colors.black,
-              fontFamily: "AppleTPT",
+              fontFamily: "MP1P_MEDIUM",
               fontStyle: FontStyle.normal,
-              fontSize: 20,
+              fontSize: 17,
             ),
             children: <TextSpan>[
               TextSpan(
@@ -147,13 +147,13 @@ class BasicGridView extends StatelessWidget {
                   style: TextStyle(
                       //fontWeight: FontWeight.bold,
                       color: Colors.grey.shade700,
-                      fontSize: 15)),
+                      fontSize: 12)),
               TextSpan(
                   text: ' $hira',
                   style: TextStyle(
                       //fontStyle: FontStyle.italic,
                       color: Colors.grey.shade700,
-                      fontSize: 15)),
+                      fontSize: 12)),
             ],
           ),
           textAlign: TextAlign.center,
@@ -170,9 +170,9 @@ class BasicGridView extends StatelessWidget {
           TextSpan(
             text: hira,
             style: TextStyle(
-              fontFamily: "AppleTPT",
+              fontFamily: "MP1P_MEDIUM",
               color: Colors.black,
-              fontSize: 20,
+              fontSize: 17,
             ),
             children: <TextSpan>[
               TextSpan(
@@ -180,13 +180,13 @@ class BasicGridView extends StatelessWidget {
                   style: TextStyle(
                       //fontWeight: FontWeight.bold,
                       color: Colors.grey.shade700,
-                      fontSize: 15)),
+                      fontSize: 12)),
               TextSpan(
                   text: ' $roma',
                   style: TextStyle(
                       //fontStyle: FontStyle.italic,
                       color: Colors.grey.shade700,
-                      fontSize: 15)),
+                      fontSize: 12)),
             ],
           ),
           textAlign: TextAlign.center,

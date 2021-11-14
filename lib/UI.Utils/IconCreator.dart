@@ -23,8 +23,8 @@ class IconCreator extends StatelessWidget {
         child: new Text(
           icon,
           style: new TextStyle(
-            fontSize: 23.0,
-            fontFamily: "AppleTPB",
+            fontSize: 16.0,
+            fontFamily: "MP1P_BOLD",
             fontStyle: FontStyle.normal,
             color: Colors.black,
           ),

@@ -255,7 +255,7 @@ class _State extends State<MyApp> {
                           text: TextSpan(
                             text: 'nihonoari ',
                             style: TextStyle(
-                              fontFamily: 'AppleTP',
+                              fontFamily: 'MP1P_LIGHT',
                               fontSize: 30.0,
                               color: Colors.white,
                             ),

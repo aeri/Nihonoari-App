@@ -8,7 +8,7 @@ description: A little Japanese Kana training
 # build by specifying --build-name and --build-number, respectively.
 # Read more about versioning at semver.org.
 
-version: 1.5.0+7
+version: 1.6.0+8
 
 environment:
   sdk: ">=2.0.0-dev.68.0 <3.0.0"
@@ -36,15 +36,24 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
   fonts:
-    - family: AppleTP
+    - family: MP1P_BOLD
       fonts:
-        - asset: assets/apple-tp_thin.ttf
-    - family: AppleTPT
+        - asset: assets/MPLUS1p-Bold.ttf
+    - family: MP1P_BLACK
       fonts:
-      - asset: assets/apple-tp_text.ttf
-    - family: AppleTPB
+        - asset: assets/MPLUS1p-Black.ttf
+    - family: MP1P_MEDIUM
       fonts:
-        - asset: assets/apple-tp_bold.ttf
+        - asset: assets/MPLUS1p-Medium.ttf
+    - family: MP1P_REGULAR
+      fonts:
+        - asset: assets/MPLUS1p-Regular.ttf
+    - family: MP1P_LIGHT
+      fonts:
+        - asset: assets/MPLUS1p-Light.ttf
+    - family: MP1P_THIN
+      fonts:
+        - asset: assets/MPLUS1p-Thin.ttf
   assets:
     - assets/LICENSES.txt
     - i18n/es.json

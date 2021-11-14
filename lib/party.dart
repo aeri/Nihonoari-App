@@ -234,8 +234,8 @@ class _Party extends State<Party> {
                         QuizBrain.currentQuestion.question,
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontFamily: 'AppleTP',
-                          fontSize: 150.0,
+                          fontFamily: 'MP1P_LIGHT',
+                          fontSize: 125.0,
                           color: _result,
                         ),
                       ),
