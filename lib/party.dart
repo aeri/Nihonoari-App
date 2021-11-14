@@ -171,6 +171,7 @@ class _Party extends State<Party> {
                 ),
                 onPressed: () {
                   if (t != null && t.isActive) t.cancel();
+                  QuizBrain.clearList();
                   Navigator.of(context).pop(true);
                 },
               ),

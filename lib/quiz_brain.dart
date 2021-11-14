@@ -219,11 +219,6 @@ class QuizBrain {
     }
   };
 
-  static bool checkAnswer(String answer){
-
-
-  }
-
   static void nextQuestion(bool passed) {
     if (passed) {
       _passed.add(currentQuestion);
@@ -249,6 +244,12 @@ class QuizBrain {
   static void firstQuestion() {
     int _questionNumber = rng.nextInt(_quiz.length);
     currentQuestion = _quiz[_questionNumber];
+  }
+
+  static void clearList(){
+    _quiz.clear();
+    _passed.clear();
+    _failed.clear();
   }
 
   static void setList(
