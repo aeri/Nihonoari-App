@@ -147,7 +147,7 @@ class BasicGridView extends StatelessWidget {
                   style: TextStyle(
                       //fontWeight: FontWeight.bold,
                       color: Colors.grey.shade700,
-                      fontSize: 13)),
+                      fontSize: 15)),
               TextSpan(
                   text: ' $hira',
                   style: TextStyle(
@@ -180,7 +180,7 @@ class BasicGridView extends StatelessWidget {
                   style: TextStyle(
                       //fontWeight: FontWeight.bold,
                       color: Colors.grey.shade700,
-                      fontSize: 13)),
+                      fontSize: 15)),
               TextSpan(
                   text: ' $roma',
                   style: TextStyle(
@@ -204,7 +204,7 @@ class BasicGridView extends StatelessWidget {
             text: deep,
             style: TextStyle(
               color: Colors.deepOrangeAccent,
-              fontSize: 18,
+              fontSize: 20,
               fontFamily: "MP1P_MEDIUM",
             ),
           ),
