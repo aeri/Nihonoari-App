@@ -1,0 +1,3 @@
+* Añadida la función de test inverso (Rōmaji a Kana)
+* Arreglado el cuestionario tras volver al menú principal
+* Cambios menores en la interfaz de usuario

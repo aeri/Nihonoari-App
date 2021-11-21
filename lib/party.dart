@@ -21,14 +21,13 @@ import 'dart:async';
 
 import 'package:Nihonoari/preferences.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'localizations.dart';
 import 'quiz_brain.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'table.dart';
 
 class Party extends StatefulWidget {
-  final bool h, k;
+  final bool h, k, re;
 
   final Map<String, dynamic> hv, kv;
 
@@ -36,18 +35,20 @@ class Party extends StatefulWidget {
       {@required this.h,
       @required this.hv,
       @required this.k,
-      @required this.kv});
+      @required this.kv,
+        @required this.re
+      });
 
   @override
-  _Party createState() => _Party(h, hv, k, kv);
+  _Party createState() => _Party(h, hv, k, kv, re);
 }
 
 class _Party extends State<Party> {
-  _Party(h, hv, k, kv) {
+  _Party(h, hv, k, kv, re) {
     SharedKanaPreferences.setHiraganaSet(hv);
     SharedKanaPreferences.setKatakanaSet(kv);
 
-    QuizBrain.setList(h, hv, k, kv);
+    QuizBrain.setList(h, hv, k, kv, re);
   }
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
@@ -170,6 +171,7 @@ class _Party extends State<Party> {
                 ),
                 onPressed: () {
                   if (t != null && t.isActive) t.cancel();
+                  QuizBrain.clearList();
                   Navigator.of(context).pop(true);
                 },
               ),
@@ -232,8 +234,8 @@ class _Party extends State<Party> {
                         QuizBrain.currentQuestion.question,
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontFamily: 'AppleTP',
-                          fontSize: 150.0,
+                          fontFamily: 'MP1P_LIGHT',
+                          fontSize: 125.0,
                           color: _result,
                         ),
                       ),
@@ -255,9 +257,25 @@ class _Party extends State<Party> {
                           fillColor: Colors.white,
                           focusColor: Colors.white,
                           border: InputBorder.none,
-                          hintText: AppLocalizations.of(context)
-                              .translate('quiz_enter'),
                           hintStyle: TextStyle(color: Colors.grey),
+                          hintText:  (() {
+                            if(QuizBrain.re){
+                              if (QuizBrain.currentQuestion.type == "hiragana"){
+                                return AppLocalizations.of(context).
+                                translate('quiz_enter_hira');
+                              }
+                              else{
+                                return AppLocalizations.of(context).
+                                translate('quiz_enter_kata');
+                              }
+                            }
+                            else{
+                              return AppLocalizations.of(context).
+                              translate('quiz_enter');
+
+                            }
+
+                          })()
                         ),
                         style: TextStyle(
                           fontSize: 20,

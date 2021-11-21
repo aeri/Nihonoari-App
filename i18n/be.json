@@ -14,5 +14,9 @@
   "quiz_enter": "Увядзіце рамаджы",
   "quiz_correct": "Правільны адказ",
   "quiz_stoptit" : "Спыніць тэст",
-  "quiz_stopmes" : "Вярнуцца ў галоўнае меню?"
+  "quiz_stopmes" : "Вярнуцца ў галоўнае меню?",
+  "main_rset" : "Reverse",
+  "main_reverse" : "Паказаць rōmaji/Enter Kana",
+  "quiz_enter_hira" : "Увядзіце Хіраганы",
+  "quiz_enter_kata" : "Увядзіце Катаканы"
 }

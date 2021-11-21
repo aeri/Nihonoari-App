@@ -14,5 +14,9 @@
   "quiz_enter": "Input rōmaji",
   "quiz_correct": "Correct answer",
   "quiz_stoptit" : "Stop quiz",
-  "quiz_stopmes" : "Return to the main menu?"
+  "quiz_stopmes" : "Return to the main menu?",
+  "main_rset" : "Reverse",
+  "main_reverse" : "Show rōmaji/Enter Kana",
+  "quiz_enter_hira" : "Input hiragana",
+  "quiz_enter_kata" : "Input katakana"
 }
