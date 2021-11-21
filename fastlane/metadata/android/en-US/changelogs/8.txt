@@ -1,0 +1,3 @@
+* Added reverse function (Rōmaji to Kana)
+* Fixed quiz after back to main menu
+* Minor UI changes
