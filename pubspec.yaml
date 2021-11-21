@@ -36,12 +36,6 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
   fonts:
-    - family: MP1P_BOLD
-      fonts:
-        - asset: assets/MPLUS1p-Bold.ttf
-    - family: MP1P_BLACK
-      fonts:
-        - asset: assets/MPLUS1p-Black.ttf
     - family: MP1P_MEDIUM
       fonts:
         - asset: assets/MPLUS1p-Medium.ttf
@@ -51,9 +45,6 @@ flutter:
     - family: MP1P_LIGHT
       fonts:
         - asset: assets/MPLUS1p-Light.ttf
-    - family: MP1P_THIN
-      fonts:
-        - asset: assets/MPLUS1p-Thin.ttf
   assets:
     - assets/LICENSES.txt
     - i18n/es.json

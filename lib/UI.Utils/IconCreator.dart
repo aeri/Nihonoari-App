@@ -24,7 +24,7 @@ class IconCreator extends StatelessWidget {
           icon,
           style: new TextStyle(
             fontSize: 16.0,
-            fontFamily: "MP1P_BOLD",
+            fontFamily: "MP1P_MEDIUM",
             fontStyle: FontStyle.normal,
             color: Colors.black,
           ),
