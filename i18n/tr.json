@@ -1,0 +1,22 @@
+{
+  "main_licenses": "LİSANSLAR",
+  "main_hset": "Hiragana seti",
+  "main_kset": "Katakana seti",
+  "main_hiragana" : "Hiragana karakterlerini kullan",
+  "main_katakana" : "Katakana karakterlerini kullan",
+  "main_select": "Birini seç",
+  "main_start": "Başlat",
+  "quiz_stats": "İstatistikler",
+  "quiz_total": "Toplam",
+  "quiz_passed": "Doğru",
+  "quiz_failed": "Yanlış",
+  "quiz_rate": "Başarı yüzdesi",
+  "quiz_enter": "Rōmajisini yaz",
+  "quiz_correct": "Doğru cevap",
+  "quiz_stoptit" : "Testi durdur",
+  "quiz_stopmes" : "Ana menüye dönmek istiyor musun?",
+  "main_rset" : "Ters Mod",
+  "main_reverse" : "Rōmajisini göster / Kanasını yaz",
+  "quiz_enter_hira" : "Hiraganasını yaz",
+  "quiz_enter_kata" : "Katakanasını yaz"
+}
