@@ -1,0 +1,4 @@
+Nihonoari, Hiragana ve Katakana alfabelerini öğrenmenizi sağlayan, reklam ve uygulama içi satın alımlar içermeyen,  gereksiz şeylerden arındırılmış, sade tasarıma sahip, açık kaynak kodlu bir uygulamadır.
+
+Uygulamaya katkıda bulunmak veya sorun bildirmek isterseniz lütfen uygulamanın Github sayfasını ziyaret edin:
+https://github.com/aeri/Nihonoari-App
