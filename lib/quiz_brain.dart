@@ -23,11 +23,11 @@ import 'dart:math';
 class QuizBrain {
   static var rng = new Random();
   static bool h = true, k = true, re = true;
-  static Question currentQuestion;
+  static Question? currentQuestion;
 
-  static List<Question> _quiz = [];
-  static List<Question> _passed = [];
-  static List<Question> _failed = [];
+  static List<Question?> _quiz = [];
+  static List<Question?> _passed = [];
+  static List<Question?> _failed = [];
 
   static var _hiragana = {
     "あ い う え お": {
@@ -253,21 +253,21 @@ class QuizBrain {
   }
 
   static void setList(
-      bool h, Map<String, dynamic> hv, bool k, Map<String, dynamic> kv, bool re) {
+      bool h, Map<String, dynamic>? hv, bool k, Map<String, dynamic>? kv, bool re) {
     QuizBrain.h = h;
     QuizBrain.k = k;
     QuizBrain.re = re;
 
     if (h) {
-      hv = Map.from(hv)..removeWhere((k, v) => v == false);
+      hv = Map.from(hv!)..removeWhere((k, v) => v == false);
 
       hv.forEach(
-        (k, v) => _hiragana[k].forEach(
+        (k, v) => _hiragana[k]!.forEach(
           (k, v) {
             if (re) {
               // https://github.com/aeri/Nihonoari-App/issues/33
               // enable distinguishing `ji`
-              String extra = null;
+              String? extra;
               if ( k == "じ") {
                 extra = "ぢ";
               }
@@ -291,15 +291,15 @@ class QuizBrain {
     }
 
     if (k) {
-      kv = Map.from(kv)..removeWhere((k, v) => v == false);
+      kv = Map.from(kv!)..removeWhere((k, v) => v == false);
 
       kv.forEach(
-        (k, v) => _katakana[k].forEach(
+        (k, v) => _katakana[k]!.forEach(
               (k, v) {
             if (re) {
               // https://github.com/aeri/Nihonoari-App/issues/33
               // enable distinguishing `ji`
-              String extra;
+              String? extra;
               if ( k == "ジ") {
                 extra = "ヂ";
               }

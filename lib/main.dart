@@ -35,8 +35,8 @@ Future<String> loadAsset() async {
   return await rootBundle.loadString('assets/LICENSES.txt');
 }
 
-Map<String, dynamic> _hirasol = new Map<String, bool>();
-Map<String, dynamic> _katasol = new Map<String, bool>();
+Map<String, dynamic>? _hirasol = new Map<String, bool?>();
+Map<String, dynamic>? _katasol = new Map<String, bool?>();
 
 Future<void> main() async {
   runApp(new MaterialApp(
@@ -76,7 +76,7 @@ class _hiraDialogState extends State<hiraDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(
-        AppLocalizations.of(context).translate('main_hset'),
+        AppLocalizations.of(context)!.translate('main_hset')!,
         style: TextStyle(
           color: Colors.white,
         ),
@@ -87,7 +87,7 @@ class _hiraDialogState extends State<hiraDialog> {
         child: new Theme(
           data: ThemeData(unselectedWidgetColor: Colors.white),
           child: new ListView(
-            children: _hirasol.keys.map((String key) {
+            children: _hirasol!.keys.map((String key) {
               return new CheckboxListTile(
                 title: new Text(
                   key,
@@ -96,10 +96,10 @@ class _hiraDialogState extends State<hiraDialog> {
                   ),
                 ),
                 activeColor: Colors.red,
-                value: _hirasol[key],
-                onChanged: (bool value) {
+                value: _hirasol![key],
+                onChanged: (bool? value) {
                   setState(() {
-                    _hirasol[key] = value;
+                    _hirasol![key] = value;
                   });
                 },
               );
@@ -129,7 +129,7 @@ class _kataDialogState extends State<kataDialog> {
     return AlertDialog(
       backgroundColor: Colors.black,
       title: Text(
-        AppLocalizations.of(context).translate('main_kset'),
+        AppLocalizations.of(context)!.translate('main_kset')!,
         style: TextStyle(
           color: Colors.white,
         ),
@@ -139,7 +139,7 @@ class _kataDialogState extends State<kataDialog> {
         child: Theme(
           data: ThemeData(unselectedWidgetColor: Colors.white),
           child: new ListView(
-            children: _katasol.keys.map((String key) {
+            children: _katasol!.keys.map((String key) {
               return new CheckboxListTile(
                 title: new Text(
                   key,
@@ -147,11 +147,11 @@ class _kataDialogState extends State<kataDialog> {
                     color: Colors.white,
                   ),
                 ),
-                value: _katasol[key],
+                value: _katasol![key],
                 activeColor: Colors.red,
-                onChanged: (bool value) {
+                onChanged: (bool? value) {
                   setState(() {
-                    _katasol[key] = value;
+                    _katasol![key] = value;
                   });
                 },
               );
@@ -177,8 +177,8 @@ class _kataDialogState extends State<kataDialog> {
 
 //State is information of the application that can change over time or when some actions are taken.
 class _State extends State<MyApp> {
-  bool _katakana = false;
-  bool _hiragana = false;
+  bool? _katakana = false;
+  bool? _hiragana = false;
   bool _reverse = false;
 
   @override
@@ -196,12 +196,12 @@ class _State extends State<MyApp> {
   bool _isButtonDisabled = true;
 
   //we omitted the brackets '{}' and are using fat arrow '=>' instead, this is dart syntax
-  void _katakanaChanged(bool value) => setState(() => _katakana = value);
+  void _katakanaChanged(bool? value) => setState(() => _katakana = value);
 
-  void _hiraganaChanged(bool value) => setState(() => _hiragana = value);
+  void _hiraganaChanged(bool? value) => setState(() => _hiragana = value);
 
   void __isButtonDisabledChanged() {
-    _isButtonDisabled = _katakana || _hiragana ? false : true;
+    _isButtonDisabled = _katakana! || _hiragana! ? false : true;
   }
 
   void _showLicense() async {
@@ -272,7 +272,7 @@ class _State extends State<MyApp> {
                         padding: EdgeInsets.all(5),
                         child: RichText(
                           text: TextSpan(
-                            text: AppLocalizations.of(context)
+                            text: AppLocalizations.of(context)!
                                 .translate('main_licenses'),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
@@ -295,7 +295,7 @@ class _State extends State<MyApp> {
                     new CheckboxListTile(
                       value: _hiragana,
                       onChanged: (value) async {
-                        if (value) {
+                        if (value!) {
                           await showDialog(
                             context: context,
                             builder: (context) {
@@ -303,7 +303,7 @@ class _State extends State<MyApp> {
                             },
                           );
                         }
-                        if (!_hirasol.containsValue(true)) {
+                        if (!_hirasol!.containsValue(true)) {
                           _hiraganaChanged(false);
                         } else {
                           _hiraganaChanged(value);
@@ -318,8 +318,8 @@ class _State extends State<MyApp> {
                       ),
                       controlAffinity: ListTileControlAffinity.leading,
                       subtitle: new Text(
-                        (AppLocalizations.of(context)
-                            .translate('main_hiragana')),
+                        AppLocalizations.of(context)!
+                            .translate('main_hiragana')!,
                         style: TextStyle(
                           color: Colors.white,
                         ),
@@ -330,7 +330,7 @@ class _State extends State<MyApp> {
                     new CheckboxListTile(
                       value: _katakana,
                       onChanged: (value) async {
-                        if (value) {
+                        if (value!) {
                           await showDialog(
                             context: context,
                             builder: (context) {
@@ -339,7 +339,7 @@ class _State extends State<MyApp> {
                           );
                         }
 
-                        if (!_katasol.containsValue(true)) {
+                        if (!_katasol!.containsValue(true)) {
                           _katakanaChanged(false);
                         } else {
                           _katakanaChanged(value);
@@ -354,8 +354,8 @@ class _State extends State<MyApp> {
                       ),
                       controlAffinity: ListTileControlAffinity.leading,
                       subtitle: new Text(
-                        (AppLocalizations.of(context)
-                            .translate('main_katakana')),
+                        AppLocalizations.of(context)!
+                            .translate('main_katakana')!,
                         style: TextStyle(
                           color: Colors.white,
                         ),
@@ -365,15 +365,15 @@ class _State extends State<MyApp> {
                     ),
                     SwitchListTile(
                       title: new Text(
-                        (AppLocalizations.of(context)
-                            .translate('main_rset')),
+                        AppLocalizations.of(context)!
+                            .translate('main_rset')!,
                         style: TextStyle(
                           color: Colors.white,
                         ),
                       ),
                       subtitle:  new Text(
-                        (AppLocalizations.of(context)
-                            .translate('main_reverse')),
+                        AppLocalizations.of(context)!
+                            .translate('main_reverse')!,
                         style: TextStyle(
                           color: Colors.white,
                         ),
@@ -391,11 +391,17 @@ class _State extends State<MyApp> {
                       child: Padding(
                         padding: EdgeInsets.all(5.0),
                         child: Center(
-                          child: new RaisedButton(
-                            padding: const EdgeInsets.all(8.0),
-                            textColor: Colors.white,
-                            color: Colors.red,
-                            disabledColor: Colors.white,
+                          child: new ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              minimumSize: Size(100, 50),
+                              textStyle: TextStyle(
+                                color: Colors.white,
+                              ),
+                              padding: const EdgeInsets.all(8.0),
+                              primary: Colors.red, // background
+                              onPrimary: Colors.white, // foreground
+                              onSurface: Colors.white
+                            ),
                             onPressed: _isButtonDisabled
                                 ? null
                                 : () {
@@ -413,10 +419,10 @@ class _State extends State<MyApp> {
                               );
                             },
                             child: new Text(_isButtonDisabled
-                                ? (AppLocalizations.of(context)
-                                .translate('main_select'))
-                                : (AppLocalizations.of(context)
-                                .translate('main_start'))),
+                                ? AppLocalizations.of(context)!
+                                .translate('main_select')!
+                                : AppLocalizations.of(context)!
+                                .translate('main_start')!),
                           ),
                         ),
                       ),

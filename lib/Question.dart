@@ -19,13 +19,13 @@
 
 class Question{
 
-  String question;
-  String answer;
-  String type;
+  late String question;
+  String? answer;
+  String? type;
 
-  String extraAnswer;
+  String? extraAnswer;
 
-  Question(String q, String a, String t, [String ea]) {
+  Question(String q, String a, String t, [String? ea]) {
     question = q;
     answer = a;
     type = t;
