@@ -267,20 +267,21 @@ class QuizBrain {
             if (re) {
               // https://github.com/aeri/Nihonoari-App/issues/33
               // enable distinguishing `ji`
+              String extra = null;
               if ( k == "じ") {
-                v = "$v(${_hiragana['し']})";
+                extra = "ぢ";
               }
               if (k == "ぢ") {
-                v = "$v(${_hiragana['ち']})";
+                extra = "じ";
               }
               // enable distinguishing `zu`
               if (k == "ず") {
-                v = "$v(${_hiragana['す']})";
+                extra = "づ";
               }
               if ( k == "づ") {
-                v = "$v(${_hiragana['つ']})";
+                extra = "ず";
               }
-              _quiz.add(Question(v, k, "hiragana"));
+              _quiz.add(Question(v, k, "hiragana", extra));
             } else {
               _quiz.add(Question(k, v, "hiragana"));
             }
@@ -298,20 +299,21 @@ class QuizBrain {
             if (re) {
               // https://github.com/aeri/Nihonoari-App/issues/33
               // enable distinguishing `ji`
+              String extra = null;
               if ( k == "ジ") {
-                v = "$v(${_katakana['シ']})";
+                extra = "ヂ";
               }
               if (k == "ヂ") {
-                v = "$v(${_katakana['チ']})";
+                extra = "ジ";
               }
               // enable distinguishing `zu`
               if (k == "ズ") {
-                v = "$v(${_katakana['ス']})";
+                extra = "ヅ";
               }
               if ( k == "ヅ") {
-                v = "$v(${_katakana['ツ']})";
+                extra = "ズ";
               }
-              _quiz.add(Question(v, k, "katakana"));
+              _quiz.add(Question(v, k, "katakana", extra));
             } else {
               _quiz.add(Question(k, v, "katakana"));
             }

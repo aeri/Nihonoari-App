@@ -293,11 +293,14 @@ class _Party extends State<Party> {
                           _controller.clear();
 
                           String result = QuizBrain.currentQuestion.answer;
+                          String extraAnswer = QuizBrain.currentQuestion.extraAnswer;
 
                           ++total;
 
                           setState(() {
-                            if (result == value.toLowerCase()) {
+                            // check if an extra answer is available, and if so, if it matches.
+                            // this is part of the fix for #33
+                            if (result == value.toLowerCase() || (extraAnswer != null && extraAnswer == value.toLowerCase())) {
                               control = 500;
                               print("OK");
                               _result = Colors.green;

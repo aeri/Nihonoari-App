@@ -23,10 +23,12 @@ class Question{
   String answer;
   String type;
 
+  String extraAnswer;
 
-  Question(String q, String a, String t) {
+  Question(String q, String a, String t, [String ea=null]) {
     question = q;
     answer = a;
     type = t;
+    extraAnswer = ea;
   }
 }
