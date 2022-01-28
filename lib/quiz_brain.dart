@@ -264,11 +264,27 @@ class QuizBrain {
       hv.forEach(
         (k, v) => _hiragana[k].forEach(
           (k, v) {
-            if (re)
+            if (re) {
+              // https://github.com/aeri/Nihonoari-App/issues/33
+              // enable distinguishing `ji`
+              if ( k == "じ") {
+                v = "$v(${_hiragana['し']})";
+              }
+              if (k == "ぢ") {
+                v = "$v(${_hiragana['ち']})";
+              }
+              // enable distinguishing `zu`
+              if (k == "ず") {
+                v = "$v(${_hiragana['す']})";
+              }
+              if ( k == "づ") {
+                v = "$v(${_hiragana['つ']})";
+              }
               _quiz.add(Question(v, k, "hiragana"));
-            else
+            } else {
               _quiz.add(Question(k, v, "hiragana"));
-            },
+            }
+          },
         ),
       );
     }
@@ -279,10 +295,26 @@ class QuizBrain {
       kv.forEach(
         (k, v) => _katakana[k].forEach(
               (k, v) {
-            if (re)
+            if (re) {
+              // https://github.com/aeri/Nihonoari-App/issues/33
+              // enable distinguishing `ji`
+              if ( k == "ジ") {
+                v = "$v(${_katakana['シ']})";
+              }
+              if (k == "ヂ") {
+                v = "$v(${_katakana['チ']})";
+              }
+              // enable distinguishing `zu`
+              if (k == "ズ") {
+                v = "$v(${_katakana['ス']})";
+              }
+              if ( k == "ヅ") {
+                v = "$v(${_katakana['ツ']})";
+              }
               _quiz.add(Question(v, k, "katakana"));
-            else
+            } else {
               _quiz.add(Question(k, v, "katakana"));
+            }
           },
         ),
       );
