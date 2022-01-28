@@ -14,9 +14,9 @@ environment:
   sdk: ">=2.0.0-dev.68.0 <3.0.0"
 
 dependencies:
-  kana: ^1.0.0
-  font_awesome_flutter: ^8.5.0
-  shared_preferences: ^0.5.12
+  kana_kit: ^2.0.0
+  font_awesome_flutter: ^9.2.0
+  shared_preferences: ^2.0.12
   flutter:
     sdk: flutter
   flutter_localizations:

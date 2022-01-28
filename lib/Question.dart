@@ -25,7 +25,7 @@ class Question{
 
   String extraAnswer;
 
-  Question(String q, String a, String t, [String ea=null]) {
+  Question(String q, String a, String t, [String ea]) {
     question = q;
     answer = a;
     type = t;

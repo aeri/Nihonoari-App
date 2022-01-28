@@ -25,9 +25,9 @@ class QuizBrain {
   static bool h = true, k = true, re = true;
   static Question currentQuestion;
 
-  static List<Question> _quiz = new List<Question>();
-  static List<Question> _passed = new List<Question>();
-  static List<Question> _failed = new List<Question>();
+  static List<Question> _quiz = [];
+  static List<Question> _passed = [];
+  static List<Question> _failed = [];
 
   static var _hiragana = {
     "あ い う え お": {
@@ -299,7 +299,7 @@ class QuizBrain {
             if (re) {
               // https://github.com/aeri/Nihonoari-App/issues/33
               // enable distinguishing `ji`
-              String extra = null;
+              String extra;
               if ( k == "ジ") {
                 extra = "ヂ";
               }

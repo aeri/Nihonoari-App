@@ -109,7 +109,7 @@ class _hiraDialogState extends State<hiraDialog> {
       ),
       actions: <Widget>[
         // usually buttons at the bottom of the dialog
-        new FlatButton(
+        new TextButton(
           child: new Icon(
             Icons.done,
             color: Colors.red,
@@ -161,7 +161,7 @@ class _kataDialogState extends State<kataDialog> {
       ),
       actions: <Widget>[
         // usually buttons at the bottom of the dialog
-        new FlatButton(
+        new TextButton(
           child: new Icon(
             Icons.done,
             color: Colors.red,
@@ -218,7 +218,7 @@ class _State extends State<MyApp> {
           ),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
-            new FlatButton(
+            new TextButton(
               child: new Icon(
                 Icons.done,
                 color: Colors.red,

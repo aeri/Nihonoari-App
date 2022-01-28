@@ -55,7 +55,7 @@ class _Party extends State<Party> {
 
   void showInSnackBar(int control, String result) {
 
-    _scaffoldKey.currentState.showSnackBar(SnackBar(
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       elevation: 10,
       duration: Duration(milliseconds: control),
       content: Text(
@@ -70,7 +70,7 @@ class _Party extends State<Party> {
   }
 
   void hideSnackbar(){
-    _scaffoldKey.currentState.hideCurrentSnackBar();
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
   }
 
   FocusNode _focusNode = FocusNode();
@@ -124,7 +124,7 @@ class _Party extends State<Party> {
               )),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
-            new FlatButton(
+            new TextButton(
               child: new Icon(
                 Icons.done,
                 color: Colors.red,
@@ -155,7 +155,7 @@ class _Party extends State<Party> {
                 )),
             actions: <Widget>[
               // usually buttons at the bottom of the dialog
-              new FlatButton(
+              new TextButton(
                 child: new Icon(
                   Icons.close,
                   color: Colors.red,
@@ -164,7 +164,7 @@ class _Party extends State<Party> {
                   Navigator.of(context).pop(false);
                 },
               ),
-              new FlatButton(
+              new TextButton(
                 child: new Icon(
                   Icons.done,
                   color: Colors.red,
