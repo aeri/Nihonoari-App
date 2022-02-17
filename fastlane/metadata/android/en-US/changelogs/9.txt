@@ -1,0 +1,3 @@
+* Fixed ambiguities in reverse mode
+* Integrated Turkish language
+* Updated dependencies and SDK

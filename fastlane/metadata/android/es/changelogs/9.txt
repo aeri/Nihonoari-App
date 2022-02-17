@@ -1,0 +1,3 @@
+* Ambigüedades en el modo inverso corregidas
+* Integrada la traducción al Turco
+* SDK y librerías actualizadas

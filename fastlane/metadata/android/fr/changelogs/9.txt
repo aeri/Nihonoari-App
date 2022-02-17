@@ -1,0 +1,3 @@
+* Correction d'ambiguïtés en mode inversé
+* Intégration de la langue turque
+* Mise à jour des dépendances et du SDK
