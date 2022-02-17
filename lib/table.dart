@@ -18,7 +18,9 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:kana/kana.dart';
+import 'package:kana_kit/kana_kit.dart';
+
+const kanaKit = KanaKit();
 
 class BasicGridView extends StatelessWidget {
   @override
@@ -134,7 +136,7 @@ class BasicGridView extends StatelessWidget {
         child: Center(
             child: Text.rich(
           TextSpan(
-            text: getHiragana(hira),
+            text: kanaKit.toHiragana(hira),
             style: TextStyle(
               color: Colors.black,
               fontFamily: "MP1P_MEDIUM",
@@ -143,7 +145,7 @@ class BasicGridView extends StatelessWidget {
             ),
             children: <TextSpan>[
               TextSpan(
-                  text: '\n${getKatakana(hira)} ',
+                  text: '\n${kanaKit.toKatakana(hira)} ',
                   style: TextStyle(
                       //fontWeight: FontWeight.bold,
                       color: Colors.grey.shade700,

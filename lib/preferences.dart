@@ -22,9 +22,9 @@ import 'dart:convert';
 class SharedKanaPreferences {
   static Future<SharedPreferences> get _instance async =>
       _prefsInstance ??= await SharedPreferences.getInstance();
-  static SharedPreferences _prefsInstance;
+  static SharedPreferences? _prefsInstance;
 
-  static Future<SharedPreferences> init() async {
+  static Future<SharedPreferences?> init() async {
     _prefsInstance = await _instance;
     return _prefsInstance;
   }
@@ -61,7 +61,7 @@ class SharedKanaPreferences {
   static final String _katasolSet = "katakana";
 
   static String getHiraganaSet() {
-    var hiraganaData = _prefsInstance.getString(_hirasolSet);
+    var hiraganaData = _prefsInstance!.getString(_hirasolSet);
 
     if (hiraganaData == null) {
       print("EMPTY HIRAGANA");
@@ -72,12 +72,12 @@ class SharedKanaPreferences {
     }
   }
 
-  static Future<bool> setHiraganaSet(Map<String, dynamic> value) async {
-    return _prefsInstance.setString(_hirasolSet, json.encode(value));
+  static Future<bool> setHiraganaSet(Map<String, dynamic>? value) async {
+    return _prefsInstance!.setString(_hirasolSet, json.encode(value));
   }
 
   static String getKatakanaSet() {
-    var katakanaData = _prefsInstance.getString(_katasolSet);
+    var katakanaData = _prefsInstance!.getString(_katasolSet);
 
     if (katakanaData == null) {
       print("EMPTY KATAKANA");
@@ -88,7 +88,7 @@ class SharedKanaPreferences {
     }
   }
 
-  static Future<bool> setKatakanaSet(Map<String, dynamic> value) async {
-    return _prefsInstance.setString(_katasolSet, json.encode(value));
+  static Future<bool> setKatakanaSet(Map<String, dynamic>? value) async {
+    return _prefsInstance!.setString(_katasolSet, json.encode(value));
   }
 }

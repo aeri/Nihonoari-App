@@ -19,7 +19,7 @@
 
 import 'dart:async';
 
-import 'package:Nihonoari/preferences.dart';
+import 'package:nihonoari/preferences.dart';
 import 'package:flutter/material.dart';
 import 'localizations.dart';
 import 'quiz_brain.dart';
@@ -27,16 +27,16 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'table.dart';
 
 class Party extends StatefulWidget {
-  final bool h, k, re;
+  final bool? h, k, re;
 
-  final Map<String, dynamic> hv, kv;
+  final Map<String, dynamic>? hv, kv;
 
   Party(
-      {@required this.h,
-      @required this.hv,
-      @required this.k,
-      @required this.kv,
-        @required this.re
+      {required this.h,
+      required this.hv,
+      required this.k,
+      required this.kv,
+        required this.re
       });
 
   @override
@@ -53,13 +53,13 @@ class _Party extends State<Party> {
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-  void showInSnackBar(int control, String result) {
+  void showInSnackBar(int control, String? result) {
 
-    _scaffoldKey.currentState.showSnackBar(SnackBar(
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       elevation: 10,
       duration: Duration(milliseconds: control),
       content: Text(
-        '${AppLocalizations.of(context).translate('quiz_correct')}: $result',
+        '${AppLocalizations.of(context)!.translate('quiz_correct')}: $result',
         style: TextStyle(
             fontSize: 20,
             color: Colors.white,
@@ -70,14 +70,14 @@ class _Party extends State<Party> {
   }
 
   void hideSnackbar(){
-    _scaffoldKey.currentState.hideCurrentSnackBar();
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
   }
 
   FocusNode _focusNode = FocusNode();
 
   bool _ignore = false;
 
-  Timer t;
+  Timer? t;
 
   Color _result = Colors.white;
 
@@ -110,21 +110,21 @@ class _Party extends State<Party> {
         // return object of type Dialog
         return AlertDialog(
           backgroundColor: Colors.black,
-          title: new Text(AppLocalizations.of(context).translate('quiz_stats'),
+          title: new Text(AppLocalizations.of(context)!.translate('quiz_stats')!,
               style: TextStyle(
                 color: Colors.white,
               )),
           content: new Text(
-              "${AppLocalizations.of(context).translate('quiz_total')}: $total\n"
-              "${AppLocalizations.of(context).translate('quiz_passed')}: $accepted\n"
-              "${AppLocalizations.of(context).translate('quiz_failed')}: $rejected\n"
-              "${AppLocalizations.of(context).translate('quiz_rate')}: ${ratio.toStringAsFixed(2)}%",
+              "${AppLocalizations.of(context)!.translate('quiz_total')}: $total\n"
+              "${AppLocalizations.of(context)!.translate('quiz_passed')}: $accepted\n"
+              "${AppLocalizations.of(context)!.translate('quiz_failed')}: $rejected\n"
+              "${AppLocalizations.of(context)!.translate('quiz_rate')}: ${ratio.toStringAsFixed(2)}%",
               style: TextStyle(
                 color: Colors.white,
               )),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
-            new FlatButton(
+            new TextButton(
               child: new Icon(
                 Icons.done,
                 color: Colors.red,
@@ -145,17 +145,17 @@ class _Party extends State<Party> {
           context: context,
           builder: (context) => new AlertDialog(
             backgroundColor: Colors.black,
-            title: new Text(AppLocalizations.of(context).translate('quiz_stoptit'),
+            title: new Text(AppLocalizations.of(context)!.translate('quiz_stoptit')!,
                 style: TextStyle(
                   color: Colors.white,
                 )),
-            content: new Text(AppLocalizations.of(context).translate('quiz_stopmes'),
+            content: new Text(AppLocalizations.of(context)!.translate('quiz_stopmes')!,
                 style: TextStyle(
                   color: Colors.white,
                 )),
             actions: <Widget>[
               // usually buttons at the bottom of the dialog
-              new FlatButton(
+              new TextButton(
                 child: new Icon(
                   Icons.close,
                   color: Colors.red,
@@ -164,21 +164,20 @@ class _Party extends State<Party> {
                   Navigator.of(context).pop(false);
                 },
               ),
-              new FlatButton(
+              new TextButton(
                 child: new Icon(
                   Icons.done,
                   color: Colors.red,
                 ),
                 onPressed: () {
-                  if (t != null && t.isActive) t.cancel();
+                  if (t != null && t!.isActive) t!.cancel();
                   QuizBrain.clearList();
                   Navigator.of(context).pop(true);
                 },
               ),
             ],
           ),
-        ) ??
-        false;
+        ).then((value) => true);
   }
 
   @override
@@ -231,7 +230,7 @@ class _Party extends State<Party> {
                     padding: EdgeInsets.all(10.0),
                     child: Center(
                       child: Text(
-                        QuizBrain.currentQuestion.question,
+                        QuizBrain.currentQuestion!.question ?? "",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontFamily: 'MP1P_LIGHT',
@@ -260,17 +259,17 @@ class _Party extends State<Party> {
                           hintStyle: TextStyle(color: Colors.grey),
                           hintText:  (() {
                             if(QuizBrain.re){
-                              if (QuizBrain.currentQuestion.type == "hiragana"){
-                                return AppLocalizations.of(context).
+                              if (QuizBrain.currentQuestion!.type == "hiragana"){
+                                return AppLocalizations.of(context)!.
                                 translate('quiz_enter_hira');
                               }
                               else{
-                                return AppLocalizations.of(context).
+                                return AppLocalizations.of(context)!.
                                 translate('quiz_enter_kata');
                               }
                             }
                             else{
-                              return AppLocalizations.of(context).
+                              return AppLocalizations.of(context)!.
                               translate('quiz_enter');
 
                             }
@@ -288,12 +287,12 @@ class _Party extends State<Party> {
                           _ignore = true;
 
                           int control = 0;
-                          bool passed;
+                          bool passed = false;
 
                           _controller.clear();
 
-                          String result = QuizBrain.currentQuestion.answer;
-                          String extraAnswer = QuizBrain.currentQuestion.extraAnswer;
+                          String? result = QuizBrain.currentQuestion!.answer;
+                          String? extraAnswer = QuizBrain.currentQuestion!.extraAnswer;
 
                           ++total;
 
@@ -311,7 +310,6 @@ class _Party extends State<Party> {
                               print("NO");
                               _result = Colors.red;
                               ++rejected;
-                              passed = false;
 
                               showInSnackBar(control,result);
 

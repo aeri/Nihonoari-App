@@ -1,4 +1,4 @@
-name: Nihonoari
+name: nihonoari
 description: A little Japanese Kana training
 
 # The following defines the version and build number for your application.
@@ -8,15 +8,15 @@ description: A little Japanese Kana training
 # build by specifying --build-name and --build-number, respectively.
 # Read more about versioning at semver.org.
 
-version: 1.6.0+8
+version: 1.6.1+9
 
 environment:
-  sdk: ">=2.0.0-dev.68.0 <3.0.0"
+  sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
-  kana: ^1.0.0
-  font_awesome_flutter: ^8.5.0
-  shared_preferences: ^0.5.12
+  kana_kit: ^2.0.0
+  font_awesome_flutter: ^9.2.0
+  shared_preferences: ^2.0.12
   flutter:
     sdk: flutter
   flutter_localizations:
@@ -52,6 +52,7 @@ flutter:
     - i18n/fr.json
     - i18n/uk.json
     - i18n/ru.json
+    - i18n/tr.json
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
