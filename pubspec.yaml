@@ -1,4 +1,4 @@
-name: Nihonoari
+name: nihonoari
 description: A little Japanese Kana training
 
 # The following defines the version and build number for your application.
@@ -8,7 +8,7 @@ description: A little Japanese Kana training
 # build by specifying --build-name and --build-number, respectively.
 # Read more about versioning at semver.org.
 
-version: 1.6.0+8
+version: 1.6.1+9
 
 environment:
   sdk: '>=2.12.0 <3.0.0'

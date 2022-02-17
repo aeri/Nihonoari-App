@@ -19,7 +19,7 @@
 
 import 'dart:async';
 
-import 'package:Nihonoari/preferences.dart';
+import 'package:nihonoari/preferences.dart';
 import 'package:flutter/material.dart';
 import 'localizations.dart';
 import 'quiz_brain.dart';
@@ -230,7 +230,7 @@ class _Party extends State<Party> {
                     padding: EdgeInsets.all(10.0),
                     child: Center(
                       child: Text(
-                        QuizBrain.currentQuestion!.question,
+                        QuizBrain.currentQuestion!.question ?? "",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontFamily: 'MP1P_LIGHT',
@@ -287,7 +287,7 @@ class _Party extends State<Party> {
                           _ignore = true;
 
                           int control = 0;
-                          late bool passed;
+                          bool passed = false;
 
                           _controller.clear();
 
@@ -310,7 +310,6 @@ class _Party extends State<Party> {
                               print("NO");
                               _result = Colors.red;
                               ++rejected;
-                              passed = false;
 
                               showInSnackBar(control,result);
 

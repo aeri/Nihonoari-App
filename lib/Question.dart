@@ -19,7 +19,7 @@
 
 class Question{
 
-  late String question;
+  String? question;
   String? answer;
   String? type;
 
