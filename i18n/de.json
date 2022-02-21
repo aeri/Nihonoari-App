@@ -1,1 +1,22 @@
-
+{
+  "main_licenses": "Lizenzen",
+  "main_hset": "Hiragana",
+  "main_kset": "Katakana",
+  "main_hiragana" : "Hiragana hinzufügen",
+  "main_katakana" : "Katakana hinzufügen",
+  "main_select": "Wähle eins aus",
+  "main_start": "Start",
+  "quiz_stats": "Statistiken",
+  "quiz_total": "Alle",
+  "quiz_passed": "Richtig",
+  "quiz_failed": "Falsch",
+  "quiz_rate": "Erfolgsrate",
+  "quiz_enter": "Schreibe Rōmaji",
+  "quiz_correct": "Antwort korrigieren",
+  "quiz_stoptit" : "Quiz stoppen",
+  "quiz_stopmes" : "Zurück zum Hauptmenü?",
+  "main_rset" : "Rückwärts",
+  "main_reverse" : "Zeige Rōmaji/Schreibe Kana",
+  "quiz_enter_hira" : "Schreibe Hiragana",
+  "quiz_enter_kata" : "Schreibe Katakana"
+}
