@@ -1,0 +1,3 @@
+* Umkehrfunktion hinzugefügt (Rōmaji zu Kana)
+* Quiz nach Rückkehr zum Hauptmenü korrigiert
+* kleinere UI-Änderungen

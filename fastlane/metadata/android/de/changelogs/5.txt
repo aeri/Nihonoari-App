@@ -1,0 +1,4 @@
+* Set-Auswahl für Hiragana und Katakana
+* verbesserte Quiz-Basis
+* Katakana "ri" korrigiert
+* verbesserter dunkler Stil

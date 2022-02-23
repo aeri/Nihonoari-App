@@ -1,0 +1,3 @@
+* Behebung von Mehrdeutigkeiten im Rückwärtsmodus
+* Türkische Sprache integriert
+* Aktualisierte Abhängigkeiten und SDK
