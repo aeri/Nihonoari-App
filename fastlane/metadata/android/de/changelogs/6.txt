@@ -1,0 +1,2 @@
+* Algorithmus für räumliche Wiederholungen
+* die Tastatur wird nach dem Absenden nicht geschlossen

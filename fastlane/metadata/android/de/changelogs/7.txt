@@ -1,0 +1,2 @@
+* die ausgewählten Kana-Sets werden gespeichert
+* UI-Übersetzung hinzugefügt
