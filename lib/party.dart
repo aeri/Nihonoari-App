@@ -229,7 +229,11 @@ class _Party extends State<Party> {
                   child: Padding(
                     padding: EdgeInsets.all(10.0),
                     child: Center(
-                      child: Text(
+                      child:
+                      FittedBox(
+                          fit: BoxFit.fitWidth,
+                          child:
+                      Text(
                         QuizBrain.currentQuestion!.question ?? "",
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -238,13 +242,12 @@ class _Party extends State<Party> {
                           color: _result,
                         ),
                       ),
+                      ),
                     ),
                   ),
                 ),
                 Expanded(
-                  child: Padding(
-                      padding: EdgeInsets.all(15.0),
-                      child: TextField(
+                  child: TextField(
                         textInputAction: TextInputAction.done,
                         controller: _controller,
                         focusNode: _focusNode,
@@ -329,7 +332,7 @@ class _Party extends State<Party> {
 
                         },
                       )),
-                ),
+
                 Expanded(
                   child: Row(
                     children: scoreKeeper,

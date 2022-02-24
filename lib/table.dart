@@ -118,7 +118,7 @@ class BasicGridView extends StatelessWidget {
               _buildContainer("wo"),
 
               _emptyContainer(),
-              _manualContainer("ん", "ン", "n")
+              _buildContainer("n"),
             ],
             //specify direction in which it scrolls (horizontal or vertical).
             //scrollDirection: Axis.horizontal,
@@ -152,39 +152,6 @@ class BasicGridView extends StatelessWidget {
                       fontSize: 15)),
               TextSpan(
                   text: ' $hira',
-                  style: TextStyle(
-                      //fontStyle: FontStyle.italic,
-                      color: Colors.grey.shade700,
-                      fontSize: 13)),
-            ],
-          ),
-          textAlign: TextAlign.center,
-        )));
-  }
-
-  Widget _manualContainer(String hira, String kata, String roma) {
-    return Container(
-        height: 50.0,
-        width: 60.0,
-        color: Colors.grey.shade200,
-        child: Center(
-            child: Text.rich(
-          TextSpan(
-            text: hira,
-            style: TextStyle(
-              fontFamily: "MP1P_MEDIUM",
-              color: Colors.black,
-              fontSize: 16,
-            ),
-            children: <TextSpan>[
-              TextSpan(
-                  text: '\n$kata ',
-                  style: TextStyle(
-                      //fontWeight: FontWeight.bold,
-                      color: Colors.grey.shade700,
-                      fontSize: 15)),
-              TextSpan(
-                  text: ' $roma',
                   style: TextStyle(
                       //fontStyle: FontStyle.italic,
                       color: Colors.grey.shade700,

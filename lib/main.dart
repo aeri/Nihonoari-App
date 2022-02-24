@@ -257,7 +257,7 @@ class _State extends State<MyApp> {
                             text: 'nihonoari ',
                             style: TextStyle(
                               fontFamily: 'MP1P_LIGHT',
-                              fontSize: 30.0,
+                              fontSize: 25.0,
                               color: Colors.white,
                             ),
                             children: <TextSpan>[
@@ -289,7 +289,7 @@ class _State extends State<MyApp> {
                     ],
                   )),
               Expanded(
-                flex: 2,
+                flex: 3,
                 child: Theme(
                   data: ThemeData(unselectedWidgetColor: Colors.white),
                   child: new Column(children: <Widget>[
