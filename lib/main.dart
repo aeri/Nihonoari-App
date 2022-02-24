@@ -257,14 +257,13 @@ class _State extends State<MyApp> {
                             text: 'nihonoari ',
                             style: TextStyle(
                               fontFamily: 'MP1P_LIGHT',
-                              fontSize: 30.0,
+                              fontSize: 25.0,
                               color: Colors.white,
                             ),
                             children: <TextSpan>[
                               TextSpan(
                                   text: 'project',
-                                  style:
-                                  TextStyle(fontFamily: 'MP1P_REGULAR')),
+                                  style: TextStyle(fontFamily: 'MP1P_REGULAR')),
                             ],
                           ),
                         ),
@@ -289,7 +288,7 @@ class _State extends State<MyApp> {
                     ],
                   )),
               Expanded(
-                flex: 2,
+                flex: 3,
                 child: Theme(
                   data: ThemeData(unselectedWidgetColor: Colors.white),
                   child: new Column(children: <Widget>[
@@ -366,13 +365,12 @@ class _State extends State<MyApp> {
                     ),
                     SwitchListTile(
                       title: new Text(
-                        AppLocalizations.of(context)!
-                            .translate('main_rset')!,
+                        AppLocalizations.of(context)!.translate('main_rset')!,
                         style: TextStyle(
                           color: Colors.white,
                         ),
                       ),
-                      subtitle:  new Text(
+                      subtitle: new Text(
                         AppLocalizations.of(context)!
                             .translate('main_reverse')!,
                         style: TextStyle(
@@ -381,11 +379,18 @@ class _State extends State<MyApp> {
                       ),
                       controlAffinity: ListTileControlAffinity.leading,
                       value: _reverse,
-                      activeColor:  Colors.red,
+                      activeColor: Colors.red,
                       inactiveThumbColor: Colors.white,
                       inactiveTrackColor: Colors.black,
-                      onChanged: (bool value) { setState(() { _reverse = value; }); },
-                      secondary: const Icon(Icons.refresh, color: Colors.white,),
+                      onChanged: (bool value) {
+                        setState(() {
+                          _reverse = value;
+                        });
+                      },
+                      secondary: const Icon(
+                        Icons.refresh,
+                        color: Colors.white,
+                      ),
                     ),
                     Expanded(
                       flex: 1,
@@ -394,36 +399,36 @@ class _State extends State<MyApp> {
                         child: Center(
                           child: new ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              minimumSize: Size(100, 50),
-                              textStyle: TextStyle(
-                                color: Colors.white,
-                              ),
-                              padding: const EdgeInsets.all(8.0),
-                              primary: Colors.red, // background
-                              onPrimary: Colors.white, // foreground
-                              onSurface: Colors.white
-                            ),
+                                minimumSize: Size(100, 50),
+                                textStyle: TextStyle(
+                                  color: Colors.white,
+                                ),
+                                padding: const EdgeInsets.all(8.0),
+                                primary: Colors.red,
+                                // background
+                                onPrimary: Colors.white,
+                                // foreground
+                                onSurface: Colors.white),
                             onPressed: _isButtonDisabled
                                 ? null
                                 : () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                    new Party(
-                                        h: _hiragana,
-                                        hv: _hirasol,
-                                        k: _katakana,
-                                        kv: _katasol,
-                                        re: _reverse
-                                    )),
-                              );
-                            },
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (BuildContext context) =>
+                                              new Party(
+                                                  h: _hiragana,
+                                                  hv: _hirasol,
+                                                  k: _katakana,
+                                                  kv: _katasol,
+                                                  re: _reverse)),
+                                    );
+                                  },
                             child: new Text(_isButtonDisabled
                                 ? AppLocalizations.of(context)!
-                                .translate('main_select')!
+                                    .translate('main_select')!
                                 : AppLocalizations.of(context)!
-                                .translate('main_start')!),
+                                    .translate('main_start')!),
                           ),
                         ),
                       ),

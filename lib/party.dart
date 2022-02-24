@@ -36,8 +36,7 @@ class Party extends StatefulWidget {
       required this.hv,
       required this.k,
       required this.kv,
-        required this.re
-      });
+      required this.re});
 
   @override
   _Party createState() => _Party(h, hv, k, kv, re);
@@ -54,22 +53,19 @@ class _Party extends State<Party> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   void showInSnackBar(int control, String? result) {
-
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       elevation: 10,
       duration: Duration(milliseconds: control),
       content: Text(
         '${AppLocalizations.of(context)!.translate('quiz_correct')}: $result',
         style: TextStyle(
-            fontSize: 20,
-            color: Colors.white,
-            fontWeight: FontWeight.bold),
+            fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
         textAlign: TextAlign.center,
       ),
     ));
   }
 
-  void hideSnackbar(){
+  void hideSnackbar() {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
   }
 
@@ -80,7 +76,6 @@ class _Party extends State<Party> {
   Timer? t;
 
   Color _result = Colors.white;
-
 
   TextEditingController _controller = TextEditingController();
 
@@ -110,10 +105,11 @@ class _Party extends State<Party> {
         // return object of type Dialog
         return AlertDialog(
           backgroundColor: Colors.black,
-          title: new Text(AppLocalizations.of(context)!.translate('quiz_stats')!,
-              style: TextStyle(
-                color: Colors.white,
-              )),
+          title:
+              new Text(AppLocalizations.of(context)!.translate('quiz_stats')!,
+                  style: TextStyle(
+                    color: Colors.white,
+                  )),
           content: new Text(
               "${AppLocalizations.of(context)!.translate('quiz_total')}: $total\n"
               "${AppLocalizations.of(context)!.translate('quiz_passed')}: $accepted\n"
@@ -142,42 +138,44 @@ class _Party extends State<Party> {
   Future<bool> _onBackPressed() {
     FocusScope.of(context).requestFocus(new FocusNode());
     return showDialog(
-          context: context,
-          builder: (context) => new AlertDialog(
-            backgroundColor: Colors.black,
-            title: new Text(AppLocalizations.of(context)!.translate('quiz_stoptit')!,
+      context: context,
+      builder: (context) => new AlertDialog(
+        backgroundColor: Colors.black,
+        title:
+            new Text(AppLocalizations.of(context)!.translate('quiz_stoptit')!,
                 style: TextStyle(
                   color: Colors.white,
                 )),
-            content: new Text(AppLocalizations.of(context)!.translate('quiz_stopmes')!,
+        content:
+            new Text(AppLocalizations.of(context)!.translate('quiz_stopmes')!,
                 style: TextStyle(
                   color: Colors.white,
                 )),
-            actions: <Widget>[
-              // usually buttons at the bottom of the dialog
-              new TextButton(
-                child: new Icon(
-                  Icons.close,
-                  color: Colors.red,
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop(false);
-                },
-              ),
-              new TextButton(
-                child: new Icon(
-                  Icons.done,
-                  color: Colors.red,
-                ),
-                onPressed: () {
-                  if (t != null && t!.isActive) t!.cancel();
-                  QuizBrain.clearList();
-                  Navigator.of(context).pop(true);
-                },
-              ),
-            ],
+        actions: <Widget>[
+          // usually buttons at the bottom of the dialog
+          new TextButton(
+            child: new Icon(
+              Icons.close,
+              color: Colors.red,
+            ),
+            onPressed: () {
+              Navigator.of(context).pop(false);
+            },
           ),
-        ).then((value) => true);
+          new TextButton(
+            child: new Icon(
+              Icons.done,
+              color: Colors.red,
+            ),
+            onPressed: () {
+              if (t != null && t!.isActive) t!.cancel();
+              QuizBrain.clearList();
+              Navigator.of(context).pop(true);
+            },
+          ),
+        ],
+      ),
+    ).then((value) => true);
   }
 
   @override
@@ -229,107 +227,103 @@ class _Party extends State<Party> {
                   child: Padding(
                     padding: EdgeInsets.all(10.0),
                     child: Center(
-                      child: Text(
-                        QuizBrain.currentQuestion!.question ?? "",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontFamily: 'MP1P_LIGHT',
-                          fontSize: 125.0,
-                          color: _result,
+                      child: FittedBox(
+                        fit: BoxFit.fitWidth,
+                        child: Text(
+                          QuizBrain.currentQuestion!.question ?? "",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: 'MP1P_LIGHT',
+                            fontSize: 125.0,
+                            color: _result,
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
                 Expanded(
-                  child: Padding(
-                      padding: EdgeInsets.all(15.0),
-                      child: TextField(
-                        textInputAction: TextInputAction.done,
-                        controller: _controller,
-                        focusNode: _focusNode,
-                        autofocus: true,
-                        textAlign: TextAlign.center,
-                        cursorColor: Colors.white,
-                        decoration: InputDecoration(
-                          hoverColor: Colors.white,
-                          fillColor: Colors.white,
-                          focusColor: Colors.white,
-                          border: InputBorder.none,
-                          hintStyle: TextStyle(color: Colors.grey),
-                          hintText:  (() {
-                            if(QuizBrain.re){
-                              if (QuizBrain.currentQuestion!.type == "hiragana"){
-                                return AppLocalizations.of(context)!.
-                                translate('quiz_enter_hira');
-                              }
-                              else{
-                                return AppLocalizations.of(context)!.
-                                translate('quiz_enter_kata');
-                              }
-                            }
-                            else{
-                              return AppLocalizations.of(context)!.
-                              translate('quiz_enter');
-
-                            }
-
-                          })()
-                        ),
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.white,
-                        ),
-                        onSubmitted: (value) {
-                          if (_ignore || value.length < 1) {
-                            return;
+                    child: TextField(
+                  textInputAction: TextInputAction.done,
+                  controller: _controller,
+                  focusNode: _focusNode,
+                  autofocus: true,
+                  textAlign: TextAlign.center,
+                  cursorColor: Colors.white,
+                  decoration: InputDecoration(
+                      hoverColor: Colors.white,
+                      fillColor: Colors.white,
+                      focusColor: Colors.white,
+                      border: InputBorder.none,
+                      hintStyle: TextStyle(color: Colors.grey),
+                      hintText: (() {
+                        if (QuizBrain.re) {
+                          if (QuizBrain.currentQuestion!.type == "hiragana") {
+                            return AppLocalizations.of(context)!
+                                .translate('quiz_enter_hira');
+                          } else {
+                            return AppLocalizations.of(context)!
+                                .translate('quiz_enter_kata');
                           }
-                          _ignore = true;
+                        } else {
+                          return AppLocalizations.of(context)!
+                              .translate('quiz_enter');
+                        }
+                      })()),
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.white,
+                  ),
+                  onSubmitted: (value) {
+                    if (_ignore || value.length < 1) {
+                      return;
+                    }
+                    _ignore = true;
 
-                          int control = 0;
-                          bool passed = false;
+                    int control = 0;
+                    bool passed = false;
 
-                          _controller.clear();
+                    _controller.clear();
 
-                          String? result = QuizBrain.currentQuestion!.answer;
-                          String? extraAnswer = QuizBrain.currentQuestion!.extraAnswer;
+                    String? result = QuizBrain.currentQuestion!.answer;
+                    String? extraAnswer =
+                        QuizBrain.currentQuestion!.extraAnswer;
 
-                          ++total;
+                    ++total;
 
-                          setState(() {
-                            // check if an extra answer is available, and if so, if it matches.
-                            // this is part of the fix for #33
-                            if (result == value.toLowerCase() || (extraAnswer != null && extraAnswer == value.toLowerCase())) {
-                              control = 500;
-                              print("OK");
-                              _result = Colors.green;
-                              ++accepted;
-                              passed = true;
-                            } else {
-                              control = 2000;
-                              print("NO");
-                              _result = Colors.red;
-                              ++rejected;
+                    setState(() {
+                      // check if an extra answer is available, and if so, if it matches.
+                      // this is part of the fix for #33
+                      if (result == value.toLowerCase() ||
+                          (extraAnswer != null &&
+                              extraAnswer == value.toLowerCase())) {
+                        control = 500;
+                        print("OK");
+                        _result = Colors.green;
+                        ++accepted;
+                        passed = true;
+                      } else {
+                        control = 2000;
+                        print("NO");
+                        _result = Colors.red;
+                        ++rejected;
 
-                              showInSnackBar(control,result);
+                        showInSnackBar(control, result);
+                      }
+                    });
 
-                            }
-                          });
+                    ratio = (accepted / total) * 100;
 
-                          ratio = (accepted / total) * 100;
-
-                          t = Timer(Duration(milliseconds: control), () {
-                            setState(() {
-                              _result = Colors.white;
-                              QuizBrain.nextQuestion(passed);
-                              _ignore = false;
-                            });
-                          });
-                          // and later, before the timer goes off...
-
-                        },
-                      )),
-                ),
+                    t = Timer(Duration(milliseconds: control), () {
+                      setState(() {
+                        _result = Colors.white;
+                        QuizBrain.nextQuestion(passed);
+                        _ignore = false;
+                      });
+                    });
+                    // and later, before the timer goes off...
+                  },
+                )),
                 Expanded(
                   child: Row(
                     children: scoreKeeper,
