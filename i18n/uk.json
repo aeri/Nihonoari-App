@@ -15,9 +15,8 @@
   "quiz_correct": "Правильна відповідь",
   "quiz_stoptit" : "Зупинити тест",
   "quiz_stopmes" : "Повернутися в головне меню?",
-  "main_reverse" : "Reverse",
   "main_rset" : "Reverse",
-  "main_reverse" : "Покажи ромадзі/Введіть Кана",
+  "main_reverse" : "Введіть Кана",
   "quiz_enter_hira" : "Введіть Хіраґани",
   "quiz_enter_kata" : "Введіть Катакани"
 }

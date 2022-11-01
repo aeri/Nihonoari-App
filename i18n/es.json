@@ -16,7 +16,7 @@
   "quiz_stoptit" : "Detener prueba",
   "quiz_stopmes" : "¿Volver al menú principal?",
   "main_rset" : "Inversa",
-  "main_reverse" : "Muestra rōmaji/Introduce Kana",
+  "main_reverse" : "Introduce Kana",
   "quiz_enter_hira" : "Escribe hiragana",
   "quiz_enter_kata" : "Escribe katakana"
 }
