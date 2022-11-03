@@ -18,18 +18,19 @@
  */
 
 import 'dart:async';
+import 'dart:io';
 
 import 'package:nihonoari/preferences.dart';
 import 'package:flutter/material.dart';
 import 'localizations.dart';
-import 'quiz_brain.dart';
+import 'quiz_engine.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'table.dart';
 
 class Party extends StatefulWidget {
   final bool? h, k, re;
 
-  final Map<String, dynamic>? hv, kv;
+  final Map<String, dynamic> hv, kv;
 
   Party(
       {required this.h,
@@ -47,7 +48,9 @@ class _Party extends State<Party> {
     SharedKanaPreferences.setHiraganaSet(hv);
     SharedKanaPreferences.setKatakanaSet(kv);
 
-    QuizBrain.setList(h, hv, k, kv, re);
+    //var loc = WidgetsBinding.instance.window.locales;
+    var currentDefaultSystemLocale = Platform.localeName;
+    QuizBrain.setList(h, hv, k, kv, re, currentDefaultSystemLocale);
   }
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
@@ -285,42 +288,40 @@ class _Party extends State<Party> {
 
                     _controller.clear();
 
-                    String? result = QuizBrain.currentQuestion!.answer;
-                    String? extraAnswer =
-                        QuizBrain.currentQuestion!.extraAnswer;
+                    List<String?>? answer = QuizBrain.currentQuestion!.answer;
 
                     ++total;
 
-                    setState(() {
-                      // check if an extra answer is available, and if so, if it matches.
-                      // this is part of the fix for #33
-                      if (result == value.toLowerCase() ||
-                          (extraAnswer != null &&
-                              extraAnswer == value.toLowerCase())) {
-                        control = 500;
-                        print("OK");
-                        _result = Colors.green;
-                        ++accepted;
-                        passed = true;
-                      } else {
-                        control = 2000;
-                        print("NO");
-                        _result = Colors.red;
-                        ++rejected;
-
-                        showInSnackBar(control, result);
-                      }
-                    });
-
-                    ratio = (accepted / total) * 100;
-
-                    t = Timer(Duration(milliseconds: control), () {
+                    if (answer != null) {
                       setState(() {
-                        _result = Colors.white;
-                        QuizBrain.nextQuestion(passed);
-                        _ignore = false;
+                        // check if an extra answer is available, and if so, if it matches.
+                        // this is part of the fix for #33
+                        if (answer.contains(value.toLowerCase())) {
+                          control = 500;
+                          print("OK");
+                          _result = Colors.green;
+                          ++accepted;
+                          passed = true;
+                        } else {
+                          control = 2000;
+                          print("NO");
+                          _result = Colors.red;
+                          ++rejected;
+                          showInSnackBar(
+                              control, answer.toSet().toList().join(" / "));
+                        }
                       });
-                    });
+
+                      ratio = (accepted / total) * 100;
+
+                      t = Timer(Duration(milliseconds: control), () {
+                        setState(() {
+                          _result = Colors.white;
+                          QuizBrain.nextQuestion(passed);
+                          _ignore = false;
+                        });
+                      });
+                    }
                     // and later, before the timer goes off...
                   },
                 )),

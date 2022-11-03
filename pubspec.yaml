@@ -8,7 +8,7 @@ description: A little Japanese Kana training
 # build by specifying --build-name and --build-number, respectively.
 # Read more about versioning at semver.org.
 
-version: 1.6.1+9
+version: 1.6.2+10
 
 environment:
   sdk: '>=2.12.0 <3.0.0'
@@ -53,6 +53,8 @@ flutter:
     - i18n/uk.json
     - i18n/ru.json
     - i18n/tr.json
+    - assets/data/hira.json
+    - assets/data/kata.json
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

@@ -32,7 +32,7 @@ class SharedKanaPreferences {
   static Map<String, bool> _defaultHiraganaSet = {
     'あ い う え お': true,
     'か き く け こ': true,
-    'さ し	す せ そ': true,
+    'さ し す せ そ': true,
     'た ち つ て と': true,
     'な に ぬ ね の': true,
     'は ひ ふ へ ほ': true,
@@ -68,7 +68,7 @@ class SharedKanaPreferences {
       return json.encode(_defaultHiraganaSet);
     } else {
       print("EXISTS HIRAGANA");
-      return hiraganaData;
+      return hiraganaData.replaceAll("\\t", " ");
     }
   }
 
@@ -84,7 +84,7 @@ class SharedKanaPreferences {
       return json.encode(_defaultKatakanaSet);
     } else {
       print("EXISTS KATAKANA");
-      return katakanaData;
+      return katakanaData.replaceAll("\\t", " ");
     }
   }
 
