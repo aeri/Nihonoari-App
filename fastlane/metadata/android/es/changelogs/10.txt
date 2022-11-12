@@ -1,0 +1,2 @@
+* Introducción cirílica para idioma ruso y ucraniano
+* Arreglada escala adaptativa de pantalla

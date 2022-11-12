@@ -1,0 +1,2 @@
+* Cyrillic input for Russian and Ukrainian language
+* Fixed adaptive screen scaling

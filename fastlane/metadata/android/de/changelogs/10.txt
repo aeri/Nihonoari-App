@@ -1,0 +1,2 @@
+* Kyrillische Eingabe für die russische und ukrainische Sprache
+* Adaptive Bildschirmskalierung korrigiert

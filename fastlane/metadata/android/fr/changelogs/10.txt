@@ -1,0 +1,2 @@
+* Entrée cyrillique pour la langue russe et ukrainienne
+* Mise à l'échelle adaptative de l'écran fixe
