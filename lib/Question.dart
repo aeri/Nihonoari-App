@@ -19,11 +19,11 @@
 
 class Question{
 
-  String? question;
-  List<String?>? answer;
-  String? type;
+  String question = "";
+  List<String?> answer = [];
+  String type = "";
 
-  Question(String? q, List<String?> a, String t) {
+  Question(String q, List<String?> a, String t) {
     question = q;
     answer = List.from(a);
     type = t;

@@ -26,7 +26,7 @@ import 'dart:math';
 class QuizBrain {
   static var rng = new Random();
   static bool h = true, k = true, re = true;
-  static Question? currentQuestion;
+  static Question currentQuestion = Question("", [], "");
 
   static List<Question?> _quiz = [];
   static List<Question?> _passed = [];
@@ -51,12 +51,12 @@ class QuizBrain {
       }
     }
     int _questionNumber = rng.nextInt(_quiz.length);
-    currentQuestion = _quiz[_questionNumber];
+    currentQuestion = _quiz[_questionNumber] ?? Question("", [], "");
   }
 
   static void firstQuestion() {
     int _questionNumber = rng.nextInt(_quiz.length);
-    currentQuestion = _quiz[_questionNumber];
+    currentQuestion = _quiz[_questionNumber] ?? Question("", [], "");
   }
 
   static void clearList() {
@@ -66,15 +66,15 @@ class QuizBrain {
   }
 
   static void setList(bool h, Map<String, dynamic> hv, bool k,
-      Map<String, dynamic> kv, bool isReverse, String locale) async {
+      Map<String, dynamic> kv, bool isReverse, String locale) {
     QuizBrain.h = h;
     QuizBrain.k = k;
     QuizBrain.re = isReverse;
 
-    List<String?>? hiraganaAnswers = [];
-    List<String?>? hiraganaQuestions = [];
-    List<String?>? katakanaAnswers = [];
-    List<String?>? katakanaQuestions = [];
+    List<String?> hiraganaAnswers = [];
+    List<String?> hiraganaQuestions = [];
+    List<String?> katakanaAnswers = [];
+    List<String?> katakanaQuestions = [];
 
     if (h) {
       hv = Map.from(hv)..removeWhere((k, v) => v == false);
@@ -84,38 +84,41 @@ class QuizBrain {
           if (hiraganaSetList != null) {
             hiraganaSetList.forEach(
               (x) {
-                hiraganaAnswers = [];
+                hiraganaAnswers.clear();
                 hiraganaQuestions.clear();
 
                 switch (locale.split('_').first) {
                   case "uk":
                     {
                       hiraganaAnswers = (GlobalKanas.hiraganaMap[x]
-                          ?.where((y) =>
-                              y.system == System.Kovalenko ||
-                              y.system == System.DibrovaOdinets ||
-                              y.system == System.Bondarenko ||
-                              y.system == System.Romaji)
-                          .map((e) => e.value)
-                          .toList());
+                              ?.where((y) =>
+                                  y.system == System.Kovalenko ||
+                                  y.system == System.DibrovaOdinets ||
+                                  y.system == System.Bondarenko ||
+                                  y.system == System.Romaji)
+                              .map((e) => e.value)
+                              .toList()) ??
+                          [];
                     }
                     break;
                   case "ru":
                     {
                       hiraganaAnswers = (GlobalKanas.hiraganaMap[x]
-                          ?.where((y) =>
-                              y.system == System.Polivanov ||
-                              y.system == System.Romaji)
-                          .map((e) => e.value)
-                          .toList());
+                              ?.where((y) =>
+                                  y.system == System.Polivanov ||
+                                  y.system == System.Romaji)
+                              .map((e) => e.value)
+                              .toList()) ??
+                          [];
                     }
                     break;
                   default:
                     {
                       hiraganaAnswers = (GlobalKanas.hiraganaMap[x]
-                          ?.where((y) => y.system == System.Romaji)
-                          .map((e) => e.value)
-                          .toList());
+                              ?.where((y) => y.system == System.Romaji)
+                              .map((e) => e.value)
+                              .toList()) ??
+                          [];
                     }
                     break;
                 }
@@ -137,10 +140,10 @@ class QuizBrain {
                     hiraganaQuestions.add("ず");
                   }
                   hiraganaQuestions.add(x);
-                  _quiz.add(Question(
-                      hiraganaAnswers?.last, hiraganaQuestions, "hiragana"));
+                  _quiz.add(Question(hiraganaAnswers.last ?? "",
+                      hiraganaQuestions, "hiragana"));
                 } else {
-                  _quiz.add(Question(x, hiraganaAnswers ?? [], "hiragana"));
+                  _quiz.add(Question(x, hiraganaAnswers, "hiragana"));
                 }
               },
             );
@@ -159,38 +162,41 @@ class QuizBrain {
         if (katakanaSetList != null) {
           katakanaSetList.forEach(
             (x) {
-              katakanaAnswers = [];
+              katakanaAnswers.clear();
               katakanaQuestions.clear();
 
-              switch (locale.split('_')[0]) {
+              switch (locale.split('_').first) {
                 case "uk":
                   {
                     katakanaAnswers = (GlobalKanas.katakanaMap[x]
-                        ?.where((y) =>
-                            y.system == System.Kovalenko ||
-                            y.system == System.DibrovaOdinets ||
-                            y.system == System.Bondarenko ||
-                            y.system == System.Romaji)
-                        .map((e) => e.value)
-                        .toList());
+                            ?.where((y) =>
+                                y.system == System.Kovalenko ||
+                                y.system == System.DibrovaOdinets ||
+                                y.system == System.Bondarenko ||
+                                y.system == System.Romaji)
+                            .map((e) => e.value)
+                            .toList()) ??
+                        [];
                   }
                   break;
                 case "ru":
                   {
                     katakanaAnswers = (GlobalKanas.katakanaMap[x]
-                        ?.where((y) =>
-                            y.system == System.Polivanov ||
-                            y.system == System.Romaji)
-                        .map((e) => e.value)
-                        .toList());
+                            ?.where((y) =>
+                                y.system == System.Polivanov ||
+                                y.system == System.Romaji)
+                            .map((e) => e.value)
+                            .toList()) ??
+                        [];
                   }
                   break;
                 default:
                   {
                     katakanaAnswers = (GlobalKanas.katakanaMap[x]
-                        ?.where((y) => y.system == System.Romaji)
-                        .map((e) => e.value)
-                        .toList());
+                            ?.where((y) => y.system == System.Romaji)
+                            .map((e) => e.value)
+                            .toList()) ??
+                        [];
                   }
                   break;
               }
@@ -213,9 +219,9 @@ class QuizBrain {
                 }
                 katakanaQuestions.add(x);
                 _quiz.add(Question(
-                    katakanaAnswers?.last, katakanaQuestions, "katakana"));
+                    katakanaAnswers.last ?? "", katakanaQuestions, "katakana"));
               } else {
-                _quiz.add(Question(x, katakanaAnswers ?? [], "katakana"));
+                _quiz.add(Question(x, katakanaAnswers, "katakana"));
               }
             },
           );
