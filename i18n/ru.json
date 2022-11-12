@@ -11,12 +11,12 @@
   "quiz_passed": "Пройдено",
   "quiz_failed": "Провалено",
   "quiz_rate": "Процент успеха",
-  "quiz_enter": "Введите ромадзи",
+  "quiz_enter": "Введите ромадзи/Кириллица",
   "quiz_correct": "Верный ответ",
   "quiz_stoptit" : "Остановить тест",
   "quiz_stopmes" : "Вернуться в главное меню?",
   "main_rset" : "Задний ход",
-  "main_reverse" : "Покажи ромаджи/Введите Кана",
+  "main_reverse" : "Введите Кана",
   "quiz_enter_hira" : "Введите Хираганы",
   "quiz_enter_kata" : "Введите Катаканы"
 }

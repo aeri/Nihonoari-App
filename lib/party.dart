@@ -18,18 +18,19 @@
  */
 
 import 'dart:async';
+import 'dart:io';
 
 import 'package:nihonoari/preferences.dart';
 import 'package:flutter/material.dart';
 import 'localizations.dart';
-import 'quiz_brain.dart';
+import 'quiz_engine.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'table.dart';
 
 class Party extends StatefulWidget {
-  final bool? h, k, re;
+  final bool h, k, re;
 
-  final Map<String, dynamic>? hv, kv;
+  final Map<String, dynamic> hv, kv;
 
   Party(
       {required this.h,
@@ -47,12 +48,14 @@ class _Party extends State<Party> {
     SharedKanaPreferences.setHiraganaSet(hv);
     SharedKanaPreferences.setKatakanaSet(kv);
 
-    QuizBrain.setList(h, hv, k, kv, re);
+    //var loc = WidgetsBinding.instance.window.locales;
+    var currentDefaultSystemLocale = Platform.localeName;
+    QuizBrain.setList(h, hv, k, kv, re, currentDefaultSystemLocale);
   }
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-  void showInSnackBar(int control, String? result) {
+  void showInSnackBar(int control, String result) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       elevation: 10,
       duration: Duration(milliseconds: control),
@@ -230,7 +233,7 @@ class _Party extends State<Party> {
                       child: FittedBox(
                         fit: BoxFit.fitWidth,
                         child: Text(
-                          QuizBrain.currentQuestion!.question ?? "",
+                          QuizBrain.currentQuestion.question,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontFamily: 'MP1P_LIGHT',
@@ -258,7 +261,7 @@ class _Party extends State<Party> {
                       hintStyle: TextStyle(color: Colors.grey),
                       hintText: (() {
                         if (QuizBrain.re) {
-                          if (QuizBrain.currentQuestion!.type == "hiragana") {
+                          if (QuizBrain.currentQuestion.type == "hiragana") {
                             return AppLocalizations.of(context)!
                                 .translate('quiz_enter_hira');
                           } else {
@@ -285,18 +288,14 @@ class _Party extends State<Party> {
 
                     _controller.clear();
 
-                    String? result = QuizBrain.currentQuestion!.answer;
-                    String? extraAnswer =
-                        QuizBrain.currentQuestion!.extraAnswer;
+                    List<String?> answer = QuizBrain.currentQuestion.answer;
 
                     ++total;
 
                     setState(() {
                       // check if an extra answer is available, and if so, if it matches.
                       // this is part of the fix for #33
-                      if (result == value.toLowerCase() ||
-                          (extraAnswer != null &&
-                              extraAnswer == value.toLowerCase())) {
+                      if (answer.contains(value.toLowerCase())) {
                         control = 500;
                         print("OK");
                         _result = Colors.green;
@@ -307,8 +306,8 @@ class _Party extends State<Party> {
                         print("NO");
                         _result = Colors.red;
                         ++rejected;
-
-                        showInSnackBar(control, result);
+                        showInSnackBar(
+                            control, answer.toSet().toList().join(" / "));
                       }
                     });
 
@@ -321,6 +320,7 @@ class _Party extends State<Party> {
                         _ignore = false;
                       });
                     });
+
                     // and later, before the timer goes off...
                   },
                 )),

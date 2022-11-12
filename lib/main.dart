@@ -19,7 +19,10 @@
 
 import 'dart:convert';
 
+import 'package:nihonoari/Models/Transliteration.dart';
+
 import 'UI.Utils/IconCreator.dart';
+import 'Models/GlobalKanas.dart';
 import 'preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -31,14 +34,20 @@ import 'localizations.dart';
 import 'dart:async' show Future;
 import 'package:flutter/services.dart' show rootBundle;
 
-Future<String> loadAsset() async {
-  return await rootBundle.loadString('assets/LICENSES.txt');
+Future<String> loadAsset(String asset) async {
+  return await rootBundle.loadString(asset);
 }
 
-Map<String, dynamic>? _hirasol = new Map<String, bool?>();
-Map<String, dynamic>? _katasol = new Map<String, bool?>();
+Map<String, dynamic> _hirasol = new Map<String, bool?>();
+Map<String, dynamic> _katasol = new Map<String, bool?>();
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  String hiraRawData = await loadAsset("assets/data/hira.json");
+  String kanaRawData = await loadAsset("assets/data/kata.json");
+  GlobalKanas.hiraganaMap = kanasFromJson(hiraRawData);
+  GlobalKanas.katakanaMap = kanasFromJson(kanaRawData);
+
   runApp(new MaterialApp(
     supportedLocales: [
       Locale('en', 'US'),
@@ -46,12 +55,16 @@ Future<void> main() async {
       Locale('fr', ''),
       Locale('uk', ''),
       Locale('ru', ''),
-      Locale('tr', '')
+      Locale('be', ''),
+      Locale('tr', ''),
+      Locale('de', '')
     ],
     localizationsDelegates: [
       AppLocalizations.delegate,
       GlobalMaterialLocalizations.delegate,
       GlobalWidgetsLocalizations.delegate,
+      GlobalCupertinoLocalizations.delegate,
+      DefaultWidgetsLocalizations.delegate,
     ],
     home: new MyApp(),
   ));
@@ -62,17 +75,17 @@ class MyApp extends StatefulWidget {
   _State createState() => new _State();
 }
 
-class hiraDialog extends StatefulWidget {
+class HiraDialog extends StatefulWidget {
   @override
-  _hiraDialogState createState() => _hiraDialogState();
+  _HiraDialogState createState() => _HiraDialogState();
 }
 
-class kataDialog extends StatefulWidget {
+class KataDialog extends StatefulWidget {
   @override
-  _kataDialogState createState() => _kataDialogState();
+  _KataDialogState createState() => _KataDialogState();
 }
 
-class _hiraDialogState extends State<hiraDialog> {
+class _HiraDialogState extends State<HiraDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -88,7 +101,7 @@ class _hiraDialogState extends State<hiraDialog> {
         child: new Theme(
           data: ThemeData(unselectedWidgetColor: Colors.white),
           child: new ListView(
-            children: _hirasol!.keys.map((String key) {
+            children: _hirasol.keys.map((String key) {
               return new CheckboxListTile(
                 title: new Text(
                   key,
@@ -97,10 +110,10 @@ class _hiraDialogState extends State<hiraDialog> {
                   ),
                 ),
                 activeColor: Colors.red,
-                value: _hirasol![key],
+                value: _hirasol[key],
                 onChanged: (bool? value) {
                   setState(() {
-                    _hirasol![key] = value;
+                    _hirasol[key] = value;
                   });
                 },
               );
@@ -124,7 +137,7 @@ class _hiraDialogState extends State<hiraDialog> {
   }
 }
 
-class _kataDialogState extends State<kataDialog> {
+class _KataDialogState extends State<KataDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -140,7 +153,7 @@ class _kataDialogState extends State<kataDialog> {
         child: Theme(
           data: ThemeData(unselectedWidgetColor: Colors.white),
           child: new ListView(
-            children: _katasol!.keys.map((String key) {
+            children: _katasol.keys.map((String key) {
               return new CheckboxListTile(
                 title: new Text(
                   key,
@@ -148,11 +161,11 @@ class _kataDialogState extends State<kataDialog> {
                     color: Colors.white,
                   ),
                 ),
-                value: _katasol![key],
+                value: _katasol[key],
                 activeColor: Colors.red,
                 onChanged: (bool? value) {
                   setState(() {
-                    _katasol![key] = value;
+                    _katasol[key] = value;
                   });
                 },
               );
@@ -178,8 +191,8 @@ class _kataDialogState extends State<kataDialog> {
 
 //State is information of the application that can change over time or when some actions are taken.
 class _State extends State<MyApp> {
-  bool? _katakana = false;
-  bool? _hiragana = false;
+  bool _katakana = false;
+  bool _hiragana = false;
   bool _reverse = false;
 
   @override
@@ -197,16 +210,16 @@ class _State extends State<MyApp> {
   bool _isButtonDisabled = true;
 
   //we omitted the brackets '{}' and are using fat arrow '=>' instead, this is dart syntax
-  void _katakanaChanged(bool? value) => setState(() => _katakana = value);
+  void _katakanaChanged(bool value) => setState(() => _katakana = value);
 
-  void _hiraganaChanged(bool? value) => setState(() => _hiragana = value);
+  void _hiraganaChanged(bool value) => setState(() => _hiragana = value);
 
   void __isButtonDisabledChanged() {
-    _isButtonDisabled = _katakana! || _hiragana! ? false : true;
+    _isButtonDisabled = _katakana || _hiragana ? false : true;
   }
 
   void _showLicense() async {
-    String data = await loadAsset();
+    String data = await loadAsset("assets/LICENSES.txt");
     // flutter defined function
     showDialog(
       context: context,
@@ -245,7 +258,7 @@ class _State extends State<MyApp> {
           child: new Column(
             children: <Widget>[
               Expanded(
-                  flex: 2,
+                  flex: 1,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -288,7 +301,7 @@ class _State extends State<MyApp> {
                     ],
                   )),
               Expanded(
-                flex: 3,
+                flex: 1,
                 child: Theme(
                   data: ThemeData(unselectedWidgetColor: Colors.white),
                   child: new Column(children: <Widget>[
@@ -299,11 +312,11 @@ class _State extends State<MyApp> {
                           await showDialog(
                             context: context,
                             builder: (context) {
-                              return hiraDialog();
+                              return HiraDialog();
                             },
                           );
                         }
-                        if (!_hirasol!.containsValue(true)) {
+                        if (!_hirasol.containsValue(true)) {
                           _hiraganaChanged(false);
                         } else {
                           _hiraganaChanged(value);
@@ -334,12 +347,12 @@ class _State extends State<MyApp> {
                           await showDialog(
                             context: context,
                             builder: (context) {
-                              return kataDialog();
+                              return KataDialog();
                             },
                           );
                         }
 
-                        if (!_katasol!.containsValue(true)) {
+                        if (!_katasol.containsValue(true)) {
                           _katakanaChanged(false);
                         } else {
                           _katakanaChanged(value);
@@ -387,55 +400,48 @@ class _State extends State<MyApp> {
                           _reverse = value;
                         });
                       },
-                      secondary: const Icon(
-                        Icons.refresh,
-                        color: Colors.white,
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Padding(
-                        padding: EdgeInsets.all(5.0),
-                        child: Center(
-                          child: new ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                minimumSize: Size(100, 50),
-                                textStyle: TextStyle(
-                                  color: Colors.white,
-                                ),
-                                padding: const EdgeInsets.all(8.0),
-                                primary: Colors.red,
-                                // background
-                                onPrimary: Colors.white,
-                                // foreground
-                                onSurface: Colors.white),
-                            onPressed: _isButtonDisabled
-                                ? null
-                                : () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (BuildContext context) =>
-                                              new Party(
-                                                  h: _hiragana,
-                                                  hv: _hirasol,
-                                                  k: _katakana,
-                                                  kv: _katasol,
-                                                  re: _reverse)),
-                                    );
-                                  },
-                            child: new Text(_isButtonDisabled
-                                ? AppLocalizations.of(context)!
-                                    .translate('main_select')!
-                                : AppLocalizations.of(context)!
-                                    .translate('main_start')!),
-                          ),
-                        ),
-                      ),
-                    ),
+                      secondary: new IconCreator("A"),
+                    )
                   ]),
                 ),
-              )
+              ),
+              Expanded(
+                flex: 0,
+                child: Center(
+                  child: new ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        minimumSize: Size(100, 50),
+                        textStyle: TextStyle(
+                          color: Colors.white,
+                        ),
+                        padding: const EdgeInsets.all(8.0),
+                        primary: Colors.red,
+                        // background
+                        onPrimary: Colors.white,
+                        // foreground
+                        onSurface: Colors.white),
+                    onPressed: _isButtonDisabled
+                        ? null
+                        : () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) => new Party(
+                                      h: _hiragana,
+                                      hv: _hirasol,
+                                      k: _katakana,
+                                      kv: _katasol,
+                                      re: _reverse)),
+                            );
+                          },
+                    child: new Text(_isButtonDisabled
+                        ? AppLocalizations.of(context)!
+                            .translate('main_select')!
+                        : AppLocalizations.of(context)!
+                            .translate('main_start')!),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
