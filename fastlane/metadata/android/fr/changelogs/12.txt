@@ -1,0 +1,2 @@
+* Correction d'un bug critique lors du lancement de l'application sur les anciens appareils Android
+* Correction d'un bug critique lors de l'utilisation de l'allemand comme langue

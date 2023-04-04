@@ -1,0 +1,2 @@
+* Corregido fallo crítico al iniciar la aplicación en dispositivos Android antiguos
+* Corregido fallo crítico al usar Alemán como idioma
