@@ -54,6 +54,7 @@ flutter:
     - i18n/ru.json
     - i18n/tr.json
     - i18n/de.json
+    - i18n/be.json
     - assets/data/hira.json
     - assets/data/kata.json
 
