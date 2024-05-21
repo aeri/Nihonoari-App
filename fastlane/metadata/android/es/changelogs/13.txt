@@ -1,0 +1,1 @@
+* Se añade un nuevo tema claro y se optimiza el tema oscuro para pantallas OLED

@@ -1,0 +1,1 @@
+* Added a new light theme and dark theme optimized for OLED displays

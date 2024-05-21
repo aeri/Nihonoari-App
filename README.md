@@ -24,11 +24,6 @@ To recognize the Kana syllabary without difficulty is a costly task. While there
     <img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Logo" width=200
   </a>
   
-## Built With
-
-* [Flutter](https://flutter.dev/) - SDK
-* [Android Studio](https://developer.android.com/studio) - IDE
-
 ## Author
 
 * **Aeri** - *Project Nihonoari* - [aeri](https://github.com/aeri)

@@ -26,7 +26,6 @@ class BasicGridView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade900,
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(15.0),
@@ -46,77 +45,66 @@ class BasicGridView extends StatelessWidget {
               _columnContainer("u"),
               _columnContainer("e"),
               _columnContainer("o"),
-
               _columnContainer("a"),
               _buildContainer("a"),
               _buildContainer("i"),
               _buildContainer("u"),
               _buildContainer("e"),
               _buildContainer("o"),
-
               _columnContainer("k"),
               _buildContainer("ka"),
               _buildContainer("ki"),
               _buildContainer("ku"),
               _buildContainer("ke"),
               _buildContainer("ko"),
-
               _columnContainer("s"),
               _buildContainer("sa"),
               _buildContainer("shi"),
               _buildContainer("su"),
               _buildContainer("se"),
               _buildContainer("so"),
-
               _columnContainer("t"),
               _buildContainer("ta"),
               _buildContainer("chi"),
               _buildContainer("tsu"),
               _buildContainer("te"),
               _buildContainer("to"),
-
               _columnContainer("n"),
               _buildContainer("na"),
               _buildContainer("ni"),
               _buildContainer("nu"),
               _buildContainer("ne"),
               _buildContainer("no"),
-
               _columnContainer("h"),
               _buildContainer("ha"),
               _buildContainer("hi"),
               _buildContainer("fu"),
               _buildContainer("he"),
               _buildContainer("ho"),
-
               _columnContainer("m"),
               _buildContainer("ma"),
               _buildContainer("mi"),
               _buildContainer("mu"),
               _buildContainer("me"),
               _buildContainer("mo"),
-
               _columnContainer("y"),
               _buildContainer("ya"),
               _emptyContainer(),
               _buildContainer("yu"),
               _emptyContainer(),
               _buildContainer("yo"),
-
               _columnContainer("r"),
               _buildContainer("ra"),
               _buildContainer("ri"),
               _buildContainer("ru"),
               _buildContainer("re"),
               _buildContainer("ro"),
-
               _columnContainer("w"),
               _buildContainer("wa"),
               _emptyContainer(),
               _emptyContainer(),
               _emptyContainer(),
               _buildContainer("wo"),
-
               _emptyContainer(),
               _buildContainer("n"),
             ],
@@ -172,7 +160,7 @@ class BasicGridView extends StatelessWidget {
           TextSpan(
             text: deep,
             style: TextStyle(
-              color: Colors.deepOrangeAccent,
+              color: Colors.redAccent,
               fontSize: 20,
               fontFamily: "MP1P_MEDIUM",
             ),
