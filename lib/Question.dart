@@ -17,8 +17,7 @@
     along with Nihonoari.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-class Question{
-
+class Question {
   String question = "";
   List<String?> answer = [];
   String type = "";

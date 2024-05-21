@@ -43,7 +43,7 @@ android {
         main.java.srcDirs += 'src/main/kotlin'
     }
 
-    compileSdkVersion 33
+    compileSdkVersion 34
 
     lintOptions {
         disable 'InvalidPackage'

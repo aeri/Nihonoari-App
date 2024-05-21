@@ -67,36 +67,34 @@ Future<void> main() async {
       DefaultWidgetsLocalizations.delegate,
     ],
     darkTheme: ThemeData(
-        useMaterial3: true,
-        // Define the default brightness and colors.
-        colorScheme: ColorScheme(
-          primary: Colors.red,
-          secondary: Colors.white,
-          error: Colors.red,
-          onBackground: Colors.white,
-          onError: Colors.red,
-          onPrimary: Colors.white,
-          onSecondary: Colors.black,
-          onSurface: Colors.white,
-          surface: Colors.black,
-          tertiary: Colors.grey,
-          background: Colors.black,
-          brightness: Brightness.dark,
-
-        ),
+      useMaterial3: true,
+      // Define the default brightness and colors.
+      colorScheme: ColorScheme(
+        primary: Colors.red,
+        secondary: Colors.white,
+        error: Colors.red,
+        onBackground: Colors.white,
+        onError: Colors.red,
+        onPrimary: Colors.white,
+        onSecondary: Colors.black,
+        onSurface: Colors.white,
+        surface: Colors.black,
+        tertiary: Colors.grey,
+        background: Colors.black,
+        brightness: Brightness.dark,
+      ),
       dialogTheme: const DialogTheme(
-          backgroundColor: Colors.black,
-          surfaceTintColor: Colors.grey,
+        backgroundColor: Colors.black,
+        surfaceTintColor: Colors.grey,
       ),
 
-        unselectedWidgetColor: Colors.white,
-        textTheme: TextTheme(
-          displayLarge: const TextStyle(
-            fontSize: 72,
-            fontWeight: FontWeight.bold,
-          ),
-
+      unselectedWidgetColor: Colors.white,
+      textTheme: TextTheme(
+        displayLarge: const TextStyle(
+          fontSize: 72,
+          fontWeight: FontWeight.bold,
         ),
+      ),
     ),
     theme: ThemeData(
       useMaterial3: true,
@@ -153,26 +151,25 @@ class _HiraDialogState extends State<HiraDialog> {
       content: Container(
         width: double.maxFinite,
         child: new ListView(
-            children: _hirasol.keys.map((String key) {
-              return new CheckboxListTile(
-                title: new Text(
-                  key,
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.secondary,
-                  ),
+          children: _hirasol.keys.map((String key) {
+            return new CheckboxListTile(
+              title: new Text(
+                key,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.secondary,
                 ),
-                checkColor: Theme.of(context).colorScheme.onPrimary,
-                activeColor: Theme.of(context).colorScheme.primary,
-                value: _hirasol[key],
-                onChanged: (bool? value) {
-                  setState(() {
-                    _hirasol[key] = value;
-                  });
-                },
-              );
-            }).toList(),
-          ),
-
+              ),
+              checkColor: Theme.of(context).colorScheme.onPrimary,
+              activeColor: Theme.of(context).colorScheme.primary,
+              value: _hirasol[key],
+              onChanged: (bool? value) {
+                setState(() {
+                  _hirasol[key] = value;
+                });
+              },
+            );
+          }).toList(),
+        ),
       ),
       actions: <Widget>[
         // usually buttons at the bottom of the dialog
@@ -203,25 +200,25 @@ class _KataDialogState extends State<KataDialog> {
       content: Container(
         width: double.maxFinite,
         child: new ListView(
-            children: _katasol.keys.map((String key) {
-              return new CheckboxListTile(
-                title: new Text(
-                  key,
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.secondary,
-                  ),
+          children: _katasol.keys.map((String key) {
+            return new CheckboxListTile(
+              title: new Text(
+                key,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.secondary,
                 ),
-                checkColor: Theme.of(context).colorScheme.onPrimary,
-                activeColor: Theme.of(context).colorScheme.primary,
-                value: _katasol[key],
-                onChanged: (bool? value) {
-                  setState(() {
-                    _katasol[key] = value;
-                  });
-                },
-              );
-            }).toList(),
-          ),
+              ),
+              checkColor: Theme.of(context).colorScheme.onPrimary,
+              activeColor: Theme.of(context).colorScheme.primary,
+              value: _katasol[key],
+              onChanged: (bool? value) {
+                setState(() {
+                  _katasol[key] = value;
+                });
+              },
+            );
+          }).toList(),
+        ),
       ),
       actions: <Widget>[
         // usually buttons at the bottom of the dialog
@@ -291,8 +288,7 @@ class _State extends State<MyApp> {
                             style: TextStyle(
                               fontFamily: 'MP1P_LIGHT',
                               fontSize: 25.0,
-                                color: Theme.of(context).colorScheme.secondary,
-
+                              color: Theme.of(context).colorScheme.secondary,
                             ),
                             children: <TextSpan>[
                               TextSpan(
@@ -313,13 +309,13 @@ class _State extends State<MyApp> {
                                 showLicensePage(
                                   context: context,
                                   applicationName: 'Nihonoari',
-                                  applicationLegalese: 'Copyright (C) 2020  Naval Alcalá',
+                                  applicationLegalese:
+                                      'Copyright (C) 2020  Naval Alcalá',
                                 );
                               },
                             style: TextStyle(
                               fontSize: 15.0,
-                                color: Theme.of(context).colorScheme.tertiary,
-
+                              color: Theme.of(context).colorScheme.tertiary,
                             ),
                           ),
                         ),
@@ -329,117 +325,115 @@ class _State extends State<MyApp> {
               Expanded(
                 flex: 1,
                 child: new Column(children: <Widget>[
-                    new CheckboxListTile(
-                      checkColor: Theme.of(context).colorScheme.onPrimary,
-                      activeColor: Theme.of(context).colorScheme.primary,
-                      value: _hiragana,
-                      onChanged: (value) async {
-                        if (value!) {
-                          await showDialog(
-                            context: context,
-                            builder: (context) {
-                              return HiraDialog();
-                            },
-                          );
-                        }
-                        if (!_hirasol.containsValue(true)) {
-                          _hiraganaChanged(false);
-                        } else {
-                          _hiraganaChanged(value);
-                        }
-                        __isButtonDisabledChanged();
-                      },
-                      title: new Text(
-                        'Hiragana',
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.secondary,
-                        ),
+                  new CheckboxListTile(
+                    checkColor: Theme.of(context).colorScheme.onPrimary,
+                    activeColor: Theme.of(context).colorScheme.primary,
+                    value: _hiragana,
+                    onChanged: (value) async {
+                      if (value!) {
+                        await showDialog(
+                          context: context,
+                          builder: (context) {
+                            return HiraDialog();
+                          },
+                        );
+                      }
+                      if (!_hirasol.containsValue(true)) {
+                        _hiraganaChanged(false);
+                      } else {
+                        _hiraganaChanged(value);
+                      }
+                      __isButtonDisabledChanged();
+                    },
+                    title: new Text(
+                      'Hiragana',
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.secondary,
                       ),
-                      controlAffinity: ListTileControlAffinity.leading,
-                      subtitle: new Text(
-                        AppLocalizations.of(context)!
-                            .translate('main_hiragana')!,
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.secondary,
-                        ),
-                      ),
-                      secondary: new IconCreator("あ"),
                     ),
-                    new CheckboxListTile(
-                      value: _katakana,
-                      checkColor: Theme.of(context).colorScheme.onPrimary,
-                      activeColor: Theme.of(context).colorScheme.primary,
-                      onChanged: (value) async {
-                        if (value!) {
-                          await showDialog(
-                            context: context,
-                            builder: (context) {
-                              return KataDialog();
-                            },
-                          );
-                        }
+                    controlAffinity: ListTileControlAffinity.leading,
+                    subtitle: new Text(
+                      AppLocalizations.of(context)!.translate('main_hiragana')!,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.secondary,
+                      ),
+                    ),
+                    secondary: new IconCreator("あ"),
+                  ),
+                  new CheckboxListTile(
+                    value: _katakana,
+                    checkColor: Theme.of(context).colorScheme.onPrimary,
+                    activeColor: Theme.of(context).colorScheme.primary,
+                    onChanged: (value) async {
+                      if (value!) {
+                        await showDialog(
+                          context: context,
+                          builder: (context) {
+                            return KataDialog();
+                          },
+                        );
+                      }
 
-                        if (!_katasol.containsValue(true)) {
-                          _katakanaChanged(false);
-                        } else {
-                          _katakanaChanged(value);
-                        }
-                        __isButtonDisabledChanged();
-                      },
-                      title: new Text(
-                        'Katakana',
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.secondary,
-                        ),
+                      if (!_katasol.containsValue(true)) {
+                        _katakanaChanged(false);
+                      } else {
+                        _katakanaChanged(value);
+                      }
+                      __isButtonDisabledChanged();
+                    },
+                    title: new Text(
+                      'Katakana',
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.secondary,
                       ),
-                      controlAffinity: ListTileControlAffinity.leading,
-                      subtitle: new Text(
-                        AppLocalizations.of(context)!
-                            .translate('main_katakana')!,
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.secondary,
-                        ),
-                      ),
-                      secondary: new IconCreator("ア"),
                     ),
-                    SwitchListTile(
-                      title: new Text(
-                        AppLocalizations.of(context)!.translate('main_rset')!,
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.secondary,
-                        ),
+                    controlAffinity: ListTileControlAffinity.leading,
+                    subtitle: new Text(
+                      AppLocalizations.of(context)!.translate('main_katakana')!,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.secondary,
                       ),
-                      subtitle: new Text(
-                        AppLocalizations.of(context)!
-                            .translate('main_reverse')!,
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.secondary,
-                        ),
+                    ),
+                    secondary: new IconCreator("ア"),
+                  ),
+                  SwitchListTile(
+                    title: new Text(
+                      AppLocalizations.of(context)!.translate('main_rset')!,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.secondary,
                       ),
-                      controlAffinity: ListTileControlAffinity.leading,
-                      value: _reverse,
-                      activeColor: Theme.of(context).colorScheme.onPrimary,
-                      activeTrackColor: Theme.of(context).colorScheme.primary,
-                      inactiveThumbColor: Theme.of(context).colorScheme.secondary,
-                      inactiveTrackColor: Theme.of(context).colorScheme.background,
-                      onChanged: (bool value) {
-                        setState(() {
-                          _reverse = value;
-                        });
-                      },
-                      secondary: new IconCreator("A"),
-                    )
-                  ]),
+                    ),
+                    subtitle: new Text(
+                      AppLocalizations.of(context)!.translate('main_reverse')!,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.secondary,
+                      ),
+                    ),
+                    controlAffinity: ListTileControlAffinity.leading,
+                    value: _reverse,
+                    activeColor: Theme.of(context).colorScheme.onPrimary,
+                    activeTrackColor: Theme.of(context).colorScheme.primary,
+                    inactiveThumbColor: Theme.of(context).colorScheme.secondary,
+                    inactiveTrackColor:
+                        Theme.of(context).colorScheme.background,
+                    onChanged: (bool value) {
+                      setState(() {
+                        _reverse = value;
+                      });
+                    },
+                    secondary: new IconCreator("A"),
+                  )
+                ]),
               ),
               Expanded(
                 flex: 0,
                 child: Center(
                   child: new ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        minimumSize: Size(100, 50),
-                        padding: const EdgeInsets.all(8.0),
-                        backgroundColor: Theme.of(context).colorScheme.primary,
-                        foregroundColor: Theme.of(context).colorScheme.secondary,
+                      minimumSize: Size(100, 50),
+                      padding: const EdgeInsets.all(8.0),
+                      backgroundColor: Theme.of(context).colorScheme.primary,
+                      foregroundColor: Theme.of(context).colorScheme.secondary,
                     ),
                     onPressed: _isButtonDisabled
                         ? null
@@ -455,13 +449,15 @@ class _State extends State<MyApp> {
                                       re: _reverse)),
                             );
                           },
-                    child: new Text(_isButtonDisabled
-                        ? AppLocalizations.of(context)!
-                            .translate('main_select')!
-                        : AppLocalizations.of(context)!
-                            .translate('main_start')!,style: TextStyle(
-                      color: Theme.of(context).colorScheme.onPrimary
-                    ),),
+                    child: new Text(
+                      _isButtonDisabled
+                          ? AppLocalizations.of(context)!
+                              .translate('main_select')!
+                          : AppLocalizations.of(context)!
+                              .translate('main_start')!,
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.onPrimary),
+                    ),
                   ),
                 ),
               ),

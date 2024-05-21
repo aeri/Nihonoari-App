@@ -58,7 +58,6 @@ class _Party extends State<Party> {
   int rejected = 0;
   double ratio = 0;
 
-
   _Party(h, hv, k, kv, re) {
     AppPreferences.setHiraganaSet(hv);
     AppPreferences.setKatakanaSet(kv);
@@ -78,7 +77,9 @@ class _Party extends State<Party> {
       content: Text(
         '${AppLocalizations.of(context)!.translate('quiz_correct')}: $result',
         style: TextStyle(
-            fontSize: 20, color: Theme.of(context).colorScheme.onPrimary, fontWeight: FontWeight.bold),
+            fontSize: 20,
+            color: Theme.of(context).colorScheme.onPrimary,
+            fontWeight: FontWeight.bold),
         textAlign: TextAlign.center,
       ),
     ));
@@ -193,8 +194,8 @@ class _Party extends State<Party> {
         if (didPop) {
           return;
         }
-        bool isExit =  await _onBackPressed();
-        if (isExit){
+        bool isExit = await _onBackPressed();
+        if (isExit) {
           Navigator.of(context).pop();
         }
       },
@@ -210,32 +211,30 @@ class _Party extends State<Party> {
                 Expanded(
                     flex: 0,
                     child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-
-                            IconButton(
-                                // Use the FontAwesomeIcons class for the IconData
-                                icon: new Icon(FontAwesomeIcons.language,
-                                    color: Theme.of(context).colorScheme.secondary),
-                                onPressed: () {
-                                  FocusScope.of(context)
-                                      .requestFocus(new FocusNode());
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => BasicGridView()),
-                                  );
-                                }),
-
-                            IconButton(
-                                // Use the FontAwesomeIcons class for the IconData
-                                icon: new Icon(FontAwesomeIcons.chartBar,
-                                    color: Theme.of(context).colorScheme.secondary),
-                                onPressed: () {
-                                  FocusScope.of(context)
-                                      .requestFocus(new FocusNode());
-                                  _showDialog();
-                                }),
+                        IconButton(
+                            // Use the FontAwesomeIcons class for the IconData
+                            icon: new Icon(FontAwesomeIcons.language,
+                                color: Theme.of(context).colorScheme.secondary),
+                            onPressed: () {
+                              FocusScope.of(context)
+                                  .requestFocus(new FocusNode());
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => BasicGridView()),
+                              );
+                            }),
+                        IconButton(
+                            // Use the FontAwesomeIcons class for the IconData
+                            icon: new Icon(FontAwesomeIcons.chartBar,
+                                color: Theme.of(context).colorScheme.secondary),
+                            onPressed: () {
+                              FocusScope.of(context)
+                                  .requestFocus(new FocusNode());
+                              _showDialog();
+                            }),
                       ],
                     )),
                 Expanded(
@@ -329,7 +328,8 @@ class _Party extends State<Party> {
 
                     t = Timer(Duration(milliseconds: control), () {
                       setState(() {
-                        _questionColor = Theme.of(context).colorScheme.secondary;
+                        _questionColor =
+                            Theme.of(context).colorScheme.secondary;
                         QuizBrain.nextQuestion(passed);
                         _ignore = false;
                       });
