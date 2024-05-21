@@ -66,6 +66,61 @@ Future<void> main() async {
       GlobalCupertinoLocalizations.delegate,
       DefaultWidgetsLocalizations.delegate,
     ],
+    darkTheme: ThemeData(
+        useMaterial3: true,
+        // Define the default brightness and colors.
+        colorScheme: ColorScheme(
+          primary: Colors.red,
+          secondary: Colors.white,
+          error: Colors.red,
+          onBackground: Colors.white,
+          onError: Colors.red,
+          onPrimary: Colors.white,
+          onSecondary: Colors.black,
+          onSurface: Colors.white,
+          surface: Colors.black,
+          tertiary: Colors.grey,
+          background: Colors.black,
+          brightness: Brightness.dark,
+
+        ),
+      dialogTheme: const DialogTheme(
+          backgroundColor: Colors.black,
+          surfaceTintColor: Colors.grey,
+      ),
+
+        unselectedWidgetColor: Colors.white,
+        textTheme: TextTheme(
+          displayLarge: const TextStyle(
+            fontSize: 72,
+            fontWeight: FontWeight.bold,
+          ),
+
+        ),
+    ),
+    theme: ThemeData(
+      useMaterial3: true,
+      colorScheme: ColorScheme(
+        primary: Colors.redAccent,
+        secondary: Color(0xff011627),
+        error: Colors.redAccent,
+        onBackground: Color(0xff011627),
+        onError: Colors.redAccent,
+        onPrimary: Color(0xfffffbff),
+        onSecondary: Color(0xfffffbff),
+        onSurface: Color(0xff011627),
+        surface: Color(0xfffffbff),
+        tertiary: Colors.grey,
+        background: Color(0xfffffbff),
+        brightness: Brightness.light,
+      ),
+      dialogTheme: const DialogTheme(
+        backgroundColor: Color(0xfffffbff),
+        surfaceTintColor: Colors.transparent,
+      ),
+      /* dark theme settings */
+    ),
+    themeMode: ThemeMode.system,
     home: new MyApp(),
   ));
 }
@@ -92,24 +147,22 @@ class _HiraDialogState extends State<HiraDialog> {
       title: Text(
         AppLocalizations.of(context)!.translate('main_hset')!,
         style: TextStyle(
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.secondary,
         ),
       ),
-      backgroundColor: Colors.black,
       content: Container(
         width: double.maxFinite,
-        child: new Theme(
-          data: ThemeData(unselectedWidgetColor: Colors.white),
-          child: new ListView(
+        child: new ListView(
             children: _hirasol.keys.map((String key) {
               return new CheckboxListTile(
                 title: new Text(
                   key,
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.secondary,
                   ),
                 ),
-                activeColor: Colors.red,
+                checkColor: Theme.of(context).colorScheme.onPrimary,
+                activeColor: Theme.of(context).colorScheme.primary,
                 value: _hirasol[key],
                 onChanged: (bool? value) {
                   setState(() {
@@ -119,14 +172,14 @@ class _HiraDialogState extends State<HiraDialog> {
               );
             }).toList(),
           ),
-        ),
+
       ),
       actions: <Widget>[
         // usually buttons at the bottom of the dialog
         new TextButton(
           child: new Icon(
             Icons.done,
-            color: Colors.red,
+            color: Theme.of(context).colorScheme.primary,
           ),
           onPressed: () {
             Navigator.of(context).pop();
@@ -141,28 +194,26 @@ class _KataDialogState extends State<KataDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: Colors.black,
       title: Text(
         AppLocalizations.of(context)!.translate('main_kset')!,
         style: TextStyle(
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.secondary,
         ),
       ),
       content: Container(
         width: double.maxFinite,
-        child: Theme(
-          data: ThemeData(unselectedWidgetColor: Colors.white),
-          child: new ListView(
+        child: new ListView(
             children: _katasol.keys.map((String key) {
               return new CheckboxListTile(
                 title: new Text(
                   key,
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.secondary,
                   ),
                 ),
+                checkColor: Theme.of(context).colorScheme.onPrimary,
+                activeColor: Theme.of(context).colorScheme.primary,
                 value: _katasol[key],
-                activeColor: Colors.red,
                 onChanged: (bool? value) {
                   setState(() {
                     _katasol[key] = value;
@@ -171,14 +222,13 @@ class _KataDialogState extends State<KataDialog> {
               );
             }).toList(),
           ),
-        ),
       ),
       actions: <Widget>[
         // usually buttons at the bottom of the dialog
         new TextButton(
           child: new Icon(
             Icons.done,
-            color: Colors.red,
+            color: Theme.of(context).colorScheme.primary,
           ),
           onPressed: () {
             Navigator.of(context).pop();
@@ -202,9 +252,9 @@ class _State extends State<MyApp> {
   }
 
   Future<Null> readData() async {
-    await SharedKanaPreferences.init();
-    _hirasol = json.decode(SharedKanaPreferences.getHiraganaSet());
-    _katasol = json.decode(SharedKanaPreferences.getKatakanaSet());
+    await AppPreferences.init();
+    _hirasol = json.decode(AppPreferences.getHiraganaSet());
+    _katasol = json.decode(AppPreferences.getKatakanaSet());
   }
 
   bool _isButtonDisabled = true;
@@ -218,39 +268,9 @@ class _State extends State<MyApp> {
     _isButtonDisabled = _katakana || _hiragana ? false : true;
   }
 
-  void _showLicense() async {
-    String data = await loadAsset("assets/LICENSES.txt");
-    // flutter defined function
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return AlertDialog(
-          title: Text("Licenses"),
-          content: new SingleChildScrollView(
-            child: Text(data),
-          ),
-          actions: <Widget>[
-            // usually buttons at the bottom of the dialog
-            new TextButton(
-              child: new Icon(
-                Icons.done,
-                color: Colors.red,
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      backgroundColor: Colors.grey.shade900,
       //hit Ctrl+space in intellij to know what are the options you can use in flutter widgets
       body: new Container(
         padding: new EdgeInsets.all(32.0),
@@ -271,7 +291,8 @@ class _State extends State<MyApp> {
                             style: TextStyle(
                               fontFamily: 'MP1P_LIGHT',
                               fontSize: 25.0,
-                              color: Colors.white,
+                                color: Theme.of(context).colorScheme.secondary,
+
                             ),
                             children: <TextSpan>[
                               TextSpan(
@@ -289,11 +310,16 @@ class _State extends State<MyApp> {
                                 .translate('main_licenses'),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
-                                _showLicense();
+                                showLicensePage(
+                                  context: context,
+                                  applicationName: 'Nihonoari',
+                                  applicationLegalese: 'Copyright (C) 2020  Naval Alcalá',
+                                );
                               },
                             style: TextStyle(
                               fontSize: 15.0,
-                              color: Colors.grey,
+                                color: Theme.of(context).colorScheme.tertiary,
+
                             ),
                           ),
                         ),
@@ -302,10 +328,10 @@ class _State extends State<MyApp> {
                   )),
               Expanded(
                 flex: 1,
-                child: Theme(
-                  data: ThemeData(unselectedWidgetColor: Colors.white),
-                  child: new Column(children: <Widget>[
+                child: new Column(children: <Widget>[
                     new CheckboxListTile(
+                      checkColor: Theme.of(context).colorScheme.onPrimary,
+                      activeColor: Theme.of(context).colorScheme.primary,
                       value: _hiragana,
                       onChanged: (value) async {
                         if (value!) {
@@ -326,7 +352,7 @@ class _State extends State<MyApp> {
                       title: new Text(
                         'Hiragana',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.secondary,
                         ),
                       ),
                       controlAffinity: ListTileControlAffinity.leading,
@@ -334,14 +360,15 @@ class _State extends State<MyApp> {
                         AppLocalizations.of(context)!
                             .translate('main_hiragana')!,
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.secondary,
                         ),
                       ),
                       secondary: new IconCreator("あ"),
-                      activeColor: Colors.red,
                     ),
                     new CheckboxListTile(
                       value: _katakana,
+                      checkColor: Theme.of(context).colorScheme.onPrimary,
+                      activeColor: Theme.of(context).colorScheme.primary,
                       onChanged: (value) async {
                         if (value!) {
                           await showDialog(
@@ -362,7 +389,7 @@ class _State extends State<MyApp> {
                       title: new Text(
                         'Katakana',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.secondary,
                         ),
                       ),
                       controlAffinity: ListTileControlAffinity.leading,
@@ -370,31 +397,31 @@ class _State extends State<MyApp> {
                         AppLocalizations.of(context)!
                             .translate('main_katakana')!,
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.secondary,
                         ),
                       ),
                       secondary: new IconCreator("ア"),
-                      activeColor: Colors.red,
                     ),
                     SwitchListTile(
                       title: new Text(
                         AppLocalizations.of(context)!.translate('main_rset')!,
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.secondary,
                         ),
                       ),
                       subtitle: new Text(
                         AppLocalizations.of(context)!
                             .translate('main_reverse')!,
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.secondary,
                         ),
                       ),
                       controlAffinity: ListTileControlAffinity.leading,
                       value: _reverse,
-                      activeColor: Colors.red,
-                      inactiveThumbColor: Colors.white,
-                      inactiveTrackColor: Colors.black,
+                      activeColor: Theme.of(context).colorScheme.onPrimary,
+                      activeTrackColor: Theme.of(context).colorScheme.primary,
+                      inactiveThumbColor: Theme.of(context).colorScheme.secondary,
+                      inactiveTrackColor: Theme.of(context).colorScheme.background,
                       onChanged: (bool value) {
                         setState(() {
                           _reverse = value;
@@ -403,7 +430,6 @@ class _State extends State<MyApp> {
                       secondary: new IconCreator("A"),
                     )
                   ]),
-                ),
               ),
               Expanded(
                 flex: 0,
@@ -411,15 +437,10 @@ class _State extends State<MyApp> {
                   child: new ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         minimumSize: Size(100, 50),
-                        textStyle: TextStyle(
-                          color: Colors.white,
-                        ),
                         padding: const EdgeInsets.all(8.0),
-                        primary: Colors.red,
-                        // background
-                        onPrimary: Colors.white,
-                        // foreground
-                        onSurface: Colors.white),
+                        backgroundColor: Theme.of(context).colorScheme.primary,
+                        foregroundColor: Theme.of(context).colorScheme.secondary,
+                    ),
                     onPressed: _isButtonDisabled
                         ? null
                         : () {
@@ -438,7 +459,9 @@ class _State extends State<MyApp> {
                         ? AppLocalizations.of(context)!
                             .translate('main_select')!
                         : AppLocalizations.of(context)!
-                            .translate('main_start')!),
+                            .translate('main_start')!,style: TextStyle(
+                      color: Theme.of(context).colorScheme.onPrimary
+                    ),),
                   ),
                 ),
               ),

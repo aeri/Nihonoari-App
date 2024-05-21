@@ -10,7 +10,7 @@ class IconCreator extends StatelessWidget {
   Widget build(BuildContext context) {
     return new Container(
       decoration: new BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.secondary,
         borderRadius: new BorderRadius.circular(4.0),
       ),
       padding: EdgeInsets.symmetric(vertical: 1, horizontal: 1),
@@ -25,7 +25,7 @@ class IconCreator extends StatelessWidget {
             fontSize: 16.0,
             fontFamily: "MP1P_MEDIUM",
             fontStyle: FontStyle.normal,
-            color: Colors.black,
+            color: Theme.of(context).colorScheme.onSecondary,
           ),
         ),
       ),

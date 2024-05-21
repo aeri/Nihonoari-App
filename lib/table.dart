@@ -26,7 +26,6 @@ class BasicGridView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade900,
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(15.0),
@@ -172,7 +171,7 @@ class BasicGridView extends StatelessWidget {
           TextSpan(
             text: deep,
             style: TextStyle(
-              color: Colors.deepOrangeAccent,
+              color: Colors.redAccent,
               fontSize: 20,
               fontFamily: "MP1P_MEDIUM",
             ),

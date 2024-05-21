@@ -44,9 +44,24 @@ class Party extends StatefulWidget {
 }
 
 class _Party extends State<Party> {
+  Color? _questionColor;
+
+  FocusNode _focusNode = FocusNode();
+  bool _ignore = false;
+  Timer? t;
+
+  TextEditingController _controller = TextEditingController();
+
+  List<Widget> scoreKeeper = [];
+  int total = 0;
+  int accepted = 0;
+  int rejected = 0;
+  double ratio = 0;
+
+
   _Party(h, hv, k, kv, re) {
-    SharedKanaPreferences.setHiraganaSet(hv);
-    SharedKanaPreferences.setKatakanaSet(kv);
+    AppPreferences.setHiraganaSet(hv);
+    AppPreferences.setKatakanaSet(kv);
 
     //var loc = WidgetsBinding.instance.window.locales;
     var currentDefaultSystemLocale = Platform.localeName;
@@ -57,12 +72,13 @@ class _Party extends State<Party> {
 
   void showInSnackBar(int control, String result) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      backgroundColor: Theme.of(context).colorScheme.primary,
       elevation: 10,
       duration: Duration(milliseconds: control),
       content: Text(
         '${AppLocalizations.of(context)!.translate('quiz_correct')}: $result',
         style: TextStyle(
-            fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
+            fontSize: 20, color: Theme.of(context).colorScheme.onPrimary, fontWeight: FontWeight.bold),
         textAlign: TextAlign.center,
       ),
     ));
@@ -72,31 +88,17 @@ class _Party extends State<Party> {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
   }
 
-  FocusNode _focusNode = FocusNode();
-
-  bool _ignore = false;
-
-  Timer? t;
-
-  Color _result = Colors.white;
-
-  TextEditingController _controller = TextEditingController();
-
-  List<Widget> scoreKeeper = [];
-  int total = 0;
-  int accepted = 0;
-  int rejected = 0;
-  double ratio = 0;
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    if (t != null && t!.isActive) t!.cancel();
+    QuizBrain.clearList();
+    super.dispose();
+  }
 
   @override
   void initState() {
     super.initState();
-
-    _focusNode.addListener(() {
-      if (!_focusNode.hasFocus) {
-        FocusScope.of(context).requestFocus(_focusNode);
-      }
-    });
   }
 
   void _showDialog() async {
@@ -107,11 +109,10 @@ class _Party extends State<Party> {
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
-          backgroundColor: Colors.black,
           title:
               new Text(AppLocalizations.of(context)!.translate('quiz_stats')!,
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.secondary,
                   )),
           content: new Text(
               "${AppLocalizations.of(context)!.translate('quiz_total')}: $total\n"
@@ -119,14 +120,14 @@ class _Party extends State<Party> {
               "${AppLocalizations.of(context)!.translate('quiz_failed')}: $rejected\n"
               "${AppLocalizations.of(context)!.translate('quiz_rate')}: ${ratio.toStringAsFixed(2)}%",
               style: TextStyle(
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.secondary,
               )),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             new TextButton(
               child: new Icon(
                 Icons.done,
-                color: Colors.red,
+                color: Theme.of(context).colorScheme.primary,
               ),
               onPressed: () {
                 Navigator.of(context).pop();
@@ -143,23 +144,22 @@ class _Party extends State<Party> {
     return showDialog(
       context: context,
       builder: (context) => new AlertDialog(
-        backgroundColor: Colors.black,
         title:
             new Text(AppLocalizations.of(context)!.translate('quiz_stoptit')!,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.secondary,
                 )),
         content:
             new Text(AppLocalizations.of(context)!.translate('quiz_stopmes')!,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.secondary,
                 )),
         actions: <Widget>[
           // usually buttons at the bottom of the dialog
           new TextButton(
             child: new Icon(
               Icons.close,
-              color: Colors.red,
+              color: Theme.of(context).colorScheme.primary,
             ),
             onPressed: () {
               Navigator.of(context).pop(false);
@@ -168,26 +168,38 @@ class _Party extends State<Party> {
           new TextButton(
             child: new Icon(
               Icons.done,
-              color: Colors.red,
+              color: Theme.of(context).colorScheme.primary,
             ),
             onPressed: () {
-              if (t != null && t!.isActive) t!.cancel();
-              QuizBrain.clearList();
               Navigator.of(context).pop(true);
             },
           ),
         ],
       ),
-    ).then((value) => true);
+    ).then((value) {
+      return value ?? false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: _onBackPressed,
+    if (_questionColor == null) {
+      _questionColor = Theme.of(context).colorScheme.secondary;
+    }
+
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) async {
+        if (didPop) {
+          return;
+        }
+        bool isExit =  await _onBackPressed();
+        if (isExit){
+          Navigator.of(context).pop();
+        }
+      },
       child: new Scaffold(
         key: _scaffoldKey,
-        backgroundColor: Colors.grey.shade900,
         body: SafeArea(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 10.0),
@@ -198,12 +210,13 @@ class _Party extends State<Party> {
                 Expanded(
                     flex: 0,
                     child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                        Expanded(
-                            child: IconButton(
+
+                            IconButton(
                                 // Use the FontAwesomeIcons class for the IconData
                                 icon: new Icon(FontAwesomeIcons.language,
-                                    color: Colors.white),
+                                    color: Theme.of(context).colorScheme.secondary),
                                 onPressed: () {
                                   FocusScope.of(context)
                                       .requestFocus(new FocusNode());
@@ -212,17 +225,17 @@ class _Party extends State<Party> {
                                     MaterialPageRoute(
                                         builder: (context) => BasicGridView()),
                                   );
-                                })),
-                        Expanded(
-                            child: IconButton(
+                                }),
+
+                            IconButton(
                                 // Use the FontAwesomeIcons class for the IconData
                                 icon: new Icon(FontAwesomeIcons.chartBar,
-                                    color: Colors.white),
+                                    color: Theme.of(context).colorScheme.secondary),
                                 onPressed: () {
                                   FocusScope.of(context)
                                       .requestFocus(new FocusNode());
                                   _showDialog();
-                                })),
+                                }),
                       ],
                     )),
                 Expanded(
@@ -238,7 +251,7 @@ class _Party extends State<Party> {
                           style: TextStyle(
                             fontFamily: 'MP1P_LIGHT',
                             fontSize: 125.0,
-                            color: _result,
+                            color: _questionColor,
                           ),
                         ),
                       ),
@@ -252,11 +265,11 @@ class _Party extends State<Party> {
                   focusNode: _focusNode,
                   autofocus: true,
                   textAlign: TextAlign.center,
-                  cursorColor: Colors.white,
+                  cursorColor: Theme.of(context).colorScheme.secondary,
                   decoration: InputDecoration(
-                      hoverColor: Colors.white,
-                      fillColor: Colors.white,
-                      focusColor: Colors.white,
+                      hoverColor: Theme.of(context).colorScheme.secondary,
+                      fillColor: Theme.of(context).colorScheme.secondary,
+                      focusColor: Theme.of(context).colorScheme.secondary,
                       border: InputBorder.none,
                       hintStyle: TextStyle(color: Colors.grey),
                       hintText: (() {
@@ -275,9 +288,10 @@ class _Party extends State<Party> {
                       })()),
                   style: TextStyle(
                     fontSize: 20,
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.secondary,
                   ),
                   onSubmitted: (value) {
+                    FocusScope.of(context).autofocus(_focusNode);
                     if (_ignore || value.length < 1) {
                       return;
                     }
@@ -298,13 +312,13 @@ class _Party extends State<Party> {
                       if (answer.contains(value.toLowerCase())) {
                         control = 500;
                         print("OK");
-                        _result = Colors.green;
+                        _questionColor = Colors.greenAccent;
                         ++accepted;
                         passed = true;
                       } else {
                         control = 2000;
                         print("NO");
-                        _result = Colors.red;
+                        _questionColor = Theme.of(context).colorScheme.primary;
                         ++rejected;
                         showInSnackBar(
                             control, answer.toSet().toList().join(" / "));
@@ -315,7 +329,7 @@ class _Party extends State<Party> {
 
                     t = Timer(Duration(milliseconds: control), () {
                       setState(() {
-                        _result = Colors.white;
+                        _questionColor = Theme.of(context).colorScheme.secondary;
                         QuizBrain.nextQuestion(passed);
                         _ignore = false;
                       });

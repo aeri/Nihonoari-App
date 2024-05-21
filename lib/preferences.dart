@@ -19,7 +19,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
-class SharedKanaPreferences {
+class AppPreferences {
   static Future<SharedPreferences> get _instance async =>
       _prefsInstance ??= await SharedPreferences.getInstance();
   static SharedPreferences? _prefsInstance;
@@ -59,9 +59,12 @@ class SharedKanaPreferences {
 
   static final String _hirasolSet = "hiragana";
   static final String _katasolSet = "katakana";
+  static final String _themeKey = "original_theme";
+
+
 
   static String getHiraganaSet() {
-    var hiraganaData = _prefsInstance!.getString(_hirasolSet);
+    var hiraganaData = _prefsInstance?.getString(_hirasolSet);
 
     if (hiraganaData == null) {
       print("EMPTY HIRAGANA");
@@ -77,7 +80,7 @@ class SharedKanaPreferences {
   }
 
   static String getKatakanaSet() {
-    var katakanaData = _prefsInstance!.getString(_katasolSet);
+    var katakanaData = _prefsInstance?.getString(_katasolSet);
 
     if (katakanaData == null) {
       print("EMPTY KATAKANA");
@@ -89,6 +92,16 @@ class SharedKanaPreferences {
   }
 
   static Future<bool> setKatakanaSet(Map<String, dynamic>? value) async {
-    return _prefsInstance!.setString(_katasolSet, json.encode(value));
+    return await _prefsInstance!.setString(_katasolSet, json.encode(value));
   }
+
+  static setTheme(bool value) async {
+    return await _prefsInstance?.setBool(_themeKey, value);
+  }
+
+  static getTheme() async {
+    return await _prefsInstance?.getBool(_themeKey) ?? true;
+  }
+
+
 }
