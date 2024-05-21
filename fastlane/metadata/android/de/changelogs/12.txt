@@ -1,0 +1,2 @@
+* Kritischer Absturz beim Starten der App auf alten Android-Geräten behoben
+* Kritischer Fehler bei Verwendung von Deutsch als Sprache behoben

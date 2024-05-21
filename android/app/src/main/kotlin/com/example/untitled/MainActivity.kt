@@ -12,9 +12,10 @@ class MainActivity: FlutterActivity() {
         /*
     if (Build.VERSION.SDK_INT < 20) {
       intent.putExtra("enable-software-rendering", true)
+      getIntent().putExtra("enable-software-rendering", true);
+
     }
          */
-            getIntent().putExtra("enable-software-rendering", true);
 
         // start Flutter
         super.onCreate(savedInstanceState)

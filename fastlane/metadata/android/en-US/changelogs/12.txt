@@ -1,0 +1,2 @@
+* Fixed critical crash in older Android devices
+* Fixed critical crash using German language
