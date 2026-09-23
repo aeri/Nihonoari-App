@@ -30,6 +30,8 @@ if (keystorePropertiesFile.exists()) {
 
 android {
 
+    namespace = "com.LAPARCELA.nihonoari"
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -43,7 +45,7 @@ android {
         main.java.srcDirs += 'src/main/kotlin'
     }
 
-    compileSdkVersion 34
+    compileSdkVersion 37
 
     lintOptions {
         disable 'InvalidPackage'
@@ -52,7 +54,7 @@ android {
     defaultConfig {
         applicationId "com.LAPARCELA.nihonoari"
         minSdkVersion flutter.minSdkVersion
-        targetSdkVersion 34
+        targetSdkVersion 37
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }

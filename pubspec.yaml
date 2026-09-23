@@ -1,15 +1,15 @@
 name: nihonoari
 description: A little Japanese Kana training
 
-version: 1.8.0+13
+version: 1.8.1+14
 
 environment:
   sdk: '>=3.3.4 <4.0.0'
 
 dependencies:
-  kana_kit: ^2.0.0
-  font_awesome_flutter: ^10.7.0
-  shared_preferences: ^2.2.3
+  kana_kit: ^2.1.1
+  font_awesome_flutter: 10.9.1
+  shared_preferences: 2.5.3
   flutter:
     sdk: flutter
   flutter_localizations:
