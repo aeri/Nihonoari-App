@@ -215,7 +215,7 @@ class _Party extends State<Party> {
                       children: <Widget>[
                         IconButton(
                             // Use the FontAwesomeIcons class for the IconData
-                            icon: new Icon(FontAwesomeIcons.language,
+                            icon: new FaIcon(FontAwesomeIcons.language,
                                 color: Theme.of(context).colorScheme.secondary),
                             onPressed: () {
                               FocusScope.of(context)
@@ -228,7 +228,7 @@ class _Party extends State<Party> {
                             }),
                         IconButton(
                             // Use the FontAwesomeIcons class for the IconData
-                            icon: new Icon(FontAwesomeIcons.chartBar,
+                            icon: new FaIcon(FontAwesomeIcons.chartBar,
                                 color: Theme.of(context).colorScheme.secondary),
                             onPressed: () {
                               FocusScope.of(context)
@@ -308,7 +308,7 @@ class _Party extends State<Party> {
                     setState(() {
                       // check if an extra answer is available, and if so, if it matches.
                       // this is part of the fix for #33
-                      if (answer.contains(value.toLowerCase())) {
+                      if (answer.contains(value.toLowerCase().trim())) {
                         control = 500;
                         print("OK");
                         _questionColor = Colors.greenAccent;

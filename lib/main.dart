@@ -73,17 +73,15 @@ Future<void> main() async {
         primary: Colors.red,
         secondary: Colors.white,
         error: Colors.red,
-        onBackground: Colors.white,
         onError: Colors.red,
         onPrimary: Colors.white,
         onSecondary: Colors.black,
         onSurface: Colors.white,
         surface: Colors.black,
         tertiary: Colors.grey,
-        background: Colors.black,
         brightness: Brightness.dark,
       ),
-      dialogTheme: const DialogTheme(
+      dialogTheme: const DialogThemeData(
         backgroundColor: Colors.black,
         surfaceTintColor: Colors.grey,
       ),
@@ -102,17 +100,15 @@ Future<void> main() async {
         primary: Colors.redAccent,
         secondary: Color(0xff011627),
         error: Colors.redAccent,
-        onBackground: Color(0xff011627),
         onError: Colors.redAccent,
         onPrimary: Color(0xfffffbff),
         onSecondary: Color(0xfffffbff),
         onSurface: Color(0xff011627),
         surface: Color(0xfffffbff),
         tertiary: Colors.grey,
-        background: Color(0xfffffbff),
         brightness: Brightness.light,
       ),
-      dialogTheme: const DialogTheme(
+      dialogTheme: const DialogThemeData(
         backgroundColor: Color(0xfffffbff),
         surfaceTintColor: Colors.transparent,
       ),
@@ -275,7 +271,7 @@ class _State extends State<MyApp> {
           child: new Column(
             children: <Widget>[
               Expanded(
-                  flex: 1,
+                  flex: 2,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -322,9 +318,7 @@ class _State extends State<MyApp> {
                       ),
                     ],
                   )),
-              Expanded(
-                flex: 1,
-                child: new Column(children: <Widget>[
+               Column(children: <Widget>[
                   new CheckboxListTile(
                     checkColor: Theme.of(context).colorScheme.onPrimary,
                     activeColor: Theme.of(context).colorScheme.primary,
@@ -415,7 +409,7 @@ class _State extends State<MyApp> {
                     activeTrackColor: Theme.of(context).colorScheme.primary,
                     inactiveThumbColor: Theme.of(context).colorScheme.secondary,
                     inactiveTrackColor:
-                        Theme.of(context).colorScheme.background,
+                        Theme.of(context).colorScheme.surface,
                     onChanged: (bool value) {
                       setState(() {
                         _reverse = value;
@@ -424,9 +418,9 @@ class _State extends State<MyApp> {
                     secondary: new IconCreator("A"),
                   )
                 ]),
-              ),
+
               Expanded(
-                flex: 0,
+                flex: 1,
                 child: Center(
                   child: new ElevatedButton(
                     style: ElevatedButton.styleFrom(
